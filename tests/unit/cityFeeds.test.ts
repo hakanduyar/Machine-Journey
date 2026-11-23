@@ -3,7 +3,8 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { JourneyController, isHoldStage, yearAxis } from '../../src/journey/controller';
-import { CITY_SOURCES } from '../../src/journey/cityFeeds';
+import { CITY_SOURCES, EXTRA_SOURCES } from '../../src/journey/cityFeeds';
+import { catalogIndices, cityFeedIds, cityOfFeed } from '../../src/journey/cityContext';
 import { ALL_FEEDS, CITY_FEEDS, CORE_FEED_COUNT, FEEDS, feedOfVirtualTile, virtualTileId } from '../../src/journey/feeds';
 import { FeedDeck } from '../../src/journey/feedDeck';
 import { CITIES } from '../../src/journey/globe';
@@ -19,7 +20,10 @@ describe('city catalog: 24 globe cities own their sources', () => {
     expect(FEEDS.map((f) => f.id)).toEqual(CORE_IDS);
     expect(CORE_FEED_COUNT).toBe(12);
     expect(ALL_FEEDS.slice(0, 12).map((f) => f.id)).toEqual(CORE_IDS);
-    expect(ALL_FEEDS.length).toBe(33);
+    // the 21 base city clips follow in their original order, then the approved additional clips (catalog intentionally expanded)
+    expect(ALL_FEEDS.slice(12, 33).map((f) => f.id)).toEqual(CITY_SOURCES.map((s) => `city-${s.cityId}`));
+    expect(ALL_FEEDS.length).toBe(33 + EXTRA_SOURCES.length);
+    expect(ALL_FEEDS.slice(33).map((f) => f.id)).toEqual(EXTRA_SOURCES.map((s) => s.feedId));
   });
 
   it('the code table mirrors the curated manifest exactly (source, licence, label, feed id)', () => {
@@ -41,12 +45,17 @@ describe('city catalog: 24 globe cities own their sources', () => {
     expect(new Set(own.map((c) => c.feedId)).size).toBe(21);
     for (const c of own) {
       expect(c.feedId).toBe(`city-${c.id}`);
-      expect(c.feedIds).toBeUndefined();
+      // base clip first, then any approved additional clips of the SAME city (see the extra-catalog tests below)
+      expect(c.feedIds ?? [c.feedId]).toEqual([c.feedId, ...EXTRA_SOURCES.filter((s) => s.cityId === c.id).map((s) => s.feedId)]);
       expect(CITY_FEEDS.some((f) => f.id === c.feedId)).toBe(true);
       expect(CORE_IDS).not.toContain(c.feedId); // never a generic / core clip under a city name
     }
-    expect(CITIES.filter((c) => c.verified).map((c) => [c.id, c.feedIds])).toEqual([
-      ['savannah', ['parked-c130']], ['butlerville', ['m01', 'm02', 'm06', 'parking-walk']], ['palmdale', ['palmdale-dc8']],
+    // verified places keep their official feeds first (primary unchanged); approved extra clips of the same place follow
+    const ex = (id: string) => EXTRA_SOURCES.filter((s) => s.cityId === id).map((s) => s.feedId);
+    expect(CITIES.filter((c) => c.verified).map((c) => [c.id, c.feedId, c.feedIds])).toEqual([
+      ['savannah', 'parked-c130', ['parked-c130', ...ex('savannah')]],
+      ['butlerville', 'm01', ['m01', 'm02', 'm06', 'parking-walk', ...ex('butlerville')]],
+      ['palmdale', 'palmdale-dc8', ['palmdale-dc8', ...ex('palmdale')]],
     ]);
   });
 
@@ -57,6 +66,53 @@ describe('city catalog: 24 globe cities own their sources', () => {
       expect(`${f.label} ${f.credit}`).not.toMatch(/LIVE|CCTV/i);
       expect(f.source).toMatch(/^https:\/\//);
     }
+  });
+});
+
+describe('additional approved city clips (data-driven catalog expansion)', () => {
+  const extra = JSON.parse(readFileSync(join(process.cwd(), 'public', 'media', 'city-sources-extra.json'), 'utf8')) as Record<string, unknown>[];
+  it('the code table is exactly the extra manifest (union with the base manifest: no duplicate feed, source or city mismatch)', () => {
+    expect(EXTRA_SOURCES.map((s) => [s.cityId, s.feedId, s.source, s.credit, s.license, s.licenseUrl, s.archiveLabel]))
+      .toEqual(extra.map((m) => [m.cityId, m.feedId, m.source, m.credit, m.license, m.licenseUrl, m.archiveLabel]));
+    const all = [...manifest, ...extra];
+    expect(new Set(all.map((m) => m.feedId)).size).toBe(all.length);
+    expect(new Set(all.map((m) => m.source)).size).toBe(all.length);
+    for (const m of extra) {
+      const city = CITIES.find((c) => c.id === m.cityId);
+      expect(city, `${String(m.cityId)} is an existing city`).toBeTruthy();
+      // an official place's extra clip carries official source locality; every stock city's is the publisher-named place
+      expect(m.provenanceLevel).toBe(city!.verified ? 'OFFICIAL_SOURCE_LOCALITY' : 'STOCK_PUBLISHER_LOCATION');
+      expect(m.exactCameraCoordinatesVerified).toBe(false);
+      expect(String(m.feedId)).toMatch(/^city-[a-z0-9-]+$/);
+      expect(CORE_IDS).not.toContain(m.feedId);
+    }
+  });
+  it('every additional clip has its loop, poster and credits on disk and an archive (never live / CCTV) label', () => {
+    for (const s of EXTRA_SOURCES) {
+      for (const file of ['loop.mp4', 'poster.jpg', 'CREDITS.txt']) expect(existsSync(join(process.cwd(), 'public', 'media', s.feedId, file)), `${s.feedId}/${file}`).toBe(true);
+      expect(s.archiveLabel).toMatch(/^ARCHIVE/); expect(s.archiveLabel).not.toMatch(/LIVE|CCTV/i);
+    }
+  });
+  it('a city pool expands to its own clips only (base first, deterministic) and excludes every foreign feed', () => {
+    const grown = new Set(EXTRA_SOURCES.map((s) => s.cityId));
+    expect(grown.size).toBeGreaterThan(0);
+    for (const id of grown) {
+      const city = CITIES.find((c) => c.id === id)!;
+      const own = cityFeedIds(city);
+      // the primary pool first (a stock city's base clip, or a verified place's official feeds), then its approved extras in manifest order
+      expect(own).toEqual([...(city.verified ? ({ savannah: ['parked-c130'], butlerville: ['m01', 'm02', 'm06', 'parking-walk'], palmdale: ['palmdale-dc8'] } as Record<string, string[]>)[id] : [`city-${id}`]), ...EXTRA_SOURCES.filter((s) => s.cityId === id).map((s) => s.feedId)]);
+      expect(own.length).toBeGreaterThanOrEqual(2);
+      for (const f of ALL_FEEDS.map((x) => x.id)) if (!own.includes(f)) expect(cityOfFeed(f, CITIES)?.id).not.toBe(id);
+      const idx = catalogIndices(own, ALL_FEEDS.map((x) => x.id));
+      expect(idx.length).toBe(own.length);
+      const d = desiredPlayback({ stage: 'mosaic', selectedFeed: -1, targetFeed: -1, feedCount: ALL_FEEDS.length, pool: idx });
+      expect(ALL_FEEDS.filter((_, i) => d[i]).map((f) => f.id)).toEqual(own); // the playing pool is the city's own clips only
+    }
+    // every feed of the catalog belongs to at most one city
+    const owner = new Map<string, string>();
+    for (const c of CITIES) for (const f of cityFeedIds(c)) { expect(owner.has(f), f).toBe(false); owner.set(f, c.id); }
+    // startup budget: only Butlerville's four primary feeds are ever eager (any extra Butlerville clip is lazy, never at startup)
+    expect(cityFeedIds(CITIES.find((c) => c.id === 'butlerville')).slice(0, 4)).toEqual(['m01', 'm02', 'm06', 'parking-walk']);
   });
 });
 

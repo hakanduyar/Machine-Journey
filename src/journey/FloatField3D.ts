@@ -3,10 +3,11 @@ import {
   Object3D, PerspectiveCamera, PlaneGeometry, Scene, SRGBColorSpace, Texture, VideoTexture, WebGLRenderer,
 } from 'three';
 import {
-  FLOAT_STOPS, FOV, PANE_H, PANE_W, PANEL_TAG, buildBackground, holdDistance, holdPose, inPose, movePose, outPose, panelContent, panelLayout,
-  companionKinds, sceneOfFeed,
+  FLOAT_STOPS, FOV, PANE_H, PANE_W, PANEL_TAG, buildBackground, holdDistance, holdPose, inPose, movePose, outPose, panelContent, sceneOfFeed,
   type FloatFraming, type FloatPose, type PanelKind, type SceneGroup,
 } from './floatField';
+import { CANVAS_H, CANVAS_W, drawCompanion } from './companionCanvas';
+import { cityFacts, groupSpecs, portraitIndex, redrawEvery, type CompanionSpec, type Family } from './companions';
 import { invalidate, markUploaded, needsDomOverlay, uploadAction, videoHasFrame, type TexState } from './handoff';
 import { frameCount } from './frames';
 import { uploadNow, watchContext } from './glUpload';
@@ -31,6 +32,10 @@ export interface FloatFrameInput {
   overlaySlot: number;
   /** Slots whose decorative context panels may show (this visit's medium-framed stops). */
   panelSlots: readonly number[];
+  /** Companion family of each panelled stop of this visit (see `familyFor`); a slot not listed shows no companions. */
+  families?: readonly { slot: number; family: number }[];
+  /** Shared animation clock in seconds, the active city (all companion content belongs to it) and the reduced-motion flag. */
+  time?: number; cityId?: string | null; reduced?: boolean;
   /** This visit's pane bindings (slot -> catalog feed index). Slots not listed show their default feed. */
   bindings?: readonly { slot: number; feedIndex: number }[];
   vw: number; vh: number;
@@ -46,14 +51,16 @@ export interface FloatFieldOptions {
   videos: () => readonly (HTMLVideoElement | null)[];
   posters: readonly HTMLImageElement[];
   labels: readonly string[];
+  /** Pool indices (into `feedIds`) of the ACTIVE CITY: every default pane and the whole background show only these. */
+  catalog?: readonly number[];
 }
 
 const smooth = (t: number) => t * t * (3 - 2 * t);
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 const MONO = 'ui-monospace, "SF Mono", Menlo, Consolas, monospace';
 
-/** Draws one small fictional record panel (see `panelContent`). Hierarchy: quiet, secondary to the footage. */
-function panelCanvas(kind: PanelKind, slot: number, tagged: boolean, scene: SceneGroup | null = null, into?: HTMLCanvasElement): HTMLCanvasElement {
+/** Legacy static record renderer (the older single-kind companions); the field now draws `companionCanvas` families instead. */
+export function panelCanvas(kind: PanelKind, slot: number, tagged: boolean, scene: SceneGroup | null = null, into?: HTMLCanvasElement): HTMLCanvasElement {
   const W = 384; const H = 240;
   const cv = into ?? document.createElement('canvas'); cv.width = W; cv.height = H;
   const c = cv.getContext('2d')!;
@@ -176,10 +183,15 @@ export class FloatField3D {
   private disposables: { dispose(): void }[] = [];
   private panes: { group: Group; material: MeshBasicMaterial; feedIndex: number }[] = [];
   private defaultFeed: number[] = [];
-  private panels: { slot: number; mesh: Mesh; spec: number; cv: HTMLCanvasElement; tex: CanvasTexture; feedId: string }[] = [];
+  private panels: { slot: number; mesh: Mesh; spec: number; cv: HTMLCanvasElement | null; tex: CanvasTexture | null; key: string; layoutKey: string; at: number }[] = [];
+  /** The three fictional portraits (one 1536 x 1024 sheet, three columns); requested only when a portrait card first shows. */
+  private portraits: HTMLImageElement | null = null;
+  private portraitsFor() {
+    if (!this.portraits) { this.portraits = new Image(); this.portraits.src = `${import.meta.env.BASE_URL}assets/companions/fictional-portraits-v1.png`; }
+    return this.portraits;
+  }
   private batches: InstancedMesh[] = [];
   private w = 0; private h = 0;
-  private landscape: boolean | null = null;
 
   constructor(opts: FloatFieldOptions) {
     this.opts = opts;
@@ -202,8 +214,9 @@ export class FloatField3D {
     });
 
     // Stop panes (video-capable, poster until the decoder has a frame and the texture is warm).
+    this.catalog = opts.catalog && opts.catalog.length ? [...opts.catalog] : opts.feedIds.map((_, i) => i);
     FLOAT_STOPS.forEach((stop) => {
-      const feedIndex = opts.feedIds.indexOf(stop.feedId);
+      const feedIndex = this.catalog[stop.slot % this.catalog.length]; // city-scoped default: never another city's feed
       const geo = new PlaneGeometry(PANE_W, PANE_H);
       const mat = new MeshBasicMaterial({ map: this.posterTex[feedIndex] ?? null, color: '#ffffff' });
       const group = new Group(); group.position.set(stop.x, stop.y, stop.z);
@@ -216,34 +229,40 @@ export class FloatField3D {
       this.defaultFeed.push(feedIndex);
     });
 
-    // Small fictional record panels (two per stop). Canvas textures only; no media.
+    // Companion panels (two per stop). Meshes only: the canvas texture of a panel is created on first use and redrawn for the
+    // family / city / feed it currently shows. Canvas textures only; no media, no decoder.
     FLOAT_STOPS.forEach((stop) => {
-      panelLayout(stop.slot, 1.78, stop.feedId).forEach((sp, i) => {
-        const cv = panelCanvas(sp.kind, stop.slot, i === 0, sceneOfFeed(stop.feedId));
-        const tex = new CanvasTexture(cv);
-        tex.colorSpace = SRGBColorSpace;
+      for (let i = 0; i < 2; i++) {
         const geo = new PlaneGeometry(1, 1);
         // Drawn after every opaque plane and without depth testing, so no background thumbnail (however close in depth) covers the card.
-        const mat = new MeshBasicMaterial({ map: tex, transparent: true, opacity: 0, depthWrite: false, depthTest: false, fog: false });
+        const mat = new MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false, depthTest: false, fog: false });
         const mesh = new Mesh(geo, mat); mesh.visible = false; mesh.renderOrder = 10;
         this.scene.add(mesh);
-        this.disposables.push(tex, geo, mat);
-        this.panels.push({ slot: stop.slot, mesh, spec: i, cv, tex, feedId: stop.feedId });
-      });
+        this.disposables.push(geo, mat);
+        this.panels.push({ slot: stop.slot, mesh, spec: i, cv: null, tex: null, key: '', layoutKey: '', at: -1e9 });
+      }
     });
 
-    // Dense asymmetric background: one instanced draw per poster texture.
-    const variants = Math.max(1, opts.posters.length);
+    this.buildBackdrop();
+    this.portraitsFor(); // one small local companion sheet, requested while the field is built idle (no first-use pop-in)
+  }
+
+  private catalog: number[] = [];
+
+  /** Dense asymmetric background: one instanced draw per poster texture of the ACTIVE CITY's catalog (and no other). */
+  private buildBackdrop() {
+    const opts = this.opts; const cat = this.catalog;
+    const variants = Math.max(1, cat.length);
     // Pictures of one motif family (aircraft ramp, building + lawn, ...) are kept apart as if they were the same picture.
     const FAM: Record<SceneGroup, number> = { aircraft: 0, dock: 1, gym: 2, road: 3, campus: 4, clinic: 4, office: 4 };
-    const bg = buildBackground(variants, opts.feedIds.map((id, i) => { const g = sceneOfFeed(id); return g ? FAM[g] : 100 + i; }));
+    const bg = buildBackground(variants, cat.map((gi, i) => { const g = sceneOfFeed(opts.feedIds[gi]); return g ? FAM[g] : 100 + i; }));
     const dummy = new Object3D(); const tint = new Color();
     for (let ti = 0; ti < variants; ti++) {
       const entries = bg.filter((p) => p.texture === ti);
       // (assignment is farthest-first per picture / motif family: see assignTextures)
       if (!entries.length) continue;
       const geo = new PlaneGeometry(1, 9 / 16);
-      const mat = new MeshBasicMaterial({ map: this.posterTex[ti] ?? null, color: '#9aa7a8' });
+      const mat = new MeshBasicMaterial({ map: this.posterTex[cat[ti]] ?? null, color: '#9aa7a8' });
       const mesh = new InstancedMesh(geo, mat, entries.length);
       entries.forEach((p, i) => {
         dummy.position.set(p.x, p.y, p.z); dummy.scale.setScalar(p.w); dummy.rotation.set(0, p.ry, 0); dummy.updateMatrix();
@@ -254,8 +273,25 @@ export class FloatField3D {
       mesh.frustumCulled = false;
       this.scene.add(mesh);
       this.batches.push(mesh);
-      this.disposables.push(geo, mat);
+      this.backdrop.push(geo, mat);
     }
+  }
+  private backdrop: { dispose(): void }[] = [];
+
+  /**
+   * Rebinds the field to another city's catalog (global pool indices): default panes and the whole background then show only
+   * that city's sources. Cheap no-op when unchanged; called while the field is not on screen (the city changed at the globe).
+   */
+  setCatalog(catalog: readonly number[]) {
+    const next = catalog.length ? [...catalog] : this.catalog;
+    if (next.length === this.catalog.length && next.every((v, i) => v === this.catalog[i])) return;
+    this.catalog = next;
+    for (const b of this.batches) { this.scene.remove(b); b.dispose(); }
+    this.batches = [];
+    for (const d of this.backdrop) d.dispose();
+    this.backdrop = [];
+    this.defaultFeed = FLOAT_STOPS.map((stop) => next[stop.slot % next.length]);
+    this.buildBackdrop();
   }
 
   setVisible(v: boolean) {
@@ -272,15 +308,11 @@ export class FloatField3D {
     this.renderer.setSize(vw, vh, false);
   }
 
-  private layoutPanels(aspect: number) {
-    const land = aspect >= 1;
-    if (land === this.landscape) return;
-    this.landscape = land;
-    for (const p of this.panels) {
-      const stop = FLOAT_STOPS[p.slot]; const sp = panelLayout(p.slot, aspect)[p.spec];
-      p.mesh.position.set(stop.x + sp.dx, stop.y + sp.dy, stop.z + sp.dz);
-      p.mesh.scale.set(sp.w, sp.h, 1); p.mesh.rotation.set(0, sp.ry, 0);
-    }
+  /** Places a panel for its family at its stop (only when the family or orientation changed: no per-frame layout jitter). */
+  private placePanel(p: FloatField3D['panels'][number], sp: CompanionSpec) {
+    const stop = FLOAT_STOPS[p.slot];
+    p.mesh.position.set(stop.x + sp.dx, stop.y + sp.dy, stop.z + sp.dz);
+    p.mesh.scale.set(sp.w, sp.h, 1); p.mesh.rotation.set(0, sp.ry, 0);
   }
 
   /** Texture sources that finished loading after construction get uploaded; no listeners, polled from the frame. */
@@ -324,7 +356,6 @@ export class FloatField3D {
   render(f: FloatFrameInput): FloatRender {
     this.setSize(f.vw, f.vh);
     const aspect = f.vw / Math.max(1, f.vh);
-    this.layoutPanels(aspect);
     this.syncPosters();
     let p: FloatPose;
     switch (f.mode) {
@@ -356,20 +387,37 @@ export class FloatField3D {
       if (pane.material.map !== map) { pane.material.map = map; pane.material.needsUpdate = true; }
     });
     const medD = holdDistance('medium', aspect);
+    const land = aspect >= 1; const clockT = f.time ?? 0;
     for (const pl of this.panels) {
       const stop = FLOAT_STOPS[pl.slot];
       let o = 0;
-      if (f.panelSlots.includes(pl.slot)) {
-        // The companion document follows the camera this stop shows THIS visit (not the slot's default feed): redrawn only on a change.
-        const feedNow = this.opts.feedIds[this.panes[pl.slot].feedIndex] ?? pl.feedId;
-        if (feedNow !== pl.feedId) {
-          pl.feedId = feedNow;
-          const kind = companionKinds(pl.slot, feedNow)[pl.spec];
-          panelCanvas(kind, pl.slot, pl.spec === 0, sceneOfFeed(feedNow), pl.cv);
-          pl.tex.needsUpdate = true;
-        }
+      const fam = f.families?.find((x) => x.slot === pl.slot)?.family;
+      if (fam !== undefined && f.panelSlots.includes(pl.slot)) {
+        const sp = groupSpecs(fam as Family, pl.slot, land)[pl.spec];
+        const lk = `${fam}|${land ? 1 : 0}`;
+        if (pl.layoutKey !== lk) { pl.layoutKey = lk; pl.key = ''; this.placePanel(pl, sp); } // layout only changes with family / orientation
         const dist = Math.hypot(p.eye.x - stop.x, p.eye.y - stop.y, p.eye.z - stop.z);
-        o = smooth(clamp((medD * 1.5 - dist) / (medD * 0.6), 0, 1));
+        // Short coordinated stagger: the second card of a group settles a beat after the first as the camera arrives.
+        o = smooth(clamp((medD * 1.5 - dist) / (medD * 0.6) - pl.spec * 0.22, 0, 1));
+        if (o > 0.01) {
+          const city = f.cityId ?? null; const feedIdx = this.panes[pl.slot].feedIndex;
+          const im = sp.role === 'portrait' ? this.portraitsFor() : null;
+          const loaded = im && im.complete && im.naturalWidth > 0 ? 1 : 0;
+          const key = `${lk}|${city}|${feedIdx}|${loaded}`;
+          const every = redrawEvery(sp.role, !!f.reduced);
+          if (pl.key !== key || (every > 0 && clockT - pl.at >= every)) {
+            if (!pl.cv) {
+              pl.cv = document.createElement('canvas'); pl.cv.width = CANVAS_W; pl.cv.height = CANVAS_H;
+              pl.tex = new CanvasTexture(pl.cv); pl.tex.colorSpace = SRGBColorSpace; this.disposables.push(pl.tex);
+              const pm = pl.mesh.material as MeshBasicMaterial; pm.map = pl.tex; pm.needsUpdate = true;
+            }
+            drawCompanion(pl.cv, sp.role, sp.w, sp.h, {
+              time: clockT, reduced: !!f.reduced, city: cityFacts(city), cityId: city, slot: pl.slot,
+              feedLabel: this.opts.labels[feedIdx] ?? '', portraitIdx: portraitIndex(city, pl.slot), portraits: im,
+            });
+            pl.tex!.needsUpdate = true; pl.key = key; pl.at = clockT;
+          }
+        }
       }
       const m = pl.mesh.material as MeshBasicMaterial;
       m.opacity = o; pl.mesh.visible = o > 0.01;
@@ -382,7 +430,8 @@ export class FloatField3D {
   dispose() {
     for (const m of this.batches) { this.scene.remove(m); m.dispose(); }
     for (const d of this.disposables) d.dispose();
-    this.disposables = []; this.videoTex.clear();
+    for (const d of this.backdrop) d.dispose();
+    this.disposables = []; this.backdrop = []; this.videoTex.clear();
     this.unwatch?.(); this.unwatch = null;
     this.renderer.dispose();
     this.renderer.domElement.remove();

@@ -1,0 +1,9 @@
+City: mumbai
+Source: https://www.pexels.com/video/busy-urban-highway-traffic-in-mumbai-city-31046764/
+Credit: aksinfo7 universe
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: 9d87c61e8334c7205cddefe4c280be2d74b70592c7586e6588b0c725b795b6a7
+Archive: ARCHIVE / LOCAL CAMERA; not live surveillance.
+Location: Primary item title/description names city; sampled decoded frames show no obvious contradiction, not independent exact geolocation.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

@@ -1,0 +1,9 @@
+City: istanbul
+Source: https://mixkit.co/free-stock-video/ferri-crossing-a-canal-4085/
+Credit: Mixkit
+License: Mixkit Stock Video Free License
+License URL: https://mixkit.co/license/modal/videoFree/
+Original SHA256: 41B7636E979B289B9534E6FB39053F3B766E00E7704D1B810A69BA844EF7ABD7
+Archive: ARCHIVE / LOCAL CAMERA; not live surveillance.
+Location: publisher/contributor-described city, exact camera GPS unverified.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count based endpoint blend.

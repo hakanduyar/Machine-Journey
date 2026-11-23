@@ -27,6 +27,12 @@ export function planLeg(o: {
    * chosen year if possible, otherwise the nearest tile of any of them (the year then follows the tile; never a seen feed).
    */
   wantFeeds?: readonly number[];
+  /**
+   * Finite city catalogs: when no other source exists (a one-source city), reuse the city's own source at ANOTHER tile /
+   * year instead of refusing the leg. `currentTile` is then excluded instead of the current feed. Honest reuse, never fake variety.
+   */
+  allowSameFeed?: boolean;
+  currentTile?: string | null;
 }): PlannedLeg | null {
   const { tiles, vw, worldW, yearCount, leg } = o;
   const axis = yearAxis(worldW, vw, yearCount);
@@ -34,9 +40,9 @@ export function planLeg(o: {
   const centre = axis.centreOf(year);
   const maxX = Math.max(0, worldW - vw);
   const want = o.wantFeeds && o.wantFeeds.length ? new Set(o.wantFeeds) : null;
-  for (const reach of want ? [0.3, 0.5, 0.9, Infinity] : [0.3, 0.5, 0.9]) {
+  for (const reach of want || o.allowSameFeed ? [0.3, 0.5, 0.9, Infinity] : [0.3, 0.5, 0.9]) {
     const pool = tiles
-      .filter((t) => t.w >= vw * 0.1 && t.w <= vw && t.feedIndex !== o.currentFeed && (!want || want.has(t.feedIndex)) &&
+      .filter((t) => t.w >= vw * 0.1 && t.w <= vw && (o.allowSameFeed ? t.id !== o.currentTile : t.feedIndex !== o.currentFeed) && (!want || want.has(t.feedIndex)) &&
         Math.abs(t.x + t.w / 2 - centre) <= vw * reach)
       .sort((a, b) => Math.abs(a.x + a.w / 2 - centre) - Math.abs(b.x + b.w / 2 - centre) || a.id.localeCompare(b.id));
     if (!pool.length) continue;
@@ -45,7 +51,8 @@ export function planLeg(o: {
     return { id: t.id, x, year: Math.floor(axis.indexAt(x)) };
   }
   // No tile of an offered feed fits the viewport: never refuse the leg, fall back to the ordinary different-feed choice.
-  return want ? planLeg({ ...o, wantFeeds: undefined }) : null;
+  if (want) return planLeg({ ...o, wantFeeds: undefined });
+  return o.allowSameFeed ? null : planLeg({ ...o, allowSameFeed: true });
 }
 
 /**

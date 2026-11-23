@@ -1,0 +1,9 @@
+City: sydney
+Source: https://www.pexels.com/video/time-lapse-of-moving-clouds-over-sydney-harbour-bridge-10760636/
+Credit: Kate Branch
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: be7a20d3eedc9847f454635593ae8a3c23c2e2fba032e42244fa46ac506f913f
+Archive: ARCHIVE / TIMELAPSE; not live surveillance.
+Location: Primary item metadata names city, decoded frames inspected; no official geolocation claim.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

@@ -1,0 +1,9 @@
+City: sao-paulo
+Source: https://www.pexels.com/video/a-time-lapse-of-sao-paulo-city-4602188/
+Credit: Natã Romualdo
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: 819a49cf12f32920eada37bbf9f16dd107d73d63818633d13d2cdcf860b26218
+Archive: ARCHIVE / TIMELAPSE; not live surveillance.
+Location: Primary item metadata names city, decoded frames inspected; no official geolocation claim.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

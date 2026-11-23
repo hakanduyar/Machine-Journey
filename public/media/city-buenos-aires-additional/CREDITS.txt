@@ -1,0 +1,9 @@
+City: buenos-aires
+Source: https://www.pexels.com/video/urban-life-at-buenos-aires-obelisk-31463613/
+Credit: Aleksandr Fedorov
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: b065b5cb9e95dcbf17edc813ddfd47c0eb6edc8064fb783ee713748aa4cf8242
+Archive: ARCHIVE / LOCAL CAMERA; not live surveillance.
+Location: Primary item metadata names city, decoded frames inspected; no official geolocation claim.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

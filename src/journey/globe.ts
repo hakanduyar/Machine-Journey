@@ -1,4 +1,5 @@
 import { clamp, easeInOut } from './geometry';
+import { extraFeedIds } from './cityFeeds';
 
 /**
  * Globe excursion data + pure math (no DOM). Everything here is authored for this
@@ -41,7 +42,7 @@ export interface City {
   verified?: VerifiedPlace;
 }
 
-export const CITIES: readonly City[] = [
+const BASE_CITIES: readonly City[] = [
   // R49 C: each of these 21 cities opens ONLY its own stock-archive clip `city-<id>` (never a shared / generic feed). The
   // place is named by the stock publisher; it is not an official camera location (see cityFeeds.ts).
   { id: 'paris', name: 'Paris', country: 'France', lon: 2.35, lat: 48.86, feedId: 'city-paris' },
@@ -91,6 +92,19 @@ export const CITIES: readonly City[] = [
     },
   },
 ];
+
+/**
+ * The globe cities with their OWNED sources: a demo city's base clip plus any approved additional clips of that same city
+ * (public/media/city-sources-extra.json, in manifest order, base first). `feedId` stays the first / base clip; a city with
+ * additional clips also lists them all in `feedIds`, which is what the city pool, mosaic, decks and entry consume. This holds
+ * for verified places too (their official feeds stay first, with their official provenance); cities without extras are exactly
+ * as authored above.
+ */
+export const CITIES: readonly City[] = BASE_CITIES.map((c) => {
+  const extra = extraFeedIds(c.id);
+  // The primary (and a verified place's official feeds) stay first and unchanged; approved additional clips of the SAME city follow.
+  return extra.length ? { ...c, feedIds: [...(c.feedIds ?? [c.feedId]), ...extra] } : c;
+});
 
 export const cityById = (id: string) => CITIES.find((c) => c.id === id) ?? null;
 

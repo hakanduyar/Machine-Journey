@@ -1,0 +1,9 @@
+City: paris
+Source: https://www.pexels.com/video/people-and-cars-in-front-of-eiffel-tower-6355353/
+Credit: Joshua Miranda
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: 210243BC6B9CF662BEB3680C3C656565057E860356F95617324D9FDA870AB364
+Archive: ARCHIVE / LOCAL CAMERA; not live surveillance.
+Location: publisher/contributor-described city, exact camera GPS unverified.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count based endpoint blend.

@@ -15,7 +15,7 @@ import { planLeg, reanchorTile } from '../../src/journey/route';
 const FEED_IDS = FEEDS.map((f) => f.id);
 const N = FEED_IDS.length;
 
-describe('catalog: the twelve CORE feeds (the 21 city clips are a separate lazy set, see cityFeeds.test.ts)', () => {
+describe('catalog: the twelve CORE feeds (the 21 base city clips plus the approved additional city clips are a separate lazy set, see cityFeeds.test.ts)', () => {
   it('has twelve unique logical ids, each with its real media files (loop, poster, credits)', () => {
     expect(N).toBe(12);
     expect(new Set(FEED_IDS).size).toBe(12);
@@ -36,20 +36,20 @@ describe('catalog: the twelve CORE feeds (the 21 city clips are a separate lazy 
 });
 
 describe('verified source places (truth over novelty)', () => {
-  it('Savannah is the actual parked-c130 place at the Natural Earth city point, and only that feed', () => {
+  it('Savannah is the actual parked-c130 place at the Natural Earth city point; its pool is that primary feed plus its one approved additional clip, nothing else', () => {
     const c = cityById('savannah')!;
     expect(c.lon).toBe(-81.109995); expect(c.lat).toBe(32.021106);
-    expect(c.feedId).toBe('parked-c130'); expect(c.feedIds).toEqual(['parked-c130']);
+    expect(c.feedId).toBe('parked-c130'); expect(c.feedIds).toEqual(['parked-c130', 'city-savannah-additional']);
     expect(c.verified!.url).toContain('dvidshub.net/video/554984');
   });
-  it('Butlerville (Muscatatuck, Indiana) opens only the four MEVA Muscatatuck feeds, with the Census locality point; Palmdale only the DC-8', () => {
+  it('Butlerville (Muscatatuck, Indiana) opens only the four MEVA Muscatatuck feeds, with the Census locality point; Palmdale the DC-8 plus its one approved additional clip', () => {
     const b = cityById('butlerville')!;
     expect(b.feedIds).toEqual(['m01', 'm02', 'm06', 'parking-walk']);
     expect([b.lon, b.lat]).toEqual([-85.51, 39.03]);
     expect(b.verified!.note).toMatch(/not Indianapolis/);
     expect(b.verified!.note).toMatch(/camera position is not verified/);
     const p = cityById('palmdale')!;
-    expect(p.feedIds).toEqual(['palmdale-dc8']); expect([p.lon, p.lat]).toEqual([-118.11, 34.59]);
+    expect(p.feedId).toBe('palmdale-dc8'); expect(p.feedIds).toEqual(['palmdale-dc8', 'city-palmdale-additional']); expect([p.lon, p.lat]).toEqual([-118.11, 34.59]);
   });
   it('feeds with weaker or unknown location are never claimed by a verified place; every verified place carries its source', () => {
     const claimed = new Set(CITIES.filter((c) => c.verified).flatMap((c) => c.feedIds ?? [c.feedId]));

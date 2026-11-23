@@ -1,0 +1,9 @@
+City: paris
+Source: https://mixkit.co/free-stock-video/paris-pedestrian-path-4349/
+Credit: Mixkit
+License: Mixkit Stock Video Free License
+License URL: https://mixkit.co/license/modal/videoFree/
+Original SHA256: 0ACA1886A79E2D02AD5A8641050E0B384D33FA85559F4B91C9CB7238033F94EB
+Archive: ARCHIVE / LOCAL CAMERA; not live surveillance.
+Location: publisher/contributor-described city, exact camera GPS unverified.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count based endpoint blend.

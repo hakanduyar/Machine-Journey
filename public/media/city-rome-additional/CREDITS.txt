@@ -1,0 +1,9 @@
+City: rome
+Source: https://www.pexels.com/video/people-on-square-in-rome-12982743/
+Credit: James Anthony
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: 8e36722925becf7af75a07bc84b27b6602a762e2ac20768b2e47bba15445c190
+Archive: ARCHIVE / CITY PAN; not live surveillance.
+Location: Primary item metadata names city, decoded frames inspected; no official geolocation claim.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

@@ -25,6 +25,11 @@ export interface PlaybackInput {
   extra?: readonly number[];
   /** One manual intent is waiting for its mode to load: the visible camera must keep playing. */
   pending?: boolean;
+  /**
+   * Element indices of the ACTIVE CITY's feeds. When given, "the whole pool" is exactly these (plus `extra`): a foreign
+   * city's / unowned clip never decodes. Absent: the legacy core-prefix pool.
+   */
+  pool?: readonly number[];
   /** Floating / neural stages only: feed indices wanted (see `routeActive`), capped at MAX_ACTIVE_FEEDS. Absent: whole pool. */
   active?: readonly number[];
 }
@@ -66,7 +71,7 @@ export function desiredPlayback(i: PlaybackInput): boolean[] {
   const core = i.coreCount ?? i.feedCount;
   const only = (idx: number) => Array.from({ length: i.feedCount }, (_, k) => k === idx);
   // "The whole pool" is the CORE pool plus only the city clips currently in use: the other city clips never decode.
-  const all = () => Array.from({ length: i.feedCount }, (_, k) => k < core || (i.extra?.includes(k) ?? false));
+  const all = () => Array.from({ length: i.feedCount }, (_, k) => (i.pool ? i.pool.includes(k) : k < core) || (i.extra?.includes(k) ?? false));
   if (i.active && ROUTE_STAGES.has(i.stage)) {
     const set = [...new Set(i.active.filter((x) => x >= 0 && x < i.feedCount))].slice(0, MAX_ACTIVE_FEEDS);
     if (set.length) return Array.from({ length: i.feedCount }, (_, k) => set.includes(k)); // unknown route: never pause what might be visible
@@ -78,6 +83,13 @@ export function desiredPlayback(i: PlaybackInput): boolean[] {
       return i.selectedFeed >= 0 ? only(i.selectedFeed) : all(); // unknown camera: never pause what might be visible
     case 'turning':
       return i.targetFeed >= 0 ? only(i.targetFeed) : all();
+    case 'entering': {
+      // City-scoped pool (a city may own several clips): the geographic entry decodes the ready target + the current endpoint
+      // (`extra`) plus a small near set of the city's own feeds, never more than the spatial cap. Legacy callers keep the pool.
+      if (!i.pool) return all();
+      const want = [...new Set([i.targetFeed, ...(i.extra ?? []), ...i.pool].filter((x) => x >= 0 && x < i.feedCount))].slice(0, MAX_ACTIVE_FEEDS);
+      return Array.from({ length: i.feedCount }, (_, k) => want.includes(k));
+    }
     default:
       return all();
   }

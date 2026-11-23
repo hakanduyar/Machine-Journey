@@ -17,7 +17,7 @@ export function anchorCityFor<C extends AnchorCity>(feedId: string | null, citie
     // A feed whose real source place is verified departs from that place; otherwise from its demo anchor city.
     const real = cities.find((c) => c.verified && (c.feedIds ? c.feedIds.includes(feedId) : c.feedId === feedId));
     if (real) return real;
-    const hit = cities.find((c) => c.feedId === feedId && !c.verified);
+    const hit = cities.find((c) => !c.verified && (c.feedIds ? c.feedIds.includes(feedId) : c.feedId === feedId));
     if (hit) return hit;
     let h = 7;
     for (let i = 0; i < feedId.length; i++) h = (h * 31 + feedId.charCodeAt(i)) >>> 0;

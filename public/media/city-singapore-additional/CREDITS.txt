@@ -1,0 +1,9 @@
+City: singapore
+Source: https://www.pexels.com/video/singapore-skyline-with-landmark-views-34740345/
+Credit: Saugat Shrestha
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: d1bdd05131ed60aff0a3dffae3d5054e8eec93e257b914289caa56643a122178
+Archive: ARCHIVE / CITY PAN; not live surveillance.
+Location: Primary item metadata names city, decoded frames inspected; no official geolocation claim.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

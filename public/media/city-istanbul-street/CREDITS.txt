@@ -1,0 +1,9 @@
+City: istanbul
+Source: https://mixkit.co/free-stock-video/informal-economy-in-istanbul-4463/
+Credit: Mixkit
+License: Mixkit Stock Video Free License
+License URL: https://mixkit.co/license/modal/videoFree/
+Original SHA256: B7C7349ED4BA8104F23890314D8E56547789A605C7FA4AF5D2EE26444270D62F
+Archive: ARCHIVE / LOCAL CAMERA; not live surveillance.
+Location: publisher/contributor-described city, exact camera GPS unverified.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count based endpoint blend.

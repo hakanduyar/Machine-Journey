@@ -148,7 +148,7 @@ export interface FloatPlan { feeds: string[]; framing: FloatFraming[]; slots: nu
  * Every stop but the last is an offset `medium` hold (room for context panels); the last is `full` so it can expand
  * to fullscreen. Consecutive stops prefer an odd slot distance, so their medium panes sit on opposite sides.
  */
-export function planFloatRoute(startFeedId: string | null, stops: number, visit: number, destFeeds?: readonly string[]): FloatPlan | null {
+export function planFloatRoute(startFeedId: string | null, stops: number, visit: number, destFeeds?: readonly string[], allowRepeat = false): FloatPlan | null {
   const n = clamp(Math.round(stops), 2, 4);
   let start = startFeedId ? slotOfFeed(startFeedId) : -1;
   if (start < 0) start = (visit * 3 + 1) % FLOAT_STOPS.length;
@@ -177,7 +177,8 @@ export function planFloatRoute(startFeedId: string | null, stops: number, visit:
   // The shared pane keeps the incoming feed (even one with no native slot); later stops show the deck's distinct feeds,
   // or, without a deck, each slot's own default feed.
   const feeds = slots.map((s, k) => (k === 0 ? startFeedId ?? FLOAT_STOPS[s].feedId : destFeeds ? destFeeds[k - 1] : FLOAT_STOPS[s].feedId));
-  if (feeds.some((f) => !f) || new Set(feeds).size !== feeds.length) return null;
+  // `allowRepeat`: a finite city catalog (e.g. one source) reuses its OWN feed on several stops instead of refusing the mode.
+  if (feeds.some((f) => !f) || (!allowRepeat && new Set(feeds).size !== feeds.length)) return null;
   return { feeds, framing, slots };
 }
 

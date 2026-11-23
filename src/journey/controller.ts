@@ -88,7 +88,11 @@ export type JourneyCommand =
  * One visited hold, as semantic state only (never mutable elapsed progress). Entries are frozen copies: later state
  * changes cannot alter them, and replaying one never consults the route planner / any RNG.
  */
-interface HoldBase { holds: number }
+interface HoldBase {
+  holds: number;
+  /** The active city (semantic context) of this hold; restored exactly by back / redo. Absent only in city-less fixtures. */
+  cityId?: string | null;
+}
 interface MosaicHold extends HoldBase { kind: 'mosaic'; x: number }
 interface SelectedHold extends HoldBase {
   kind: 'selected'; id: string; feedId: string | null; x: number; ww: number; vw: number; city: string | null;
@@ -165,6 +169,12 @@ export interface JourneyState {
   legRev: boolean;
   /** Visit key of the globe's route bundles (with `outCityId` it fixes the whole composition; stored in history, never rerolled). */
   routeKey: number;
+  /**
+   * ACTIVE CITY: the persistent semantic context. Every camera shown in every mode belongs to it. It changes only when the
+   * globe actually ENTERS another city (committed at arrival) or when history restores a recorded hold; never on a display
+   * mode change, a globe pull-back or a rotation. Null only for city-less fixtures.
+   */
+  cityId: string | null;
 }
 
 export interface JourneyOptions {
@@ -177,7 +187,9 @@ export interface JourneyOptions {
   /** Chooses where the next camera leg goes (scroll offset that centres the target tile). */
   planner?: (leg: number) => { id: string; x: number } | null;
   /** Tile (of the given feed) the city leg lands on, plus the scroll that centres it. */
-  anchorFeed?: (feedId: string, worldX: number) => { id: string; x: number } | null;
+  anchorFeed?: (feedId: string, worldX: number, cityId?: string | null) => { id: string; x: number } | null;
+  /** City whose catalog the journey opens in (the active city). Absent: a city-less fixture (legacy global behaviour). */
+  initialCity?: string | null;
   /**
    * Readiness of a city-owned clip (R49 C), also the prewarm trigger (the host attaches its source on first call). `'wait'`:
    * still loading, so the ONE city intent is kept pending and the globe hold stays visible; `'failed'`: that clip can't be
@@ -185,7 +197,7 @@ export interface JourneyOptions {
    */
   cityStatus?: (feedId: string) => 'ready' | 'wait' | 'failed';
   /** Feed id of a tile, used so a city leg does not reopen the feed that was just on screen. */
-  feedOfTile?: (tileId: string) => string | null;
+  feedOfTile?: (tileId: string, cityId?: string | null) => string | null;
   /** Archive year index of a tile in the CURRENT layout; recorded once when a selected stop is reached. */
   yearOfTile?: (tileId: string) => number | null;
   /** Camera holds that must be reached before each globe branch (cycled). Authored 2..4. Ignored when `branches` is given. */
@@ -275,9 +287,17 @@ export class JourneyController {
     scanP: 0, globeP: 0, globeEased: 0, travelP: 0, travelEased: 0, destId: null, sceneCityId: null,
     floatFeeds: [], floatFraming: [], floatSlots: [], floatIdx: 0, floatP: 0, entryFeedId: null,
     neuralFeeds: [], neuralAnchors: [], neuralTimes: [], neuralIdx: 0, neuralP: 0, lon: -35, lat: 25,
-    outFeedId: null, outCityId: null, globeLeg: false, entryTileId: null, legRev: false, routeKey: 0,
+    outFeedId: null, outCityId: null, globeLeg: false, entryTileId: null, legRev: false, routeKey: 0, cityId: null,
   };
   private entryAnchor: { id: string; x: number } | null = null;
+  /** True when an active city was given: tiles are per-city and a city feed always has a real tile (no virtual stand-in). */
+  private ctx = false;
+
+  /** Commit the active city (and the per-city feed deck that goes with it). */
+  private setCity(id: string | null) {
+    if (this.s.cityId === id) { this.deck?.useCity?.(id); return; }
+    this.s.cityId = id; this.deck?.useCity?.(id);
+  }
 
   constructor(o: JourneyOptions) {
     this.worldWidth = o.worldWidth;
@@ -289,10 +309,13 @@ export class JourneyController {
     this.planner = o.planner;
     // City-owned clips (R49 C) have no tile in the core-only mosaic: they land on a stable VIRTUAL tile (`virtual:<feedId>`),
     // which resolves back to its feed here, so selection, history and re-entry never depend on the mosaic layout.
+    this.ctx = o.initialCity != null;
+    // City-less fixtures only (legacy): a city-owned clip with no tile lands on a virtual tile. With an active city every
+    // feed of the city has a REAL tile of the city's own stable mosaic, so there is never a stand-in.
     this.anchorFeed = o.anchorFeed
-      ? (feedId, worldX) => o.anchorFeed!(feedId, worldX) ?? (isCityFeed(feedId) ? { id: virtualTileId(feedId), x: worldX } : null)
+      ? (feedId, worldX, cityId) => o.anchorFeed!(feedId, worldX, cityId) ?? (!this.ctx && isCityFeed(feedId) ? { id: virtualTileId(feedId), x: worldX } : null)
       : undefined;
-    this.feedOfTile = o.feedOfTile ? (id) => feedOfVirtualTile(id) ?? o.feedOfTile!(id) : undefined;
+    this.feedOfTile = o.feedOfTile ? (id, cityId) => (this.ctx ? null : feedOfVirtualTile(id)) ?? o.feedOfTile!(id, cityId) : undefined;
     this.cityStatus = o.cityStatus;
     this.yearOfTile = o.yearOfTile;
     this.floatPlan = o.floatPlan;
@@ -301,13 +324,17 @@ export class JourneyController {
     const gaps = o.globeGaps && o.globeGaps.length ? o.globeGaps : DEFAULT_GLOBE_GAPS;
     this.source = o.branchSource ?? new CycleSource(o.branches && o.branches.length ? o.branches : gaps.map((after) => ({ kind: 'globe' as const, after })));
     if (o.initialAim) { this.s.lon = o.initialAim.lon; this.s.lat = o.initialAim.lat; }
-    this.hist.push({ kind: 'mosaic', x: this.s.worldX, holds: 0 });
+    this.setCity(o.initialCity ?? null);
+    this.hist.push({ kind: 'mosaic', x: this.s.worldX, holds: 0, cityId: this.s.cityId });
   }
 
   /** Read-only history view for review / tests: visited holds in order and the cursor. */
   get history(): { kinds: readonly string[]; cursor: number } { return { kinds: this.hist.map((h) => h.kind), cursor: this.cursor }; }
 
   get state(): Readonly<JourneyState> { return this.s; }
+
+  /** Review handle: the persistent active city (semantic context of every mode), null only for city-less fixtures. */
+  get activeCity(): string | null { return this.s.cityId; }
 
   subscribe(l: JourneyListener) { this.listeners.add(l); return () => { this.listeners.delete(l); }; }
 
@@ -384,25 +411,25 @@ export class JourneyController {
 
   /** Frozen semantic snapshot of the hold the controller is at right now (null when not at a hold). */
   private snap(): HoldEntry | null {
-    const s = this.s; const holds = this.holds;
+    const s = this.s; const holds = this.holds; const cityId = s.cityId;
     switch (s.stage) {
-      case 'mosaic': return Object.freeze({ kind: 'mosaic', x: s.worldX, holds });
+      case 'mosaic': return Object.freeze({ kind: 'mosaic', x: s.worldX, holds, cityId });
       case 'selected': {
         if (!s.selectedId) return null;
         return Object.freeze({
-          kind: 'selected', id: s.selectedId, feedId: this.feedOfTile?.(s.selectedId) ?? null, x: s.worldX,
-          ww: this.worldWidth, vw: this.viewportWidth, city: s.sceneCityId, year: this.semYear, holds,
+          kind: 'selected', id: s.selectedId, feedId: this.feedOfTile?.(s.selectedId, cityId) ?? null, x: s.worldX,
+          ww: this.worldWidth, vw: this.viewportWidth, city: s.sceneCityId, year: this.semYear, holds, cityId,
         });
       }
       case 'floating':
-        return Object.freeze({ kind: 'floating', feeds: Object.freeze([...s.floatFeeds]), framing: Object.freeze([...s.floatFraming]), slots: Object.freeze([...s.floatSlots]), idx: s.floatIdx, holds });
+        return Object.freeze({ kind: 'floating', feeds: Object.freeze([...s.floatFeeds]), framing: Object.freeze([...s.floatFraming]), slots: Object.freeze([...s.floatSlots]), idx: s.floatIdx, holds, cityId });
       case 'neural':
         return Object.freeze({
           kind: 'neural', feeds: Object.freeze([...s.neuralFeeds]), anchors: Object.freeze([...s.neuralAnchors]),
-          times: Object.freeze([...s.neuralTimes]), idx: s.neuralIdx, holds,
+          times: Object.freeze([...s.neuralTimes]), idx: s.neuralIdx, holds, cityId,
         });
       case 'globe':
-        return Object.freeze({ kind: 'globe', lon: s.lon, lat: s.lat, outFeedId: s.outFeedId, outCityId: s.outCityId, routeKey: s.routeKey, holds });
+        return Object.freeze({ kind: 'globe', lon: s.lon, lat: s.lat, outFeedId: s.outFeedId, outCityId: s.outCityId, routeKey: s.routeKey, holds, cityId });
       default: return null;
     }
   }
@@ -415,10 +442,10 @@ export class JourneyController {
 
   /** The tile + scroll a recorded camera hold maps to in the CURRENT layout (exact when the layout is unchanged). */
   private resolve(e: SelectedHold): { id: string; x: number } | null {
-    const feedNow = this.feedOfTile?.(e.id) ?? null;
+    const feedNow = this.feedOfTile?.(e.id, e.cityId) ?? null;
     if (e.ww === this.worldWidth && e.vw === this.viewportWidth && feedNow === e.feedId) return { id: e.id, x: this.clampX(e.x) };
     if (e.feedId && this.anchorFeed) {
-      const a = this.anchorFeed(e.feedId, e.x * (this.worldWidth / Math.max(1, e.ww)));
+      const a = this.anchorFeed(e.feedId, e.x * (this.worldWidth / Math.max(1, e.ww)), e.cityId);
       if (a) return { id: a.id, x: this.clampX(a.x) };
     }
     return feedNow !== null || !this.feedOfTile ? { id: e.id, x: this.clampX(e.x) } : null;
@@ -447,6 +474,7 @@ export class JourneyController {
   private restore(i: number) {
     const s = this.s; const e = this.hist[i];
     this.holds = e.holds; this.dir = 0;
+    if (e.cityId !== undefined) this.setCity(e.cityId); // the exact recorded city; its sources and tiles follow (no reroll)
     switch (e.kind) {
       case 'mosaic':
         s.worldX = s.targetX = this.clampX(e.x); s.selectedId = null; s.progress = 0; s.eased = 0; s.pendingId = null;
@@ -489,7 +517,7 @@ export class JourneyController {
     if (this.pending || this.rp || !isHoldStage(s.stage)) return false;
     const cur = this.hist[this.cursor];
     if (this.cursor <= 0 || !cur || holdKind(s.stage) !== cur.kind) return false;
-    if (s.stage === 'mosaic') this.hist[this.cursor] = Object.freeze({ kind: 'mosaic', x: s.worldX, holds: this.holds });
+    if (s.stage === 'mosaic') this.hist[this.cursor] = Object.freeze({ kind: 'mosaic', x: s.worldX, holds: this.holds, cityId: s.cityId });
     const to = this.cursor - 1;
     const prev = this.hist[to];
     switch (cur.kind) {
@@ -511,7 +539,7 @@ export class JourneyController {
           if (city && tileId) {
             // The entry's OWN path run backwards from fullscreen (travelP 1 -> 0): independent cameras, local geography, regions,
             // continent, globe. No tile contraction, no planner / deck consumption; the recorded aim is restored on landing.
-            const feed = this.feedOfTile?.(tileId) ?? cur.feedId;
+            const feed = this.feedOfTile?.(tileId, cur.cityId) ?? cur.feedId;
             this.beginReplay(to, -1, { aim: { lon: prev.lon, lat: prev.lat } });
             this.legKind = 'camera'; this.legTarget = null; this.dir = 0; this.rot = null; this.gdir = 0; this.tdir = -1;
             this.fromFeedId = feed; this.entryAnchor = null;
@@ -595,7 +623,7 @@ export class JourneyController {
     const s = this.s;
     const cur = this.hist[this.cursor]; const next = this.hist[this.cursor + 1];
     const to = this.cursor + 1;
-    if (s.stage === 'mosaic') this.hist[this.cursor] = Object.freeze({ kind: 'mosaic', x: s.worldX, holds: this.holds });
+    if (s.stage === 'mosaic') this.hist[this.cursor] = Object.freeze({ kind: 'mosaic', x: s.worldX, holds: this.holds, cityId: s.cityId });
     if (next.kind === 'selected' && (cur.kind === 'mosaic' || cur.kind === 'selected')) {
       const t = this.resolve(next); if (!t) return false;
       this.beginReplay(to, 1);
@@ -681,7 +709,7 @@ export class JourneyController {
     if (this.pending || this.rp) return false; // one manual intent is already waiting for its mode: further input is discarded
     const cur = this.hist[this.cursor];
     if (this.cursor < this.hist.length - 1 && cur && holdKind(s.stage) === cur.kind) return this.replayForward(); // redo: recorded leg, no planner
-    if (s.stage === 'mosaic') this.hist[this.cursor] = Object.freeze({ kind: 'mosaic', x: s.worldX, holds: this.holds }); // where a back leg returns to
+    if (s.stage === 'mosaic') this.hist[this.cursor] = Object.freeze({ kind: 'mosaic', x: s.worldX, holds: this.holds, cityId: s.cityId }); // where a back leg returns to
     if (s.stage === 'globe') {
       const r = this.beginCityLeg();
       if (r === 'wait') { this.pending = true; return true; } // keep this ONE intent; the city leg runs when its own clip is ready
@@ -876,7 +904,7 @@ export class JourneyController {
     const s = this.s;
     const feed = s.floatFeeds[s.floatFeeds.length - 1];
     const rec = this.rp ? this.hist[this.rp.to] : null; // a redone leg lands on the RECORDED camera, not a fresh anchor
-    const a = rec?.kind === 'selected' ? this.resolve(rec) : feed ? this.anchorFeed?.(feed, s.worldX) ?? null : null;
+    const a = rec?.kind === 'selected' ? this.resolve(rec) : feed ? this.anchorFeed?.(feed, s.worldX, s.cityId) ?? null : null;
     if (!a) { s.stage = 'floating'; this.rp = null; s.legRev = false; this.emit(null); return; } // nothing to land on: stay in the field
     s.selectedId = a.id; s.focusedId = a.id; s.pendingId = null;
     s.worldX = s.targetX = this.clampX(a.x);
@@ -906,7 +934,10 @@ export class JourneyController {
   private beginOutgoing(feedId: string | null) {
     const s = this.s;
     s.globeP = 0; s.globeEased = 0; s.travelP = 0; s.travelEased = 0; s.destId = null;
-    const c = (this.outCityOverride ? this.cities.find((x) => x.id === this.outCityOverride) : undefined) ?? anchorCityFor(feedId, this.cities);
+    // The globe anchors the ACTIVE city (the actual overview of where the journey is), whatever feed is leaving. Only a
+    // city-less fixture falls back to the departing feed's demo anchor city.
+    const active = s.cityId ? this.cities.find((x) => x.id === s.cityId) : undefined;
+    const c = (this.outCityOverride ? this.cities.find((x) => x.id === this.outCityOverride) : undefined) ?? active ?? anchorCityFor(feedId, this.cities);
     s.outFeedId = feedId; s.outCityId = c ? c.id : null;
     // This visit's route bundles: a fresh visit takes the next key; a replayed one (history back / redo) reuses the RECORDED
     // key (and, for the reversed city entry, the recorded anchor), so nothing is rerolled and no counter advances.
@@ -928,9 +959,10 @@ export class JourneyController {
     const feedOk = (c: GlobeCity) => { const f = this.entryFeed(c); return !f || f !== this.fromFeedId; };
     // Novelty: the city's feed (verified places: one of their own feeds) is still unseen in the shared deck's cycle. A city
     // is never given a different, merely-fresh feed to look new.
-    const pool = this.deck ? new Set(this.deck.eligible([this.fromFeedId])) : null;
+    const pool = this.deck && !this.deck.hasUnseen ? new Set(this.deck.eligible([this.fromFeedId])) : null;
     // A city-owned clip is outside the (core-only) deck and unique to its city: it is novel whenever its city is `fresh`.
     const novel = (c: GlobeCity) => {
+      if (this.deck?.hasUnseen) return this.deck.hasUnseen(c.id); // per-city decks: the city still has a source new to its own cycle
       if (!pool) return true;
       const f = this.entryFeed(c);
       return !!f && (pool.has(f) || !(this.deck?.ids?.includes(f) ?? true));
@@ -946,7 +978,9 @@ export class JourneyController {
       () => true,
     ];
     const rnd = mulberry32((Math.imul(this.seed | 0, 0x9e3779b1) + this.globeVisits * 7919 + 17) | 0); // reproducible per seed; fresh picks only
-    const avail = this.cities.filter((c) => { const f = this.entryFeed(c); return !f || !this.failedFeeds.has(f); }); // never a city whose own clip failed
+    let avail = this.cities.filter((c) => { const f = this.entryFeed(c); return !f || !this.failedFeeds.has(f); }); // never a city whose own clip failed
+    // Entering "another city" means a different one than the active city (the context only changes by actually entering).
+    if (s.cityId) { const others = avail.filter((c) => c.id !== s.cityId); if (others.length) avail = others; }
     for (const test of ok) {
       const cands = avail.filter(test);
       if (cands.length) return cands[Math.floor(rnd() * cands.length)];
@@ -962,7 +996,8 @@ export class JourneyController {
     const own = city.feedIds && city.feedIds.length ? city.feedIds : city.feedId ? [city.feedId] : [];
     if (!own.length) return null;
     if (own.length > 1 && this.deck) {
-      const order = this.deck.eligible([this.fromFeedId]);
+      // The entered city's OWN deck (its novelty / history), never the departing city's.
+      const order = this.deck.eligibleFor ? this.deck.eligibleFor(city.id, []) : this.deck.eligible([this.fromFeedId]);
       const hit = order.find((f) => own.includes(f));
       if (hit) return hit;
       const alt = own.filter((f) => f !== this.fromFeedId);
@@ -979,7 +1014,7 @@ export class JourneyController {
     // when that clip failed for good, the city is skipped. Never another video under this city's name.
     for (let guard = 0; city && this.cityStatus && guard < this.cities.length; guard++) {
       const f = this.entryFeed(city);
-      const st = f && isCityFeed(f) ? this.cityStatus(f) : 'ready';
+      const st = f && (this.ctx || isCityFeed(f)) ? this.cityStatus(f) : 'ready';
       if (st === 'ready') break;
       if (st === 'wait') return 'wait';
       this.failedFeeds.add(f!);
@@ -992,7 +1027,7 @@ export class JourneyController {
     // The camera that will open is fixed now, so the whole entry zooms toward ITS place in the regional field.
     const feed = this.entryFeed(city);
     s.entryFeedId = feed;
-    const a = feed ? this.anchorFeed?.(feed, s.worldX) ?? null : null;
+    const a = feed ? this.anchorFeed?.(feed, s.worldX, city.id) ?? null : null; // a tile of the DESTINATION city's own mosaic
     this.rotateToCity(city, a);
     return 'ok';
   }
@@ -1003,7 +1038,7 @@ export class JourneyController {
     this.peeked = this.globeVisits;
     const city = this.pickCity();
     const f = city ? this.entryFeed(city) : null;
-    if (f && isCityFeed(f)) this.cityStatus(f);
+    if (f && (this.ctx || isCityFeed(f))) this.cityStatus(f);
   }
 
   /** Rotate the globe to `city` and enter it, landing on `a` (chosen fresh, or the recorded tile of a redone entry). */
@@ -1028,7 +1063,7 @@ export class JourneyController {
     const s = this.s;
     const city = this.cities.find((c) => c.id === s.destId);
     const feed = s.entryFeedId ?? city?.feedId;
-    const a = this.entryAnchor ?? (feed ? this.anchorFeed?.(feed, s.worldX) ?? null : null);
+    const a = this.entryAnchor ?? (feed ? this.anchorFeed?.(feed, s.worldX, city?.id ?? s.cityId) ?? null : null);
     this.tdir = 0; this.entryAnchor = null; s.entryTileId = null; s.entryFeedId = null;
     if (!a) { // nothing to land on: stay at the globe rather than show an empty pane
       s.travelP = 0; s.travelEased = 0; s.destId = null; s.stage = 'globe'; this.rp = null; s.legRev = false;
@@ -1038,6 +1073,7 @@ export class JourneyController {
     s.worldX = s.targetX = this.clampX(a.x);
     s.progress = 1; s.eased = 1; this.dir = 0;
     s.sceneCityId = city ? city.id : null; s.destId = null;
+    if (city && this.ctx) this.setCity(city.id); // the globe actually ENTERED this city: the context is committed at arrival
     s.globeP = 0; s.globeEased = 0; s.travelP = 0; s.travelEased = 0;
     this.holds = 1;
     s.stage = 'selected';

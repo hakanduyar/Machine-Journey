@@ -1,0 +1,9 @@
+City: new-york
+Source: https://mixkit.co/free-stock-video/times-square-during-a-sunny-day-4442/
+Credit: Mixkit
+License: Mixkit Stock Video Free License
+License URL: https://mixkit.co/license/modal/videoFree/
+Original SHA256: d37d71e59bd91a0e526f4599f1a80b070de4893fd889fe44b2847a012c8c72b3
+Archive: ARCHIVE / LOCAL CAMERA; not live surveillance.
+Location: Primary item title/description names city; sampled decoded frames show no obvious contradiction, not independent exact geolocation.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

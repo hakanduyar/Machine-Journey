@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { JourneyController, isHoldStage, yearAxis } from '../../src/journey/controller';
 import { ALL_FEEDS, FEEDS } from '../../src/journey/feeds';
+import { EXTRA_SOURCES } from '../../src/journey/cityFeeds';
 import { ARCS, CITIES, HUBS, cityById, routeArcs, routeSig } from '../../src/journey/globe';
 import { planLeg, reanchorTile } from '../../src/journey/route';
 import { generateMosaic } from '../../src/journey/layout';
@@ -19,8 +20,8 @@ describe('catalog: authored demo cities plus verified source places on the twelv
       expect(feeds.has(c.feedId)).toBe(true);
       for (const f of c.feedIds ?? [c.feedId]) { expect(feeds.has(f)).toBe(true); reach.add(f); }
     }
-    // every city opens its own source: 21 unique city clips + the verified places' core feeds (m01 m02 m06 parking-walk parked-c130 palmdale-dc8)
-    expect(reach.size).toBe(21 + 6);
+    // every city opens its own source: 21 unique base city clips + the approved additional clips + the verified places' core feeds (m01 m02 m06 parking-walk parked-c130 palmdale-dc8)
+    expect(reach.size).toBe(21 + EXTRA_SOURCES.length + 6);
     const demo = CITIES.filter((c) => !c.verified);
     expect(demo.length).toBe(21);
     for (let i = 0; i < demo.length; i++) for (let j = i + 1; j < demo.length; j++) {

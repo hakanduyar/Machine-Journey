@@ -33,7 +33,9 @@ Wheel down/right, ArrowRight, Enter, Space, or swipe up/left moves forward. Whee
 
 The globe has 24 destinations. Twenty-one use separate city-labelled stock clips; Savannah, Butlerville and Palmdale use officially documented source recordings. Stock locations follow contributor/platform metadata and visual review, rather than independently verified camera coordinates. Globe points are city/locality overview positions, never camera GPS.
 
-City videos load on demand. The core mosaic and spatial scenes retain their shared video panes and feed identity during travel. Some archive views are timelapses or stationary pans, identified in their credits.
+City videos load on demand. The active city now stays consistent across the mosaic, floating field and neural scene, including background cameras; Back and Redo restore the recorded city and feed choices. Animated companion panels show fictional dossiers, documents and audio-style graphics without claiming real analysis of the footage.
+
+Twenty-four additional licensed recordings expand the city pools. Reykjavík, Cairo, Johannesburg and Lagos still have one accepted recording each; additional clips for those four cities remain a follow-up. Some archive views are timelapses or stationary pans, identified in their credits.
 
 ## Limits
 
@@ -45,3 +47,4 @@ Original application code, tests and authored scene assets are MIT-licensed; see
 
 See [asset provenance](public/assets/machine/ASSETS.md) and [release provenance](docs/RELEASE_PROVENANCE.md). The application is not affiliated with any production, dataset provider or footage contributor.
 
+`npm run build:pages` prepares a static build for the repository subpath. See [manual demo release](docs/DEMO_RELEASE.md) for deployment setup and verification.

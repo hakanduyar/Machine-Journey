@@ -1,0 +1,9 @@
+City: tokyo
+Source: https://mixkit.co/free-stock-video/quiet-tokyo-street-at-night-4451/
+Credit: Mixkit
+License: Mixkit Stock Video Free License
+License URL: https://mixkit.co/license/modal/videoFree/
+Original SHA256: 3aaae09942eb1108090825c3649f06ae18e46cdcaea45be194a29289910c95f2
+Archive: ARCHIVE / LOCAL CAMERA; not live surveillance.
+Location: Primary item title/description names city; sampled decoded frames show no obvious contradiction, not independent exact geolocation.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.
