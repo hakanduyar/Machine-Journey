@@ -1,0 +1,10 @@
+City: Mexico City
+Source: https://mixkit.co/free-stock-video/the-top-of-a-mexico-city-building-4292/
+Credit: Mixkit
+License: Mixkit Stock Video Free License
+License URL: https://mixkit.co/license/modal/videoFree/
+Original SHA256: 4f9825ced01334095e9ecedd491b1766a81f23414d50d57454ed5c85c096037f
+Archive label: ARCHIVE / ROOFTOP PAN
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

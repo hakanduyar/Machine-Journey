@@ -1,0 +1,10 @@
+City: Nairobi
+Source: https://www.pexels.com/video/nairobi-town-27918500/
+Credit: An Koishi
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: 7c5849b713046b20182ad2385dbee0f8d215c5da769abfd461874a833443e09b
+Archive label: ARCHIVE / STREET VIEW
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

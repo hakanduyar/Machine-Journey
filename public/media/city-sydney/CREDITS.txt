@@ -1,0 +1,10 @@
+City: Sydney
+Source: https://www.pexels.com/video/sydney-harbour-at-night-slow-mo-18092659/
+Credit: Catherine Grenfell
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: 77B08736D0BAB718CBB07E7ACDA96A1BE7D6BD8D4442F1946AC64A58338B7CBC
+Archive label: ARCHIVE CAMERA
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

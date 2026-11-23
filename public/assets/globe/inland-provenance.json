@@ -1,0 +1,36 @@
+{
+  "source": "Natural Earth",
+  "license": "Public domain",
+  "termsUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "downloadedAt": "2026-11-22T21:05:30.880Z",
+  "coordinates": "WGS84 lon/lat degrees rounded to 0.001 degree",
+  "pointColumns": [
+    "longitude",
+    "latitude",
+    "scalerank",
+    "pop_max"
+  ],
+  "notes": "Places are static reference locations and population estimates, not live lights or surveillance data. Border parts are unclosed polylines. Political boundaries reflect source conventions, not an endorsement.",
+  "files": [
+    {
+      "name": "ne_50m_populated_places_simple",
+      "count": 1251,
+      "vertices": 1251,
+      "jsonBytes": 31033,
+      "gzipBytes": 13061,
+      "source": "https://naciscdn.org/naturalearth/50m/cultural/ne_50m_populated_places_simple.zip",
+      "zipBytes": 133631,
+      "sha256": "a6ebb4be4672de4cd2b94b04cdc9a1bd5a5cb684d28c0e75f535152e5f07a296"
+    },
+    {
+      "name": "ne_110m_admin_0_boundary_lines_land",
+      "count": 333,
+      "vertices": 3108,
+      "jsonBytes": 50019,
+      "gzipBytes": 18707,
+      "source": "https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_boundary_lines_land.zip",
+      "zipBytes": 57325,
+      "sha256": "bb2954981570498a4b4344f8e83fa54caa5858e15e800094112407d2bd2f940d"
+    }
+  ]
+}

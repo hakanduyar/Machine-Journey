@@ -1,0 +1,10 @@
+City: Los Angeles
+Source: https://mixkit.co/free-stock-video/the-streets-of-los-angeles-4243/
+Credit: Mixkit
+License: Mixkit Stock Video Free License
+License URL: https://mixkit.co/license/modal/videoFree/
+Original SHA256: c9f68cffa4786632047178b4aa0229d8648f1db5de2f7b6585d346c98d0da225
+Archive label: ARCHIVE / TIMELAPSE
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

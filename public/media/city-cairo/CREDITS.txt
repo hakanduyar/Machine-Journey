@@ -1,0 +1,10 @@
+City: Cairo
+Source: https://www.pexels.com/video/panoramic-view-of-cairo-skyline-34610802/
+Credit: Mad Knoxx Deluxe
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: 458cee9038491cc3debe1b261b17b1b82309c547ca11d4aa9772f75bf3fba1c0
+Archive label: ARCHIVE / CITY PAN
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

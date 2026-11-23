@@ -1,0 +1,10 @@
+City: Moscow
+Source: https://www.pexels.com/video/traffic-on-road-in-moscow-11933740/
+Credit: Evgenij Mikhailov
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: fa965c094eb82b6ff193fe09ef035fe2c4ac1f412f51ee9544909290e60f4dc0
+Archive label: ARCHIVE / STREET VIEW
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

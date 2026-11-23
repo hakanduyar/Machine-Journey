@@ -1,0 +1,10 @@
+City: Mumbai
+Source: https://www.pexels.com/video/busy-urban-traffic-in-mumbai-cityscape-30350772/
+Credit: aksinfo7 universe
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: DF537A941C4B9C603B9E289A0CDADD7E83B9E7F3B2C67078F84AFB6E62CF5470
+Archive label: ARCHIVE CAMERA
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

@@ -1,0 +1,25 @@
+{
+  "source": "Natural Earth",
+  "license": "Public domain",
+  "termsUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "downloadedAt": "2026-11-22T23:51:02.2426734+03:00",
+  "attribution": "Made with Natural Earth.",
+  "crs": "WGS84 longitude, latitude degrees",
+  "derivation": "extract-parts.cjs reads shapefile polylines/polygon rings, retains source part boundaries, rounds coordinates to 0.001 degree. No simplification. Polygon holes are not classified: use evenodd fill or source winding. Coastline parts are polylines, not necessarily closed polygons.",
+  "files": [
+    {
+      "name": "ne_110m_land",
+      "url": "https://naciscdn.org/naturalearth/110m/physical/ne_110m_land.zip",
+      "zipBytes": 69700,
+      "sha256": "1926C621AFD6AC67C3F36639BB1236134A48D82226DC675D3E3DF53D02D2A3DE",
+      "downloadPage": "https://www.naturalearthdata.com/downloads/110m-physical-vectors/"
+    },
+    {
+      "name": "ne_50m_coastline",
+      "url": "https://naciscdn.org/naturalearth/50m/physical/ne_50m_coastline.zip",
+      "zipBytes": 455936,
+      "sha256": "640F805509B822F57F4840A2E18D9FF2412CF1CF6976124701C2789436166FDE",
+      "downloadPage": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/"
+    }
+  ]
+}
