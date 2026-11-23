@@ -1,0 +1,10 @@
+City: Reykjavik
+Source: https://www.pexels.com/video/reykjavik-street-scene-in-dusk-light-30447395/
+Credit: Sammy Marrco
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: acb9dd247e762397d81be112dfda819f4b09d84b1130a477f58c980963cbec93
+Archive label: ARCHIVE / STREET VIEW
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

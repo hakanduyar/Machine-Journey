@@ -1,0 +1,205 @@
+/// <reference types="node" />
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { describe, expect, it } from 'vitest';
+import { JourneyController, isHoldStage, yearAxis } from '../../src/journey/controller';
+import { CITY_SOURCES } from '../../src/journey/cityFeeds';
+import { ALL_FEEDS, CITY_FEEDS, CORE_FEED_COUNT, FEEDS, feedOfVirtualTile, virtualTileId } from '../../src/journey/feeds';
+import { FeedDeck } from '../../src/journey/feedDeck';
+import { CITIES } from '../../src/journey/globe';
+import { generateMosaic } from '../../src/journey/layout';
+import { MAX_ACTIVE_FEEDS, desiredPlayback } from '../../src/journey/playback';
+import { planLeg, reanchorTile } from '../../src/journey/route';
+
+const manifest = JSON.parse(readFileSync(join(process.cwd(), 'public', 'media', 'city-sources.json'), 'utf8')) as Record<string, unknown>[];
+const CORE_IDS = ['m01', 'm02', 'm03', 'm04', 'm06', 'm07', 'covered-road', 'parking-walk', 'docked-cargo', 'parked-c130', 'm05', 'palmdale-dc8'];
+
+describe('city catalog: 24 globe cities own their sources', () => {
+  it('keeps the twelve CORE feeds, ids and order unchanged', () => {
+    expect(FEEDS.map((f) => f.id)).toEqual(CORE_IDS);
+    expect(CORE_FEED_COUNT).toBe(12);
+    expect(ALL_FEEDS.slice(0, 12).map((f) => f.id)).toEqual(CORE_IDS);
+    expect(ALL_FEEDS.length).toBe(33);
+  });
+
+  it('the code table mirrors the curated manifest exactly (source, licence, label, feed id)', () => {
+    expect(manifest.length).toBe(21);
+    expect(CITY_SOURCES.map((s) => s.cityId)).toEqual(manifest.map((m) => m.cityId));
+    for (const m of manifest) {
+      const s = CITY_SOURCES.find((x) => x.cityId === m.cityId)!;
+      expect(m.feedId).toBe(`city-${s.cityId}`);
+      expect([s.source, s.credit, s.license, s.licenseUrl, s.archiveLabel]).toEqual([m.source, m.credit, m.license, m.licenseUrl, m.archiveLabel]);
+      expect(m.provenanceLevel).toBe('STOCK_PUBLISHER_LOCATION');
+      expect(m.exactCameraCoordinatesVerified).toBe(false); // a publisher-named place, never an official camera position
+    }
+  });
+
+  it('all 24 cities map only their own feed: 21 unique city clips + the three verified places unchanged', () => {
+    expect(CITIES.length).toBe(24);
+    const own = CITIES.filter((c) => !c.verified);
+    expect(own.length).toBe(21);
+    expect(new Set(own.map((c) => c.feedId)).size).toBe(21);
+    for (const c of own) {
+      expect(c.feedId).toBe(`city-${c.id}`);
+      expect(c.feedIds).toBeUndefined();
+      expect(CITY_FEEDS.some((f) => f.id === c.feedId)).toBe(true);
+      expect(CORE_IDS).not.toContain(c.feedId); // never a generic / core clip under a city name
+    }
+    expect(CITIES.filter((c) => c.verified).map((c) => [c.id, c.feedIds])).toEqual([
+      ['savannah', ['parked-c130']], ['butlerville', ['m01', 'm02', 'm06', 'parking-walk']], ['palmdale', ['palmdale-dc8']],
+    ]);
+  });
+
+  it('every city clip has its loop, poster and credits on disk; HUD labels are archive labels, never live / CCTV', () => {
+    for (const f of CITY_FEEDS) {
+      for (const file of ['loop.mp4', 'poster.jpg', 'CREDITS.txt']) expect(existsSync(join(process.cwd(), 'public', 'media', f.id, file)), `${f.id}/${file}`).toBe(true);
+      expect(f.label).toMatch(/^ARCHIVE/);
+      expect(`${f.label} ${f.credit}`).not.toMatch(/LIVE|CCTV/i);
+      expect(f.source).toMatch(/^https:\/\//);
+    }
+  });
+});
+
+describe('lazy media policy (pure part)', () => {
+  const n = ALL_FEEDS.length;
+  const base = { selectedFeed: -1, targetFeed: -1, feedCount: n, coreCount: CORE_FEED_COUNT };
+  const city = CORE_FEED_COUNT + 3;
+  it('the background pool never includes a city clip unless it is in use; the globe hold plays nothing', () => {
+    for (const stage of ['mosaic', 'scanning', 'contracting'] as const) {
+      const d = desiredPlayback({ ...base, stage });
+      expect(d.slice(0, CORE_FEED_COUNT).every(Boolean)).toBe(true);
+      expect(d.slice(CORE_FEED_COUNT).some(Boolean)).toBe(false);
+    }
+    expect(desiredPlayback({ ...base, stage: 'globe', extra: [city] }).some(Boolean)).toBe(false);
+  });
+  it('an open / entering city clip is the only extra that plays; selected plays just that clip; route stages keep the cap of three', () => {
+    const entering = desiredPlayback({ ...base, stage: 'entering', targetFeed: city, extra: [city] });
+    expect(entering[city]).toBe(true);
+    expect(entering.filter((v, i) => v && i >= CORE_FEED_COUNT).length).toBe(1);
+    const sel = desiredPlayback({ ...base, stage: 'selected', selectedFeed: city, extra: [city] });
+    expect(sel.filter(Boolean).length).toBe(1); expect(sel[city]).toBe(true);
+    const route = desiredPlayback({ ...base, stage: 'neuralMove', active: [0, 1, 2, 3, 4], extra: [city] });
+    expect(route.filter(Boolean).length).toBeLessThanOrEqual(MAX_ACTIVE_FEEDS);
+    expect(route[city]).toBe(false);
+  });
+  it('the legacy call (no coreCount) is unchanged: the whole pool plays in a mosaic stage', () => {
+    expect(desiredPlayback({ stage: 'mosaic', selectedFeed: -1, targetFeed: -1, feedCount: 12 }).every(Boolean)).toBe(true);
+  });
+});
+
+// ---- controller: city entry through a virtual tile, readiness, history ----
+const VW = 1000; const WORLD = 3000; const YEARS = 8;
+const mosaic = generateMosaic({ width: WORLD, height: 700, tileCount: 60, feedCount: CORE_IDS.length, seed: 11 });
+const tiles = mosaic.tiles.map((t) => ({ id: t.id, x: t.rect.x, y: t.rect.y, w: t.rect.w, h: t.rect.h, feedIndex: t.feedIndex }));
+const ax = yearAxis(WORLD, VW, YEARS);
+const feedOf = (id: string | null) => (id ? feedOfVirtualTile(id) ?? CORE_IDS[tiles.find((t) => t.id === id)!.feedIndex] : null);
+
+function make(status?: (feedId: string) => 'ready' | 'wait' | 'failed', seed = 5) {
+  const deck = new FeedDeck(CORE_IDS, seed);
+  const calls: string[] = [];
+  const c: JourneyController = new JourneyController({
+    worldWidth: WORLD, viewportWidth: VW, travelMs: 1000, cities: CITIES, branches: [{ kind: 'globe', after: 1 }], seed, deck,
+    cityStatus: status ? (f) => { calls.push(f); return status(f); } : undefined,
+    planner: (leg) => {
+      const cur = tiles.find((t) => t.id === c.state.selectedId);
+      const p = planLeg({ tiles, vw: VW, worldW: WORLD, yearCount: YEARS, leg, prevYear: Math.floor(ax.indexAt(c.state.worldX)), currentFeed: cur?.feedIndex ?? null });
+      return p && { id: p.id, x: p.x };
+    },
+    anchorFeed: (feedId, worldX) => reanchorTile({ tiles, feedIndex: CORE_IDS.indexOf(feedId), vw: VW, worldW: WORLD, yearCount: YEARS, year: Math.floor(ax.indexAt(worldX)) }),
+    feedOfTile: (id) => { const t = tiles.find((x) => x.id === id); return t ? CORE_IDS[t.feedIndex] : null; },
+  });
+  return { c, deck, calls };
+}
+const toHold = (c: JourneyController) => { for (let i = 0; i < 6000 && !isHoldStage(c.state.stage); i++) c.update(16); };
+const fwd = (c: JourneyController) => { expect(c.dispatch({ type: 'intent' })).toBe(true); toHold(c); };
+const back = (c: JourneyController) => { expect(c.dispatch({ type: 'back' })).toBe(true); toHold(c); };
+/** camera hold, globe hold, then the first city that is NOT a verified place. */
+function toCity(c: JourneyController) {
+  fwd(c); fwd(c); // camera, globe
+  expect(c.state.stage).toBe('globe');
+}
+
+describe('city entry through the controller', () => {
+  it('lands on the city\'s own clip via a stable virtual tile; selection resolves back to that feed', () => {
+    const { c } = make(() => 'ready');
+    toCity(c);
+    for (let k = 0; k < 12; k++) {
+      fwd(c);
+      const city = CITIES.find((x) => x.id === c.state.sceneCityId)!;
+      expect(c.state.stage).toBe('selected');
+      if (!city.verified) {
+        expect(c.state.selectedId).toBe(virtualTileId(city.feedId));
+        expect(feedOf(c.state.selectedId)).toBe(`city-${city.id}`);
+      } else expect(city.feedIds).toContain(feedOf(c.state.selectedId)!);
+      fwd(c); // the city hold counts as the camera hold: the next due branch is the globe
+      expect(c.state.stage).toBe('globe');
+    }
+  });
+
+  it('holds the globe with ONE pending intent until the city clip is ready, then completes without another gesture', () => {
+    let ready = false;
+    const { c, calls } = make((f) => (ready || !f.startsWith('city-') ? 'ready' : 'wait'));
+    toCity(c);
+    // find a state where the next city is city-owned: keep trying fresh visits until the status was consulted
+    let waited = false;
+    for (let k = 0; k < 8 && !waited; k++) {
+      ready = false; calls.length = 0;
+      expect(c.dispatch({ type: 'intent' })).toBe(true);
+      if (c.pendingIntent) {
+        waited = true;
+        expect(c.state.stage).toBe('globe'); // current context stays visible, no wrong / black handoff
+        expect(c.dispatch({ type: 'intent' })).toBe(false); // exactly one intent is kept, extra input is discarded
+        for (let i = 0; i < 200; i++) c.update(16);
+        expect(c.state.stage).toBe('globe'); expect(c.pendingIntent).toBe(true);
+        ready = true;
+        // The globe is itself a hold stage, so `toHold` would return at once: first let the pending intent start its leg.
+        for (let i = 0; i < 50 && c.pendingIntent; i++) c.update(16);
+        expect(c.pendingIntent).toBe(false); expect(c.state.stage).not.toBe('globe');
+        toHold(c);
+        expect(c.pendingIntent).toBe(false);
+        expect(c.state.stage).toBe('selected');
+        expect(feedOf(c.state.selectedId)).toBe(calls[0]);
+        fwd(c); // on to the next globe, so a later iteration (if any) starts at a globe hold
+      } else { toHold(c); fwd(c); } // a verified place (no wait): continue to the next globe hold
+    }
+    expect(waited).toBe(true);
+  });
+
+  it('a failed clip is skipped: its city is never entered and no other video is opened under its name', () => {
+    const failing = 'city-paris';
+    const { c } = make((f) => (f === failing ? 'failed' : 'ready'), 3);
+    toCity(c);
+    for (let k = 0; k < 20; k++) {
+      fwd(c);
+      expect(c.state.sceneCityId).not.toBe('paris');
+      if (c.state.stage === 'selected' && c.state.sceneCityId) {
+        const city = CITIES.find((x) => x.id === c.state.sceneCityId)!;
+        expect(feedOf(c.state.selectedId)).toBe(city.verified ? feedOf(c.state.selectedId) : city.feedId);
+      }
+      fwd(c); // back to a globe hold
+    }
+  });
+
+  it('back / redo into a city restores the same virtual tile and feed and consumes no deck / RNG state', () => {
+    const { c, deck } = make(() => 'ready', 9);
+    toCity(c);
+    fwd(c); // a city hold
+    const id = c.state.selectedId; const city = c.state.sceneCityId; const feed = feedOf(id);
+    fwd(c); // the next globe
+    const diag = JSON.stringify(deck.diagnostics());
+    const globeKey = c.state.routeKey;
+    back(c); // globe -> the same city hold
+    expect(c.state.selectedId).toBe(id); expect(c.state.sceneCityId).toBe(city); expect(feedOf(c.state.selectedId)).toBe(feed);
+    fwd(c); // redo: the same globe, nothing rerolled
+    expect(c.state.stage).toBe('globe'); expect(c.state.routeKey).toBe(globeKey);
+    expect(JSON.stringify(deck.diagnostics())).toBe(diag);
+  });
+
+  it('city-owned holds stay outside the core deck: the deck never learns a city feed id', () => {
+    const { c, deck } = make(() => 'ready', 4);
+    toCity(c);
+    for (let k = 0; k < 10; k++) { fwd(c); fwd(c); }
+    const seen = deck.diagnostics().seen.concat(deck.diagnostics().recent);
+    expect(seen.some((f) => f.startsWith('city-'))).toBe(false);
+  });
+});

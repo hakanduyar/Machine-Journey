@@ -1,0 +1,10 @@
+City: Istanbul
+Source: https://mixkit.co/free-stock-video/tourist-ferries-arriving-at-the-port-4004/
+Credit: Mixkit
+License: Mixkit Stock Video Free License
+License URL: https://mixkit.co/license/#videoFree
+Original SHA256: 64D5C798D2C79AB818C9BC1C5B2C1D0F9D88E2A8AD1F050AAC47AD2E56B81F27
+Archive label: ARCHIVE TIMELAPSE
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

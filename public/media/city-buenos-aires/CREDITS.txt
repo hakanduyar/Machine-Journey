@@ -1,0 +1,10 @@
+City: Buenos Aires
+Source: https://www.pexels.com/video/obelisco-argentina-19897024/
+Credit: LISTOS PARA RODAR | Productora
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: 749e0da0d1e489f59fc91af0f82fa0ca405f5335fb7872a430ce82c8f6df0870
+Archive label: ARCHIVE / STREET VIEW
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

@@ -1,6 +1,6 @@
 # Machine Journey
 
-An interactive archive of recorded city views, explored through a camera mosaic, globe, floating field and neural scene. Each gesture completes one transition and holds until the next gesture. Back navigation revisits recorded stops.
+A Person of Interest-inspired interactive archive of recorded city views, explored through a camera mosaic, globe, floating field and neural scene. Each gesture completes one transition and holds until the next gesture. Back navigation revisits recorded stops.
 
 This is an unofficial, authored visual interface. Videos are licensed **recorded excerpts**, not live surveillance. Globe routes, lights and interface annotations are decorative; they do not represent real monitoring, identities or network activity.
 
@@ -44,3 +44,4 @@ Short clips repeat and may have visible loop transitions. All playback is silent
 Original application code, tests and authored scene assets are MIT-licensed; see [LICENSE](LICENSE). **Recorded footage is not covered by MIT.** Each media directory includes source, licence and modification details in `CREDITS.txt`: Pexels, Mixkit Free, MEVA CC BY 4.0, or public-domain NASA/DVIDS material. Preserve those terms and credits when reusing assets. Natural Earth geography is public domain; its provenance records are in `public/assets/globe/`.
 
 See [asset provenance](public/assets/machine/ASSETS.md) and [release provenance](docs/RELEASE_PROVENANCE.md). The application is not affiliated with any production, dataset provider or footage contributor.
+

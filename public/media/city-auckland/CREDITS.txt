@@ -1,0 +1,10 @@
+City: Auckland
+Source: https://www.pexels.com/video/busy-downtown-traffic-in-auckland-nz-38824374/
+Credit: Kiwi and Camera
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: 29943E618D8E604C6B314F8A47FD66CCFF751E73CBC9C77EB1AC05783AD4E062
+Archive label: ARCHIVE CAMERA
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

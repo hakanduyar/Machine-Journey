@@ -1,0 +1,10 @@
+City: Paris
+Source: https://mixkit.co/free-stock-video/a-calm-street-in-paris-4348/
+Credit: Mixkit
+License: Mixkit Stock Video Free License
+License URL: https://mixkit.co/license/modal/videoFree/
+Original SHA256: 8dabacea33b4ed864189e4ff932ad4f12e4ddc649ddc303895df0841b041ec26
+Archive label: ARCHIVE / STREET VIEW
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

@@ -1,0 +1,10 @@
+City: Tokyo
+Source: https://www.pexels.com/video/aerial-view-of-shibuya-crossing-in-tokyo-37570306/
+Credit: Stephan Leuzinger
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: F59179E7C6A519EE3633BDF2DFBCA5C34DE9174CA8440FC90D096046FA38C094
+Archive label: ARCHIVE CAMERA
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

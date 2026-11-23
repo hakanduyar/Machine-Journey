@@ -1,0 +1,10 @@
+City: Lagos
+Source: https://www.pexels.com/pt-br/video/yaba-lagos-nigeria-31661048/
+Credit: Vitalis Nwenyi
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: ec813c2eb3b00a72cc9a94a5c4ab61f9143cc0c54701d9ad22c8cca5264fdf13
+Archive label: ARCHIVE / AERIAL OBSERVATION
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.

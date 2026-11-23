@@ -1,0 +1,10 @@
+City: Vancouver
+Source: https://www.pexels.com/video/city-clouds-haze-travel-4265473/
+Credit: Dmitry Varennikov
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: 330455d3026afcf390f1159302159afd80d264c0b28e60121cf466c4580b29af
+Archive label: ARCHIVE / TIMELAPSE
+Location: Named by stock contributor/platform item metadata; visually screened, not independently official-geolocated.
+Exact camera coordinates: unverified; globe marker is locality overview only.
+Edits: selected excerpt; muted;24fps;1280x720 center crop;0.5second tail-head crossfade, no reversed motion. Recorded stock archive, not live surveillance.
