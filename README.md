@@ -1,5 +1,7 @@
 # Machine Journey
 
+[Open the demo](https://hakanduyar.github.io/Machine-Journey/)
+
 A Person of Interest-inspired interactive archive of recorded city views, explored through a camera mosaic, globe, floating field and neural scene. Each gesture completes one transition and holds until the next gesture. Back navigation revisits recorded stops.
 
 This is an unofficial, authored visual interface. Videos are licensed **recorded excerpts**, not live surveillance. Globe routes, lights and interface annotations are decorative; they do not represent real monitoring, identities or network activity.
