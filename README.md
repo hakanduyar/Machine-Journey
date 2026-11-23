@@ -45,3 +45,4 @@ Original application code, tests and authored scene assets are MIT-licensed; see
 
 See [asset provenance](public/assets/machine/ASSETS.md) and [release provenance](docs/RELEASE_PROVENANCE.md). The application is not affiliated with any production, dataset provider or footage contributor.
 
+`npm run build:pages` prepares a static build for the repository subpath. See [manual demo release](docs/DEMO_RELEASE.md) for deployment setup and verification.
