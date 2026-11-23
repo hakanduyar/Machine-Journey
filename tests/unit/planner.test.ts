@@ -157,7 +157,7 @@ describe('varied route driving the journey', () => {
         if (!arrivals[i].globeBetween) expect(arrivals[i].feed).not.toBe(arrivals[i - 1].feed); // no same-feed repeat on camera/field legs
       }
     }
-  });
+  }, 15000); // Exhaustive functional simulation; not a wall-clock performance assertion.
 
   it('a due branch that is still loading keeps the same choice, holds the context and is never consumed', () => {
     let seed = 0;

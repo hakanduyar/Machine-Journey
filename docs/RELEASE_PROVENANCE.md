@@ -10,3 +10,6 @@ The accepted scope includes 24 city destinations with city-owned archive media, 
 
 CI runs the unit tests and production build. Browser acceptance used desktop and emulated mobile viewports; a physical-device certification and seamless-loop claim are not made.
 
+
+A separate November 24 harness follow-up gives only the exhaustive six-seed route simulation a 15-second test-runner allowance. The original snapshot import matched all 178 exported source/test/media/configuration blobs; this later test allowance changes no assertions, seeds, simulated ticks or runtime code. CI uses two workers to limit contention.
+
