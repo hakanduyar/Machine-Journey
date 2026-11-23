@@ -13,3 +13,11 @@ CI runs the unit tests and production build. Browser acceptance used desktop and
 
 A separate November 24 harness follow-up gives only the exhaustive six-seed route simulation a 15-second test-runner allowance. The original snapshot import matched all 178 exported source/test/media/configuration blobs; this later test allowance changes no assertions, seeds, simulated ticks or runtime code. CI uses two workers to limit contention.
 
+
+## City context and companion release
+
+This curated update derives runtime and media from source snapshot `de14a3a0be471ff87326a8e92b623e9b072560a4`, with the test-only successor `ab275b0f2c286d7de58f7f9ec875d181c323e730`. The export was prepared on November 24, 2026, without importing source-repository history. Its commits use the public contributor identity and actual preparation dates.
+
+The update keeps the active city consistent across spatial views and history, adds animated fictional companion panels, and includes 24 additional licensed recordings. Reykjavík, Cairo, Johannesburg and Lagos retain one accepted recording each; their second sources are not included. Each included media directory retains its source, licence and edit details. Some excerpts use a documented endpoint crossfade; they are not presented as unedited continuous recordings.
+
+Public build and deployment configuration remains separate from the curated runtime snapshot. The runtime received independent desktop and emulated-phone review, followed by release acceptance. Manual demo deployment and its public verification remain separate release steps.

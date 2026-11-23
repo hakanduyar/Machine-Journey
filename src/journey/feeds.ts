@@ -1,4 +1,4 @@
-import { CITY_SOURCES, cityFeedId } from './cityFeeds';
+import { CITY_SOURCES, EXTRA_SOURCES, cityFeedId, type CitySource } from './cityFeeds';
 
 export interface Feed {
   id: string;
@@ -33,13 +33,14 @@ export const FEEDS: Feed[] = [
  * mosaic / floating-field / neural content and poster pool). They exist as inert, source-less <video> elements and
  * attach their source lazily, only when their city is the upcoming / current target (see Journey `attachCityMedia`).
  */
-export const CITY_FEEDS: Feed[] = CITY_SOURCES.map((s) => ({
-  id: cityFeedId(s.cityId),
-  label: s.archiveLabel,
-  credit: `${s.credit} · ${s.license}`,
-  source: s.source,
-  licenseUrl: s.licenseUrl,
-}));
+const cityFeed = (id: string, s: CitySource): Feed => ({
+  id, label: s.archiveLabel, credit: `${s.credit} · ${s.license}`, source: s.source, licenseUrl: s.licenseUrl,
+});
+// Base clips keep `city-<cityId>`; approved additional clips carry their own manifest `feedId` (appended after, never reordered).
+export const CITY_FEEDS: Feed[] = [
+  ...CITY_SOURCES.map((s) => cityFeed(cityFeedId(s.cityId), s)),
+  ...EXTRA_SOURCES.map((s) => cityFeed(s.feedId, s)),
+];
 /** Every playable element, core first: indices < CORE_FEED_COUNT are the original pool. */
 export const ALL_FEEDS: Feed[] = [...FEEDS, ...CITY_FEEDS];
 export const CORE_FEED_COUNT = FEEDS.length;

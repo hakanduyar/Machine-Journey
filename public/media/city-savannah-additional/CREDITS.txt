@@ -1,0 +1,8 @@
+City: savannah
+Source: https://www.dvidshub.net/video/486568/savannah-hurricane-matthew-c-130-evac-part-1
+Credit: Tech. Sgt. Amber Williams /165th Airlift Wing /DVIDS
+License: Public Domain (DVIDS item declaration)
+License URL: https://www.dvidshub.net/about/copyright
+Original SHA256: 7e9274ff493bc495555b103691d637075d76abca1973c18ccc0acc3ad90c4900
+Archive: ARCHIVE / LOCAL CAMERA; not live surveillance.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

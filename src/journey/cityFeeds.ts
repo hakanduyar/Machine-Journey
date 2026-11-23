@@ -5,6 +5,8 @@
  * was visually screened: it is NOT an official camera location and NOT a verified GPS position. The globe marker is a
  * locality overview point, never a camera position.
  */
+import extraRows from '../../public/media/city-sources-extra.json';
+
 export interface CitySource {
   cityId: string;
   /** Compact HUD label from the manifest's `archiveLabel` (ARCHIVE / TIMELAPSE / PAN ...), never "LIVE" or "CCTV". */
@@ -46,3 +48,24 @@ export const CITY_SOURCES: readonly CitySource[] = [
 ];
 
 export const cityFeedId = (cityId: string) => `city-${cityId}`;
+
+/**
+ * ADDITIONAL approved clips of a city that already owns one (public/media/city-sources-extra.json, same base schema plus an
+ * explicit `feedId` = its media folder). The manifest is imported at build time: adding an approved row + its folder is a pure
+ * data append, with no behaviour edit. Extras never reorder or replace the base table; they follow it in manifest order.
+ */
+export interface ExtraCitySource extends CitySource { feedId: string }
+interface ExtraRow {
+  cityId: string; feedId: string; source: string; credit: string; license: string; licenseUrl: string; archiveLabel: string;
+}
+const FIELDS = ['cityId', 'feedId', 'source', 'credit', 'license', 'licenseUrl', 'archiveLabel'] as const;
+/** Narrowing validation of one manifest row: every field this table consumes must be a non-empty string. */
+const isExtraRow = (r: unknown): r is ExtraRow =>
+  typeof r === 'object' && r !== null && FIELDS.every((k) => { const v = (r as Record<string, unknown>)[k]; return typeof v === 'string' && v.length > 0; });
+const validRows = (rows: readonly unknown[]): ExtraRow[] =>
+  rows.map((r, i) => { if (!isExtraRow(r)) throw new Error(`city-sources-extra.json row ${i} is incomplete`); return r; });
+export const EXTRA_SOURCES: readonly ExtraCitySource[] = validRows(extraRows).map((r): ExtraCitySource => ({
+  cityId: r.cityId, feedId: r.feedId, archiveLabel: r.archiveLabel, credit: r.credit, license: r.license, licenseUrl: r.licenseUrl, source: r.source,
+}));
+/** Feed ids of a city's additional clips, in deterministic manifest order. */
+export const extraFeedIds = (cityId: string): string[] => EXTRA_SOURCES.filter((s) => s.cityId === cityId).map((s) => s.feedId);

@@ -1,0 +1,9 @@
+City: los-angeles
+Source: https://mixkit.co/free-stock-video/view-deck-over-a-city-at-night-4183/
+Credit: Mixkit
+License: Mixkit Stock Video Free License
+License URL: https://mixkit.co/license/modal/videoFree/
+Original SHA256: f7495cdd8d05800ac543611c2b2df67048f874087b21d487df7f379d016b8db3
+Archive: ARCHIVE / TIMELAPSE; not live surveillance.
+Location: Primary item title/description names city; sampled decoded frames show no obvious contradiction, not independent exact geolocation.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

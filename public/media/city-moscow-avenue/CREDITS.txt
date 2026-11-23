@@ -1,0 +1,9 @@
+City: moscow
+Source: https://www.pexels.com/video/traffic-in-moscow-at-night-9910215/
+Credit: Evgenij Mikhailov
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: 91E11B4424D598CE0303E3FDC972A84AA7513F1E0A07ED26CA56D6A7D4E13BA1
+Archive: ARCHIVE / LOCAL CAMERA; not live surveillance.
+Location: publisher/contributor-described city, exact camera GPS unverified.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count based endpoint blend.

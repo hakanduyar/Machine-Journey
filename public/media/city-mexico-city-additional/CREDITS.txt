@@ -1,0 +1,9 @@
+City: mexico-city
+Source: https://mixkit.co/free-stock-video/main-cathedral-of-mexico-city-4487/
+Credit: Mixkit
+License: Mixkit Stock Video Free License
+License URL: https://mixkit.co/license/modal/videoFree/
+Original SHA256: dd1a42200ce263724424f1faa5d8eec86559329892e6deef8370cc666a4ccb24
+Archive: ARCHIVE / TIMELAPSE; not live surveillance.
+Location: Primary item title/description names city; sampled decoded frames show no obvious contradiction, not independent exact geolocation.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

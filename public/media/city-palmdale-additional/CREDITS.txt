@@ -1,0 +1,8 @@
+City: palmdale
+Source: https://svs.gsfc.nasa.gov/12488/
+Credit: NASA / Steve Parcel
+License: NASA media usage guidelines
+License URL: https://www.nasa.gov/nasa-brand-center/images-and-media/
+Original SHA256: 7a3e3ef4a04e225a356cb4b74120417b4bbe8664c6a9be3b8563d2153ff34ceb
+Archive: ARCHIVE / LOCAL CAMERA; not live surveillance.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

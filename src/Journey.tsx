@@ -13,19 +13,27 @@ import { inlandState, preloadInland, type InlandGeo } from './journey/globeInlan
 import { heldRadius } from './journey/globeOut';
 import { TIME_A, anchorAt, focusRect, holdScale, legTime, neuralOutRect, poseAt, radiusAt, retreatAmount, retreatNetworkOpacity, solveRetreatDolly, type Pose } from './journey/scale';
 import { drawLocalField } from './journey/localField';
-import { ALL_FEEDS, CORE_FEED_COUNT, FEEDS, YEARS, feedOfVirtualTile, feedPosterUrl, feedVideoUrl, isCityFeed } from './journey/feeds';
+import { ALL_FEEDS, YEARS, feedPosterUrl, feedVideoUrl } from './journey/feeds';
+import { familyFor } from './journey/companions';
+import { CityDecks, DEFAULT_CITY_ID, catalogIndices, cityFeedIds, stopFeeds, stopsFor } from './journey/cityContext';
 import {
   computeCrop, easeInOut, lerpCrop, lerpRect, videoBoxForCrop, type CropParams, type Rect,
 } from './journey/geometry';
-import { generateMosaic, tileCountFor, type Tile } from './journey/layout';import { IntentGate, keyDirection, type Dir } from './journey/intent';
+import { generateMosaic, tileCountFor, type Mosaic, type Tile } from './journey/layout';
+import { IntentGate, keyDirection, type Dir } from './journey/intent';
 import { frameCount, isDecoded, trackFrames } from './journey/frames';
 import { PlaybackDriver, desiredPlayback, routeActive } from './journey/playback';
 import { planLeg, reanchorTile } from './journey/route';
-import { FeedDeck } from './journey/feedDeck';
 import { collageStatus, loadPosters, type PosterEntry } from './journey/posterGate';
 
 const SCREENS = 3;
-const FEED_IDS = FEEDS.map((f) => f.id);
+/** Element / pool index space: every feed of every city (indices of ALL_FEEDS). A tile's `feedIndex` lives in it. */
+const ALL_IDS = ALL_FEEDS.map((f) => f.id);
+const gi = (feedId: string | null | undefined) => (feedId ? ALL_IDS.indexOf(feedId) : -1);
+/** Pool indices of a city's own feeds (its catalog). Empty for an unknown city. */
+const catalogOf = (cityId: string | null | undefined): number[] => catalogIndices(cityFeedIds(cityById(cityId ?? '')), ALL_IDS);
+/** The only feeds fetched at startup: the opening city's (Butlerville) four real sources. Everything else attaches lazily. */
+const EAGER_IDS: ReadonlySet<string> = new Set(cityFeedIds(cityById(DEFAULT_CITY_ID)));
 const FULL_CROP: CropParams = { z: 1, cx: 0.5, cy: 0.5 };
 /** Vertical focal point shared by the globe, the mosaic pullback and the entry travel. */
 const FOCAL_Y = 0.45;
@@ -40,22 +48,11 @@ const smooth = (a: number, b: number, x: number) => { const t = Math.min(1, Math
 interface Placed extends Tile { x: number; y: number; w: number; h: number }
 
 declare global {
-  interface Window { __journey?: JourneyController; __routePlanner?: RoutePlanner; __feedDeck?: FeedDeck }
+  interface Window { __journey?: JourneyController; __routePlanner?: RoutePlanner; __feedDeck?: CityDecks }
 }
 
 /** A city clip that has not produced a decodable frame this long after its source was attached counts as failed. */
 const CITY_LOAD_TIMEOUT_MS = 15000;
-/**
- * The selected tile of a city-owned clip (`virtual:<feedId>`): it has no place in the core-only mosaic layout, so it is a
- * small centred stand-in at the current view. Only its feed identity is semantic; geometry is a presentation default.
- */
-function virtualTileFor(id: string, centerX: number, vw: number, vh: number): Placed | undefined {
-  const feedId = feedOfVirtualTile(id);
-  const feedIndex = feedId ? ALL_FEEDS.findIndex((f) => f.id === feedId) : -1;
-  if (feedIndex < 0) return undefined;
-  const w = vw * 0.18; const h = (w * 9) / 16;
-  return { id, index: -1, rect: { x: 0, y: 0, w, h }, feedIndex, crop: FULL_CROP, x: centerX - w / 2, y: vh / 2 - h / 2, w, h };
-}
 
 const pad = (n: number, l = 2) => String(Math.floor(n)).padStart(l, '0');
 const clock = (t: number) => `${pad(t / 3600)}:${pad((t / 60) % 60)}:${pad(t % 60)}.${pad((t % 1) * 100)}`;
@@ -83,31 +80,76 @@ export function Journey() {
   const neuralAssets = useRef<NeuralAssets | null>(null);
   const neuralStatus = useRef<'idle' | 'loading' | 'parsed' | 'ready' | 'failed'>('idle');
   const postersRef = useRef<HTMLImageElement[] | null>(null);
-  const posterEntriesRef = useRef<PosterEntry[] | null>(null);
+  const posterEntriesRef = useRef<(PosterEntry | null)[] | null>(null);
   const collageShown = useRef(false);
+  const famBases = useRef(new Map<string, number>());
   const footRef = useRef<HTMLDivElement>(null);
+  // City-scoped layouts: one stable mosaic per (city, orientation), placed per viewport. A tile's feedIndex is a pool index
+  // of THAT city's catalog, so a tile's label, poster and video are always the same source and never another city's.
+  const mosaicCache = useRef(new Map<string, Mosaic>());
+  const placedCache = useRef(new Map<string, Placed[]>());
+  const placedForRef = useRef<(cityId: string | null, d: { w: number; h: number }) => Placed[]>(() => []);
+  placedForRef.current = (cityId, d) => {
+    const city = cityId ?? DEFAULT_CITY_ID;
+    const land = d.w >= d.h;
+    const pk = `${city}|${d.w}x${d.h}`;
+    const hit = placedCache.current.get(pk);
+    if (hit) return hit;
+    const cat = catalogOf(city);
+    const mk = `${city}|${land ? 1 : 0}`;
+    let mosaic = mosaicCache.current.get(mk);
+    if (!mosaic) {
+      // Orientation-stable (regenerated only when the orientation flips) and deterministic per city: tile ids match across
+      // cities; only the binding of tiles to the city's finite catalog differs (reuse within the city is honest, not unique).
+      mosaic = generateMosaic({
+        width: d.w * SCREENS, height: d.h, feedCount: Math.max(1, cat.length),
+        tileCount: tileCountFor(d.w, d.h, SCREENS), seed: land ? 11 : 23,
+      });
+      mosaic = { ...mosaic, tiles: mosaic.tiles.map((t) => ({ ...t, feedIndex: cat[t.feedIndex] ?? cat[0] ?? 0 })) };
+      mosaicCache.current.set(mk, mosaic);
+    }
+    const m = mosaic;
+    const sx = (d.w * SCREENS) / m.width; const sy = d.h / m.height;
+    const out = m.tiles.map((t) => {
+      const x0 = Math.round(t.rect.x * sx); const x1 = Math.round((t.rect.x + t.rect.w) * sx);
+      const y0 = Math.round(t.rect.y * sy); const y1 = Math.round((t.rect.y + t.rect.h) * sy);
+      return { ...t, x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+    });
+    placedCache.current.set(pk, out);
+    return out;
+  };
+
+  /** Posters load lazily, per feed, when its city is the opening / upcoming one: never the whole pool at startup. */
+  const ensurePoster = (i: number) => {
+    const imgs = (postersRef.current ??= ALL_FEEDS.map(() => new Image()));
+    const ents = (posterEntriesRef.current ??= ALL_FEEDS.map((): PosterEntry | null => null));
+    if (i >= 0 && i < ents.length && !ents[i]) ents[i] = loadPosters([feedPosterUrl(ALL_FEEDS[i])], () => imgs[i])[0];
+  };
 
   /**
-   * Lazy city media: the 21 city <video> elements are rendered inert (no src, preload none, no autoplay, no poster). A source
-   * is attached ONCE, only when its city is the upcoming target (prewarm), entering or selected; afterwards the element keeps
-   * its identity, source and playback time (never re-sourced, so no duplicate decoder). Returns the clip's readiness.
+   * Lazy media: only the opening city's four feeds carry a source at startup. Every other <video> is inert (no src, preload
+   * none, no autoplay, no poster). A source is attached ONCE, only when its city is the upcoming target (prewarm), entering
+   * or open; afterwards the element keeps its identity, source and playback time (never re-sourced, so no duplicate decoder).
+   * Returns the clip's readiness (a decodable frame + its poster requested), the gate a city switch waits on.
    */
   const cityAttached = useRef(new Map<number, number>());
   const attachCity = (feedId: string): 'ready' | 'wait' | 'failed' => {
-    const i = ALL_FEEDS.findIndex((f) => f.id === feedId);
+    const i = gi(feedId);
     if (i < 0) return 'failed';
-    if (i < CORE_FEED_COUNT) return 'ready';
     const v = videoEls.current[i]; const pane = paneEls.current[i];
     if (!v) return 'wait';
     let t0 = cityAttached.current.get(i);
     if (t0 === undefined) {
       t0 = performance.now(); cityAttached.current.set(i, t0);
       const f = ALL_FEEDS[i];
-      if (pane) { pane.style.backgroundImage = `url(${feedPosterUrl(f)})`; pane.style.backgroundSize = 'cover'; pane.style.backgroundPosition = 'center'; }
-      v.poster = feedPosterUrl(f);
-      v.preload = 'auto';
-      v.src = feedVideoUrl(f);
-      v.load();
+      ensurePoster(i);
+      if (!EAGER_IDS.has(f.id)) {
+        if (pane) { pane.style.backgroundImage = `url(${feedPosterUrl(f)})`; pane.style.backgroundSize = 'cover'; pane.style.backgroundPosition = 'center'; }
+        v.poster = feedPosterUrl(f);
+        v.preload = 'auto';
+        v.src = feedVideoUrl(f);
+        v.load();
+      }
     }
     if (v.error) return 'failed';
     if (v.readyState >= 2 && v.videoWidth > 0) return 'ready';
@@ -128,42 +170,32 @@ export function Journey() {
   const [neuralInfo, setNeuralInfo] = useState<{ feeds: readonly string[]; idx: number }>({ feeds: [], idx: 0 });
   const [yearIdx, setYearIdx] = useState(0);
   const [announce, setAnnounce] = useState('');
+  /** The active city (semantic context) and the city whose mosaic is laid out right now (the destination while a city is entered). */
+  const [cityId, setCityId] = useState<string>(DEFAULT_CITY_ID);
+  const [viewCity, setViewCity] = useState<string>(DEFAULT_CITY_ID);
 
-  const landscape = layoutDims.w >= layoutDims.h;
-  const mosaic = useMemo(
-    () => generateMosaic({
-      width: layoutDims.w * SCREENS, height: layoutDims.h, feedCount: FEEDS.length,
-      tileCount: tileCountFor(layoutDims.w, layoutDims.h, SCREENS), seed: landscape ? 11 : 23,
-    }),
-    // Regenerate only when the orientation class flips; other resizes just rescale.
+  const placed = useMemo<Placed[]>(
+    () => placedForRef.current(viewCity, layoutDims),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [landscape],
+    [viewCity, layoutDims],
   );
-  const placed = useMemo<Placed[]>(() => {
-    const sx = (layoutDims.w * SCREENS) / mosaic.width;
-    const sy = layoutDims.h / mosaic.height;
-    return mosaic.tiles.map((t) => {
-      const x0 = Math.round(t.rect.x * sx);
-      const x1 = Math.round((t.rect.x + t.rect.w) * sx);
-      const y0 = Math.round(t.rect.y * sy);
-      const y1 = Math.round((t.rect.y + t.rect.h) * sy);
-      return { ...t, x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
-    });
-  }, [mosaic, layoutDims]);
   const placedRef = useRef(placed);
   placedRef.current = placed;
+  const viewCityRef = useRef(viewCity);
+  viewCityRef.current = viewCity;
 
   layoutRef.current = layoutDims;
   // Varied, seeded route: which mode comes next and after how many camera holds is chosen at run time from recent history.
   const seed = useMemo(() => sessionSeed(), []);
   const planner = useMemo(() => new RoutePlanner(seed), [seed]);
-  // One finite deck shared by every mode: a NEW focused camera is unseen in the current cycle (see feedDeck.ts).
-  const deck = useMemo(() => new FeedDeck(FEED_IDS, seed), [seed]);
+  // One finite deck PER CITY behind one selector: a NEW focused camera is unseen in the active city's current cycle.
+  const deck = useMemo(() => new CityDecks(CITIES, seed), [seed]);
   const ctrl = useMemo(
     () => {
       const c: JourneyController = new JourneyController({
         worldWidth: layoutDims.w * SCREENS, viewportWidth: layoutDims.w,
         cities: CITIES,
+        initialCity: DEFAULT_CITY_ID,
         seed,
         deck,
         branchSource: planner,
@@ -171,49 +203,54 @@ export function Journey() {
         // drops the mode: the planner then chooses an available alternative.
         floatPlan: (from, stops, visit) => {
           if (fieldFailed.current) { planner.setUnavailable('float'); return null; }
-          // Later stops are the deck's next NEW cameras (pure preview: nothing is consumed until each hold is reached).
-          const n = Math.max(2, Math.min(4, Math.round(stops)));
-          return fieldRef.current ? planFloatRoute(from, stops, visit, deck.frontier([from], n - 1)) : 'wait';
+          // Stops show the ACTIVE CITY's own feeds: the deck's next NEW ones first (pure preview: nothing is consumed until each
+          // hold is reached), then honest reuse of the city's finite catalog. A one-source city plans the minimum two stops.
+          const pool = cityFeedIds(cityById(c.state.cityId ?? ''));
+          const start = from ?? pool[0] ?? null;
+          const n = stopsFor(stops, pool.length);
+          return fieldRef.current ? planFloatRoute(start, n, visit, stopFeeds(pool, start, n - 1, deck.frontier([start], n - 1)), true) : 'wait';
         },
         // The authored neural scene is preloaded while idle. Until it is built the intent is refused (the current
         // hold stays visible); only a failed load drops the mode.
         neuralPlan: (from, stops, visit) => {
           if (neuralStatus.current === 'failed') { planner.setUnavailable('neural'); return null; }
           const w = neuralRef.current;
-          const n = Math.max(2, Math.min(4, Math.round(stops)));
-          return w ? planNeuralRoute(from, stops, visit, w.holds, deck.frontier([from], n - 1)) : 'wait';
+          const pool = cityFeedIds(cityById(c.state.cityId ?? ''));
+          const start = from ?? pool[0] ?? null;
+          const n = stopsFor(stops, pool.length);
+          return w ? planNeuralRoute(start, n, visit, w.holds, stopFeeds(pool, start, n - 1, deck.frontier([start], n - 1)), true) : 'wait';
         },
         neuralLegScale: (a, b, base) => neuralRef.current?.legProfile(a, b).durationScale(base) ?? 1,
         cityStatus: (feedId) => attachCityRef.current(feedId),
         travelMs: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 300 : 950,
-        // City leg lands on a tile of the destination's feed (same persistent <video>), near the current year.
-        anchorFeed: (feedId, worldX) => {
+        // City leg lands on a REAL tile of the destination city's own stable mosaic (same persistent <video>), near the current year.
+        anchorFeed: (feedId, worldX, city) => {
           const L = layoutRef.current;
-          const feedIndex = FEEDS.findIndex((f) => f.id === feedId);
+          const feedIndex = gi(feedId);
           if (feedIndex < 0) return null;
           const year = Math.floor(yearAxis(L.w * SCREENS, L.w, YEARS.length).indexAt(worldX));
-          return reanchorTile({ tiles: placedRef.current, feedIndex, vw: L.w, worldW: L.w * SCREENS, yearCount: YEARS.length, year });
+          return reanchorTile({ tiles: placedForRef.current(city ?? c.state.cityId, L), feedIndex, vw: L.w, worldW: L.w * SCREENS, yearCount: YEARS.length, year });
         },
         yearOfTile: (id) => {
           const L = layoutRef.current;
-          const t = placedRef.current.find((x) => x.id === id);
+          const t = placedForRef.current(c.state.cityId, L).find((x) => x.id === id);
           if (!t) return null;
           return Math.floor(yearAxis(L.w * SCREENS, L.w, YEARS.length).indexAt(t.x + t.w / 2 - L.w / 2));
         },
-        feedOfTile: (id) => {
-          const t = placedRef.current.find((x) => x.id === id);
-          return t ? FEEDS[t.feedIndex].id : null;
+        feedOfTile: (id, city) => {
+          const t = placedForRef.current(city ?? c.state.cityId, layoutRef.current).find((x) => x.id === id);
+          return t ? ALL_FEEDS[t.feedIndex].id : null;
         },
-        // Every leg: nonmonotonic year, different feed than the one on screen.
+        // Every leg: nonmonotonic year, different feed than the one on screen (a one-source city reuses it at another tile / year).
         planner: (leg) => {
           const L = layoutRef.current;
-          const tiles = placedRef.current;
+          const tiles = placedForRef.current(c.state.cityId, L);
           const cur = c.state.selectedId ? tiles.find((t) => t.id === c.state.selectedId) : undefined;
           const ax = yearAxis(L.w * SCREENS, L.w, YEARS.length);
           const plan = planLeg({
             tiles, vw: L.w, worldW: L.w * SCREENS, yearCount: YEARS.length, leg,
-            prevYear: Math.floor(ax.indexAt(c.state.worldX)), currentFeed: cur ? cur.feedIndex : null,
-            wantFeeds: deck.eligible([cur ? FEEDS[cur.feedIndex].id : null]).map((id) => FEED_IDS.indexOf(id)),
+            prevYear: Math.floor(ax.indexAt(c.state.worldX)), currentFeed: cur ? cur.feedIndex : null, currentTile: cur?.id ?? null,
+            wantFeeds: deck.eligible([cur ? ALL_FEEDS[cur.feedIndex].id : null]).map(gi),
           });
           return plan ? { id: plan.id, x: plan.x } : null;
         },
@@ -242,11 +279,12 @@ export function Journey() {
   // Resize / orientation change during a focused hold: the layout is refitted, so the selected
   // camera (same feed, same <video>) is re-anchored to its equivalent tile and the world is
   // re-centred on it. The next leg then contracts into the current responsive mosaic.
-  const anchor = useRef({ placed, w: layoutDims.w });
+  const anchor = useRef({ placed, w: layoutDims.w, city: viewCity });
   useLayoutEffect(() => {
     const prev = anchor.current;
     if (prev.placed === placed) return;
-    anchor.current = { placed, w: layoutDims.w };
+    anchor.current = { placed, w: layoutDims.w, city: viewCity };
+    if (prev.city !== viewCity) return; // another city's mosaic took over (a city entry): not a responsive refit of the same hold
     const s = ctrl.state;
     if (s.stage !== 'selected' || !s.selectedId) return;
     const old = prev.placed.find((t) => t.id === s.selectedId);
@@ -257,17 +295,21 @@ export function Journey() {
       tiles: placed, feedIndex: old.feedIndex, vw: layoutDims.w, worldW: layoutDims.w * SCREENS, yearCount: YEARS.length, year,
     });
     if (a) ctrl.rebase(a.id, a.x);
-  }, [placed, ctrl, layoutDims]);
+  }, [placed, ctrl, layoutDims, viewCity]);
 
   // Controller -> React chrome.
   useEffect(() => {
     window.__journey = ctrl;
     window.__routePlanner = planner; // read-only review handle (seed, chosen branches); no UI
-    window.__feedDeck = deck; // private diagnostics: deck.diagnostics() = finite pool size, cycle, seen / recent feeds; no UI
+    window.__feedDeck = deck; // private diagnostics: deck.diagnostics() = the active city's finite pool, cycle, seen / recent feeds; no UI
     let prevStage: Stage = ctrl.state.stage;
     setFocusedId(ctrl.state.focusedId);
     return ctrl.subscribe((s) => {
       setStage(s.stage);
+      setCityId(s.cityId ?? DEFAULT_CITY_ID);
+      // The layout follows the city the view is in: the destination from the moment a city is entered (the globe hides the
+      // mosaic until then), the active city otherwise. Only the controller's committed `cityId` is the semantic context.
+      setViewCity((s.stage === 'turning' || s.stage === 'entering') && s.destId ? s.destId : s.cityId ?? DEFAULT_CITY_ID);
       setSelectedId(s.selectedId);
       setFocusedId(s.focusedId);
       setDestId(s.destId);
@@ -278,7 +320,7 @@ export function Journey() {
       if (s.stage !== prevStage || s.stage === 'floating' || s.stage === 'neural') {
         if (s.stage === 'neural') {
           const n = s.neuralFeeds.length;
-          const f = FEEDS.find((x) => x.id === s.neuralFeeds[s.neuralIdx]);
+          const f = ALL_FEEDS.find((x) => x.id === s.neuralFeeds[s.neuralIdx]);
           gate.current.settle(performance.now());
           setAnnounce(`Neural network, stop ${s.neuralIdx + 1} of ${n}: camera ${f?.label ?? ''}. Decorative demo visualisation, not real data. Next ${s.neuralIdx < n - 1 ? 'travels on' : 'pulls back to the globe'}; back returns to the previous view.`);
           prevStage = s.stage;
@@ -286,15 +328,14 @@ export function Journey() {
         }
         if (s.stage === 'floating') {
           const n = s.floatFeeds.length;
-          const f = FEEDS.find((x) => x.id === s.floatFeeds[s.floatIdx]);
+          const f = ALL_FEEDS.find((x) => x.id === s.floatFeeds[s.floatIdx]);
           gate.current.settle(performance.now());
           setAnnounce(`Floating camera field, stop ${s.floatIdx + 1} of ${n}: camera ${f?.label ?? ''}. Panels show fictional demo content. Next ${s.floatIdx < n - 1 ? 'flies to the next camera' : 'expands this camera to fullscreen'}; back returns to the previous view.`);
           prevStage = s.stage;
           return;
         }
-        const tile = placedRef.current.find((t) => t.id === s.selectedId);
-        const vFeed = s.selectedId ? feedOfVirtualTile(s.selectedId) : null;
-        const name = tile ? FEEDS[tile.feedIndex].label : vFeed ? ALL_FEEDS.find((f) => f.id === vFeed)?.label ?? 'camera' : 'camera';
+        const tile = placedForRef.current(s.cityId, layoutRef.current).find((t) => t.id === s.selectedId);
+        const name = tile ? ALL_FEEDS[tile.feedIndex].label : 'camera';
         if (s.stage === 'selected') {
           gate.current.settle(performance.now());
           const sc = s.sceneCityId ? cityById(s.sceneCityId) : null;
@@ -328,13 +369,17 @@ export function Journey() {
     const world = worldRef.current!;
     const ruler = rulerRef.current!;
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const snap = (x: number) => Math.round(x * (window.devicePixelRatio || 1)) / (window.devicePixelRatio || 1);
     const tiles = placedRef.current;
 
     // Poster images persist across effect re-runs: the floating field's textures wrap these same elements.
     // They are loaded + decoded right away (see posterGate); the collage is revealed on POSTER readiness, never on video's.
-    const posterEntries = (posterEntriesRef.current ??= loadPosters(FEEDS.map(feedPosterUrl), () => new Image()));
-    const posters = (postersRef.current ??= posterEntries.map((p) => p.img));
+    // Only the active city's posters are requested (Butlerville's four at startup); another city's load when it is prewarmed.
+    ensurePoster(-1);
+    for (const i of catalogOf(viewCityRef.current)) ensurePoster(i);
+    const posterEntries = posterEntriesRef.current!;
+    const posters = postersRef.current!;
     const collageStart = performance.now();
     let videoDrawn = false; // decoded-video evidence that a tile was painted (independent evidence besides posters)
     if (!collageShown.current) root.dataset.collage = 'pending';
@@ -439,20 +484,24 @@ export function Journey() {
       const destFeedId = s.destId ? s.entryFeedId ?? cityById(s.destId)?.feedId : undefined;
       // City clips in use right now (open, entering, or leaving to the globe): their source is attached on first use and only
       // they may join the playing pool; every other city element stays inert.
-      const selVirtual = s.selectedId ? feedOfVirtualTile(s.selectedId) : null;
-      const usedCity = [selVirtual, destFeedId, s.stage === 'globeOut' || s.stage === 'contracting' ? s.outFeedId : null]
-        .filter((f): f is string => isCityFeed(f));
-      for (const f of usedCity) attachCityRef.current(f);
-      const extra = usedCity.map((f) => ALL_FEEDS.findIndex((x) => x.id === f));
-      const selFeedIdx = selTileNow ? selTileNow.feedIndex : selVirtual ? ALL_FEEDS.findIndex((x) => x.id === selVirtual) : -1;
+      const usedNow = [destFeedId, s.stage === 'globeOut' || s.stage === 'contracting' ? s.outFeedId : null]
+        .filter((f): f is string => !!f);
+      for (const f of usedNow) attachCityRef.current(f);
+      const extra = usedNow.map(gi).filter((x) => x >= 0);
+      const selFeedIdx = selTileNow ? selTileNow.feedIndex : -1;
+      // The playing pool is the ACTIVE city's own feeds (the destination's while it is being entered), never another city's.
+      const poolCity = (s.stage === 'entering' || s.stage === 'turning') && s.destId ? s.destId : s.cityId;
+      // The active (or entered) city's whole own pool is attached lazily, so every tile bound to one of its feeds has a poster / source;
+      // another city's feeds are never touched. (A one-clip city: just that clip. Idempotent, no re-source.)
+      for (const i of catalogOf(poolCity)) attachCityRef.current(ALL_IDS[i]);
       playback.current.apply(
         desiredPlayback({
           stage: s.stage, selectedFeed: selFeedIdx,
-          targetFeed: destFeedId ? ALL_FEEDS.findIndex((f) => f.id === destFeedId) : -1,
-          feedCount: ALL_FEEDS.length, coreCount: CORE_FEED_COUNT, extra, pending: ctrl.pendingIntent,
+          targetFeed: gi(destFeedId),
+          feedCount: ALL_FEEDS.length, pool: catalogOf(poolCity), extra, pending: ctrl.pendingIntent,
           active: routeActive({
             stage: s.stage, floatFeeds: s.floatFeeds, floatIdx: s.floatIdx, neuralFeeds: s.neuralFeeds, neuralIdx: s.neuralIdx,
-            feedIds: FEED_IDS, reverse: s.legRev,
+            feedIds: ALL_IDS, reverse: s.legRev,
           }),
         }),
         videoEls.current, now,
@@ -465,7 +514,7 @@ export function Journey() {
       const globeHold = s.stage === 'globe' || s.stage === 'turning';
       const focalY = vh * FOCAL_Y;
       const wx = snap(s.worldX);
-      const sel = s.selectedId ? tiles[idIndex.get(s.selectedId) ?? -1] ?? virtualTileFor(s.selectedId, wx + vw / 2, vw, vh) : undefined;
+      const sel = s.selectedId ? tiles[idIndex.get(s.selectedId) ?? -1] : undefined; // always a REAL tile of the active city's mosaic
       // ONE spatial scale for every globe leg, both directions: leg time T (0 = fullscreen / start pane, 1 = globe hold)
       // gives the log zoom m of the camera-network world; the geography uses the very same m (see journey/scale.ts).
       const worldW = layoutDims.w * SCREENS; const worldH = layoutDims.h;
@@ -495,7 +544,9 @@ export function Journey() {
         } else if (neuralStatus.current === 'parsed' && neuralAssets.current && neuralHost.current) {
           try {
             neuralRef.current = new NeuralWorld(neuralAssets.current, {
-              host: neuralHost.current, feedIds: FEEDS.map((f) => f.id), videos: () => videoEls.current,
+              host: neuralHost.current, feedIds: ALL_IDS, videos: () => videoEls.current,
+              // Photo nodes / background atlas of the scene show the ACTIVE city's already-loaded posters (no extra fetch here).
+              cityPosters: () => ({ key: ctrl.state.cityId, images: catalogOf(ctrl.state.cityId).map((i) => posters[i]) }),
             });
             neuralStatus.current = 'ready';
           } catch { neuralStatus.current = 'failed'; }
@@ -507,13 +558,17 @@ export function Journey() {
         try {
           fieldRef.current = new FloatField3D({
             host: floatHost.current,
-            feedIds: FEEDS.map((f) => f.id),
+            feedIds: ALL_IDS,
             videos: () => videoEls.current,
             posters,
-            labels: FEEDS.map((f) => f.label),
+            labels: ALL_FEEDS.map((f) => f.label),
+            catalog: catalogOf(s.cityId),
           });
         } catch { fieldFailed.current = true; }
       }
+      // The field (default panes + the whole background) always shows the ACTIVE city's catalog; rebinding only happens while
+      // it is off screen (the city changes at the globe), the destination's catalog being ready by its entry.
+      if (fieldRef.current && !floatStage) fieldRef.current.setCatalog(catalogOf((s.stage === 'entering' || s.stage === 'turning') && s.destId ? s.destId : s.cityId));
       root.dataset.p = s.progress.toFixed(3);
       // Every spatial globe bridge pose (both directions, history reverse included) shows an independent camera field,
       // not the archive: the year ribbon is hidden there (ordinary mosaic / scan keep it; the selected-year HUD is separate).
@@ -539,7 +594,10 @@ export function Journey() {
         const feeds = s.floatFeeds; const fr = s.floatFraming; const idx = s.floatIdx;
         // Spatial slot is separate from feed identity: the visit's planned slot, else the feed's own (older recorded plans).
         const slotAt = (i: number) => s.floatSlots[i] ?? slotOfFeed(feeds[i]);
-        const bindings = feeds.map((fd, i) => ({ slot: slotAt(i), feedIndex: FEED_IDS.indexOf(fd) }));
+        const bindings = feeds.map((fd, i) => ({ slot: slotAt(i), feedIndex: gi(fd) }));
+        const vkey = `${feeds.join('|')}#${s.floatSlots.join(',')}`;
+        let famBase = famBases.current.get(vkey);
+        if (famBase === undefined) { famBase = famBases.current.size * 2; famBases.current.set(vkey, famBase); }
         const last = feeds.length - 1;
         const mode = s.stage === 'floatIn' ? 'in' : s.stage === 'floatMove' ? 'move' : s.stage === 'floatOut' ? 'out' : 'hold';
         const a = mode === 'in' ? 0 : mode === 'out' ? last : idx;
@@ -550,14 +608,20 @@ export function Journey() {
         const res = field.render({
           mode, slotA: slotAt(a), framingA: fr[a], slotB: slotAt(b), framingB: fr[b], f: s.floatP, leg: idx, overlaySlot: overlay,
           panelSlots: fr.flatMap((f, i) => (f === 'medium' ? [slotAt(i)] : [])), bindings, vw, vh,
+          // Companion groups: one family per panelled stop (consecutive stops differ), all content of the ACTIVE city; the clock
+          // only animates card content, never the camera / pose / stop / feed.
+          // A visit's family offset is its ordinal among the visits seen this session (x2): any two consecutive visits together show all
+          // three families, a 4-stop visit shows all three itself. Keyed by the recorded plan, so back / redo reuse the same composition.
+          families: fr.flatMap((f, i) => (f === 'medium' ? [{ slot: slotAt(i), family: familyFor(famBase, i) }] : [])),
+          time: now / 1000, cityId: s.cityId, reduced: reducedMotion,
         });
         field.setVisible(true);
         floatHold = res.overlay < 0;
         if (res.overlay >= 0) {
           floatRect = paneScreenRect(res.eye, res.overlay, vw, vh);
-          floatFeed = FEEDS.findIndex((f) => f.id === feeds[a]);
+          floatFeed = gi(feeds[a]);
         } else {
-          floatFeed = FEEDS.findIndex((f) => f.id === feeds[idx]);
+          floatFeed = gi(feeds[idx]);
         }
       } else field?.setVisible(false);
 
@@ -572,7 +636,7 @@ export function Journey() {
         const feeds = s.neuralFeeds; const anchors = s.neuralAnchors; const times = s.neuralTimes; const idx = s.neuralIdx;
         const key = `${feeds.join('|')}#${anchors.join(',')}`;
         if (boundKey !== key) {
-          nw.bind(feeds.map((f, i) => ({ anchor: anchors[i], feedIndex: FEEDS.findIndex((x) => x.id === f) })));
+          nw.bind(feeds.map((f, i) => ({ anchor: anchors[i], feedIndex: gi(f) })));
           boundKey = key;
         }
         const last = feeds.length - 1;
@@ -609,15 +673,16 @@ export function Journey() {
         if (s.stage === 'neuralIn') {
           const target = nw.screenRect(anchors[0], vw, vh) ?? { x: vw * 0.3, y: vh * 0.3, w: vw * 0.4, h: vh * 0.4 };
           neuralRect = lerpRect({ x: 0, y: 0, w: vw, h: vh }, target, easeInOut(s.neuralP));
-          neuralFeed = FEEDS.findIndex((f) => f.id === feeds[0]);
-        } else if (s.stage === 'neural' && !nw.isWarm(FEEDS.findIndex((f) => f.id === feeds[idx]))) {
+          neuralFeed = gi(feeds[0]);
+        } else if (s.stage === 'neural' && !nw.isWarm(gi(feeds[idx]))) {
           // Hold reached but the screen's video texture has no uploaded frame yet: keep the shared DOM video over it.
           const target = nw.screenRect(anchors[idx], vw, vh);
-          if (target) { neuralRect = target; neuralFeed = FEEDS.findIndex((f) => f.id === feeds[idx]); }
+          if (target) { neuralRect = target; neuralFeed = gi(feeds[idx]); }
         } else {
-          neuralClockFeed = FEEDS.findIndex((f) => f.id === feeds[s.stage === 'neuralOut' ? last : idx]);
+          neuralClockFeed = gi(feeds[s.stage === 'neuralOut' ? last : idx]);
         }
       } else if (nw) {
+        nw.syncCity(); // the city may have changed at the globe: the atlas is repainted while the scene is hidden
         nw.setVisible(false);
         nw.release(); boundKey = '';
       }
@@ -629,7 +694,7 @@ export function Journey() {
       if (s.stage !== 'neuralOut') neuralTile = undefined;
       else if (!neuralTile) {
         // The mosaic tile of the departing feed nearest the view: the neural pane's place in the regional field.
-        const fi = FEEDS.findIndex((f) => f.id === s.outFeedId);
+        const fi = gi(s.outFeedId);
         let best = Infinity;
         for (const t of tiles) {
           const d = Math.abs(t.x + t.w / 2 - (s.worldX + vw / 2));
@@ -646,8 +711,8 @@ export function Journey() {
       let anchor = focal;
       if (pose) {
         const feedIdx = s.stage === 'entering'
-          ? ALL_FEEDS.findIndex((f) => f.id === (s.destId ? s.entryFeedId ?? cityById(s.destId)?.feedId : undefined))
-          : ALL_FEEDS.findIndex((f) => f.id === s.outFeedId);
+          ? gi(s.destId ? s.entryFeedId ?? cityById(s.destId)?.feedId : undefined)
+          : gi(s.outFeedId);
         tile = s.stage === 'entering' ? (s.entryTileId ? tiles[idIndex.get(s.entryTileId) ?? -1] : undefined)
           : s.stage === 'neuralOut' ? neuralTile : sel ?? lastSel;
         if (s.stage === 'neuralOut' && feedIdx >= 0) { // the pane's field tile IS the seam rect (never an arbitrary mosaic tile)
@@ -817,7 +882,8 @@ export function Journey() {
       const painted = tiles.every((t, i) => !dirty[i] || t.x + t.w < wx - vw * 0.3 || t.x > wx + vw * 1.3);
       if (!collageShown.current && (tilesWanted || s.stage !== 'mosaic')) {
         // Never reveals a blank grid: a timeout only changes the cover's message; late posters / frames still complete it.
-        const st = collageStatus(posterEntries.map((p) => p.state), now - collageStart, painted, videoDrawn);
+        // Gated on the ACTIVE city's posters only (Butlerville's four at startup), never on every video or every city's poster.
+        const st = collageStatus(catalogOf(s.cityId).map((i) => posterEntries[i]?.state ?? 'pending'), now - collageStart, painted, videoDrawn);
         if (st === 'ready') { collageShown.current = true; root.dataset.collage = 'ready'; }
         else if (root.dataset.cstatus !== st) root.dataset.cstatus = st;
       }
@@ -915,8 +981,7 @@ export function Journey() {
 
   const selTile = placed.find((t) => t.id === selectedId);
   const focusTileData = placed.find((t) => t.id === focusedId);
-  const selVirtualFeed = selectedId ? feedOfVirtualTile(selectedId) : null; // a city-owned clip open on its virtual tile
-  const selFeed = selTile ? FEEDS[selTile.feedIndex] : selVirtualFeed ? ALL_FEEDS.find((f) => f.id === selVirtualFeed) ?? null : null;
+  const selFeed = selTile ? ALL_FEEDS[selTile.feedIndex] : null;
   const selYear = selTile
     ? YEARS[ctrl.selectedYear ?? Math.floor(axis.indexAt(selTile.x + selTile.w / 2 - layoutDims.w / 2))]
     : null;
@@ -926,16 +991,16 @@ export function Journey() {
   // The scenario city is the destination while flying in, then the one the open camera was reached through.
   const scenario = entering ? destCity : stage === 'selected' && sceneId ? cityById(sceneId) : null;
   const floating = isFloatStage(stage);
-  const floatFeed = floating ? FEEDS.find((f) => f.id === floatInfo.feeds[floatInfo.idx]) ?? null : null;
+  const floatFeed = floating ? ALL_FEEDS.find((f) => f.id === floatInfo.feeds[floatInfo.idx]) ?? null : null;
   const neural = isNeuralStage(stage);
-  const neuralFeed = neural ? FEEDS.find((f) => f.id === neuralInfo.feeds[neuralInfo.idx]) ?? null : null;
+  const neuralFeed = neural ? ALL_FEEDS.find((f) => f.id === neuralInfo.feeds[neuralInfo.idx]) ?? null : null;
   // A reversed globe leg re-enters the camera it left (its recorded feed), not necessarily the demo city's own feed.
   const enterFeed = entering && ctrl.state.legRev ? ALL_FEEDS.find((f) => f.id === ctrl.state.outFeedId) ?? destFeed : destFeed;
   const hudFeed = entering ? enterFeed : floating ? floatFeed : neural ? neuralFeed : selFeed;
   const globeNoteOpen = stage === 'globe' || stage === 'turning';
 
   return (
-    <div className="journey" ref={rootRef} data-collage="pending" data-cstatus="loading" data-stage={stage} data-selected={selectedId ?? ''} data-hud={hudFeed ? '1' : '0'} tabIndex={0} role="application"
+    <div className="journey" ref={rootRef} data-collage="pending" data-cstatus="loading" data-stage={stage} data-city={cityId} data-selected={selectedId ?? ''} data-hud={hudFeed ? '1' : '0'} tabIndex={0} role="application"
       aria-label="Machine Journey camera archive. Next: scroll down, press Right Arrow or Enter, or swipe up or left. Back: scroll up, press Left Arrow, or swipe down or right.">
       {/* Opaque loading cover present from the very first commit: no empty labelled grid is ever visible. It lifts once every
           poster has settled AND the tiles are painted from them (or after a bounded wait; see posterGate). */}
@@ -946,7 +1011,7 @@ export function Journey() {
       </div>
       <div className="world" ref={worldRef} style={{ width: layoutDims.w * SCREENS, height: layoutDims.h }}>
         {placed.map((t, i) => {
-          const f = FEEDS[t.feedIndex];
+          const f = ALL_FEEDS[t.feedIndex];
           return (
             <button
               key={t.id}
@@ -979,9 +1044,9 @@ export function Journey() {
 
       {/* One persistent decoder + clip pane per feed; the selected pane is moved, never recreated. */}
       {ALL_FEEDS.map((f, i) => {
-        const core = i < CORE_FEED_COUNT;
-        // The 12 core feeds load exactly as before. The 21 city clips are inert (no src / poster / autoplay, preload none)
-        // until `attachCity` gives their element its source when that city is the upcoming target or open.
+        const core = EAGER_IDS.has(f.id);
+        // Only the opening city's (Butlerville) four feeds load at startup. Every other clip is inert (no src / poster /
+        // autoplay, preload none) until `attachCity` gives its element a source when its city is the upcoming target or open.
         return (
           <div className="pane" key={f.id} ref={(el) => { paneEls.current[i] = el; }}
             style={core ? { backgroundImage: `url(${feedPosterUrl(f)})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>

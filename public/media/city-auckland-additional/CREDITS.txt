@@ -1,0 +1,9 @@
+City: auckland
+Source: https://www.pexels.com/it-it/video/video-in-timelapse-della-costruzione-di-un-grattacielo-urbano-ad-auckland-38885336/
+Credit: Kiwi and Camera
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: 5e0d27801c0e261e26e7f29d338c3923e6bbce21853b585d3b6fb153e28bf047
+Archive: TIMELAPSE, recorded local city view, not live surveillance.
+Location evidence: Stock contributor item description names city; recognizable skyline agrees. Not official camera geolocation.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; frame-count based crossfade. Exact camera GPS unverified.

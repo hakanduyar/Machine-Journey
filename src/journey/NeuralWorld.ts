@@ -11,6 +11,7 @@ import { uploadNow, watchContext } from './glUpload';
 import { disposeObjectTree } from './neuralSource/dispose';
 import { createMachineFraming } from './neuralSource/machineFraming';
 import { createMachinePhotoPresentation, type MachinePhotoPresentation } from './neuralSource/machinePhotoPresentation';
+import { createNeuralCityAtlas, type NeuralCityAtlas } from './neuralSource/cityAtlas';
 import { createMachineSynapse, type MachineSynapse } from './neuralSource/machineSynapse';
 import { createMachineTreatment, type FocusHold, type MachineTreatment } from './neuralSource/machineTreatment';
 import { createSceneRig, type SceneRig } from './neuralSource/sceneRig';
@@ -38,6 +39,11 @@ export interface NeuralWorldOptions {
   feedIds: readonly string[];
   /** The persistent decoder pool, indexed like `feedIds`. Read live; never created or paused here. */
   videos: () => readonly (HTMLVideoElement | null)[];
+  /**
+   * The ACTIVE CITY's already-loaded poster images (live read). Every camera photo / background photo node of the scene is
+   * repainted from them (see neuralSource/cityAtlas.ts); undecoded posters stay neutral, never the authored foreign photo.
+   */
+  cityPosters: () => { key: string | null; images: readonly (HTMLImageElement | undefined | null)[] };
 }
 
 export interface NeuralFrame {
@@ -85,6 +91,7 @@ export class NeuralWorld {
   private synapse!: MachineSynapse;
   private treatment!: MachineTreatment;
   private photo!: MachinePhotoPresentation;
+  private cityAtlas!: NeuralCityAtlas;
   private frame!: (w: number, h: number) => unknown;
   private root: Object3D;
   private opts: NeuralWorldOptions;
@@ -125,6 +132,10 @@ export class NeuralWorld {
       this.synapse = synapse;
       this.treatment = createMachineTreatment(gltf.scene, manifest.anchors);
       this.photo = createMachinePhotoPresentation(gltf.scene);
+      // After the photo presentation (its cloned materials carry the atlas): the active city's posters replace the foreign
+      // atlas before the first draw. A released focused override restores THIS material, so it stays the city's.
+      this.cityAtlas = createNeuralCityAtlas(gltf.scene);
+      this.syncCity();
       this.frame = createMachineFraming(this.rig.camera, manifest.framingAspectRatio);
       this.rig.camera.far = Math.max(this.rig.camera.far, 6000);
       this.rig.camera.updateProjectionMatrix();
@@ -135,6 +146,13 @@ export class NeuralWorld {
     }
     opts.host.appendChild(r.domElement);
     this.unwatch = watchContext(r, () => { this.lost = true; this.rewarm(); }, () => { this.lost = false; this.rewarm(); });
+  }
+
+  /** Repaints the scene's photo atlas when the active city or the set of decoded posters changed (cheap; safe every frame). */
+  syncCity() {
+    if (this.disposed) return;
+    const c = this.opts.cityPosters();
+    this.cityAtlas.update(c.key, c.images);
   }
 
   setVisible(visible: boolean, opacity = 1) {
@@ -173,6 +191,7 @@ export class NeuralWorld {
       this.renderer.setSize(f.vw, f.vh, false);
     }
     this.frame(f.vw, f.vh);
+    this.syncCity();
     for (const o of this.overrides) this.syncVideo(o.feedIndex);
     const t = this.rig.seek(f.time);
     this.lastTime = t;
@@ -358,6 +377,7 @@ export class NeuralWorld {
     if (this.disposed) return;
     this.disposed = true;
     this.release();
+    this.cityAtlas.dispose(); // authored map back on the clones before they are freed; only our canvas textures are disposed
     this.photo.dispose();
     this.treatment.dispose();
     this.synapse.dispose();

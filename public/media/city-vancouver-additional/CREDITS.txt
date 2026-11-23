@@ -1,0 +1,9 @@
+City: vancouver
+Source: https://www.pexels.com/video/view-of-city-buildings-5423562/
+Credit: Everett Bumstead
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: d81a443fb65f09a19ad784d2f1b7ce103b0e17168e54a54cc274a56d6ff553b5
+Archive: ARCHIVE / CITY PAN; not live surveillance.
+Location: Primary item metadata names city, decoded frames inspected; no official geolocation claim.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

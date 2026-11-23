@@ -1,0 +1,9 @@
+City: dubai
+Source: https://www.pexels.com/video/time-lapse-footage-of-a-modern-city-8139594/
+Credit: 张艾伦
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: 55d5a07ff6d4f47086803d3cd7eaaa00de626e54a915ae8005ffb93c476f762f
+Archive: TIMELAPSE, recorded local city view, not live surveillance.
+Location evidence: Stock contributor item description names city; recognizable skyline agrees. Not official camera geolocation.
+Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; frame-count based crossfade. Exact camera GPS unverified.

@@ -34,6 +34,12 @@ export interface FeedSelector {
   commit(feedId: string): boolean;
   /** Best-tier feeds for the next NEW camera, in seeded order, never including `exclude`. Pure. */
   eligible(exclude?: readonly (string | null | undefined)[]): string[];
+  /** City-scoped selectors only (see cityContext.ts `CityDecks`): switch the active city's deck; commit / eligible then act on it. */
+  useCity?(cityId: string | null): void;
+  /** City-scoped selectors only: best-tier feeds of ANOTHER city's deck (pure). */
+  eligibleFor?(cityId: string, exclude?: readonly (string | null | undefined)[]): string[];
+  /** City-scoped selectors only: the city still has a feed unseen in its own cycle (never-visited: true). */
+  hasUnseen?(cityId: string): boolean;
 }
 
 export class FeedDeck implements FeedSelector {

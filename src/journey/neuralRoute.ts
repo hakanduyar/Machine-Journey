@@ -25,6 +25,8 @@ export function planNeuralRoute(
    * anchor (the world binds a video texture per stop). Absent: each later stop shows the anchor's natural feed.
    */
   destFeeds?: readonly string[],
+  /** Finite city catalog: the city's own feed may repeat across stops (never another city's). Default: never reuse a feed. */
+  allowRepeat = false,
 ): NeuralPlan | null {
   const n = Math.max(2, Math.min(4, Math.round(stops)));
   const count = Math.min(holds.length, ANCHOR_FEEDS.length);
@@ -48,7 +50,7 @@ export function planNeuralRoute(
     used += step;
     const pick = first + dir * used;
     const feed = destFeeds ? destFeeds[k - 1] : ANCHOR_FEEDS[pick];
-    if (!feed || feeds.includes(feed)) return null; // never reuse an actual feed within a visit; no duplicate fallback
+    if (!feed || (!allowRepeat && feeds.includes(feed))) return null; // never reuse an actual feed within a visit unless the city has no more
     anchors.push(pick); feeds.push(feed);
   }
   return { feeds, anchors, times: anchors.map((a) => holdMid(holds[a])) };
