@@ -14,10 +14,10 @@ const expectedTotal = 86 + importedRows.length;
 const expectedNY = 14 + importedRows.filter(r=>r.cityId==='new-york').length;
 describe('recordingManifest (legacy and reviewed imported views)', () => {
   it('has all legacy and imported entries with unique feeds, reviewed view ids and original asset keys', () => {
-    expect(RECORDING_MANIFEST).toHaveLength(expectedTotal + 8);
-    expect(new Set(RECORDING_MANIFEST.map((c) => c.feedId)).size).toBe(expectedTotal + 8);
+    expect(RECORDING_MANIFEST).toHaveLength(expectedTotal + 9);
+    expect(new Set(RECORDING_MANIFEST.map((c) => c.feedId)).size).toBe(expectedTotal + 9);
     expect(new Set(RECORDING_MANIFEST.map((c) => c.reviewedView?.viewId)).size).toBe(expectedTotal);
-    expect(new Set(RECORDING_MANIFEST.map((c) => c.originalAssetKey)).size).toBe(expectedTotal + 8);
+    expect(new Set(RECORDING_MANIFEST.map((c) => c.originalAssetKey)).size).toBe(expectedTotal + 9);
     expect(Object.keys(VIEW_OF_FEED)).toHaveLength(expectedTotal);
     // view ids are curated, not derived from the feed id
     for (const c of RECORDING_MANIFEST) expect(c.reviewedView!.viewId).not.toBe(c.feedId);
@@ -47,7 +47,7 @@ describe('recordingManifest (legacy and reviewed imported views)', () => {
   it('uses canonical MEVA camera views and does not invent original hashes for core clips', () => {
     const meva = PHYSICAL_RECORDING_MANIFEST.filter((c) => c.provenance.publisher === 'MEVA');
     expect(meva.map((c) => c.reviewedView!.viewId).sort()).toEqual([
-      'butlerville-g505-canopy-driveway', 'butlerville-meva-g301-dock', 'butlerville-meva-g326', 'butlerville-meva-g328', 'butlerville-meva-g330-gymnasium', 'butlerville-meva-g341',
+      'butlerville-g505-canopy-driveway', 'butlerville-g508-corridor-stair', 'butlerville-meva-g301-dock', 'butlerville-meva-g326', 'butlerville-meva-g328', 'butlerville-meva-g330-gymnasium', 'butlerville-meva-g341',
       'butlerville-meva-g421-cafe', 'butlerville-meva-g423-school-hall', 'butlerville-meva-g424', 'butlerville-meva-g436-road-junction',
       'butlerville-meva-g505-canopy-roadside', 'butlerville-meva-g639-passage', 'meva-mutc-g299', 'meva-mutc-g329', 'meva-mutc-g331', 'meva-mutc-g340', 'meva-mutc-g419', 'meva-mutc-g420', 'meva-mutc-g508', 'meva-mutc-g638']);
     // full source file URLs/keys (never loop hashes); camera ids come from the source file names
@@ -57,7 +57,7 @@ describe('recordingManifest (legacy and reviewed imported views)', () => {
       expect(c.originalAssetKey).toContain(`.${cam}.`);
       expect(c.originalSha256).toBeUndefined();
     }
-    expect(manifestCandidatesFor('butlerville')).toHaveLength(28);
+    expect(manifestCandidatesFor('butlerville')).toHaveLength(30);
     // original hashes only where the packet declares the SOURCE .avi hash (never a loop hash); G507 (hold) is absent
     const withHash = ['m04', 'm05', 'city-butlerville-school-hall', 'city-butlerville-cafe', 'city-butlerville-stairwell', 'city-butlerville-classroom', 'city-butlerville-courtyard', 'city-butlerville-bus-interior',
       'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell'];
@@ -256,7 +256,7 @@ describe('recordingManifest (legacy and reviewed imported views)', () => {
         "poster": "2d08d960ee9f7a3436a71e4b619c842ba3bac95b26a6e509c628c43a484edf09"
     }
 ];
-    expect(manifestCandidatesFor('tokyo')).toHaveLength(5);
+    expect(manifestCandidatesFor('tokyo')).toHaveLength(6);
     expect(manifestCandidatesFor('new-york')).toHaveLength(expectedNY);
     for (const e of expected) {
       const c = RECORDING_MANIFEST.find(c => c.feedId === e.feed)!;

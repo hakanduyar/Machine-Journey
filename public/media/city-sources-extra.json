@@ -1240,5 +1240,71 @@
     },
     "loopNote": "Archived footage, not live. Same official G505 hardware identifier as another accepted view, but independently compared canopy supports, monument sightline and visible near ground establish a distinct composition. Aim or zoom change cannot be ruled out; no claim of a new physical camera device. Fixed archival SUV passage; short end-to-start dissolve.",
     "admissionManifestSha256": "ba433e47c21860b435ec6a17197097eb437125d2a4a96dc59b73c0df92f98fe2"
+  },
+  {
+    "cityId": "butlerville",
+    "city": "butlerville",
+    "feedId": "city-butlerville-meva-6ca7fe9c563418d9",
+    "source": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-15/15/2018-03-15.15-10-00.15-15-00.bus.G508.r13.avi",
+    "credit": "MEVA / Kitware Inc. / IARPA",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://mevadata.org/resources/MEVA-data-license.txt",
+    "archiveLabel": "ARCHIVE / CITY VIEW",
+    "locationClaim": "Official MEVA KF1 MUTC site, Butlerville; no exact camera GPS",
+    "provenanceLevel": "OFFICIAL_DATASET_SITE",
+    "bundleProvenanceLevel": "official-camera-location",
+    "exactCameraCoordinatesVerified": false,
+    "originalAssetKey": "meva/2018-03-15.15-10-00.15-15-00.bus.G508.r13.avi",
+    "originalAssetUrl": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-15/15/2018-03-15.15-10-00.15-15-00.bus.G508.r13.avi",
+    "originalSha256": "6ca7fe9c563418d9263122a877636f24bf19402b63753eb1ce82ec055956497b",
+    "loopSha256": "0c17c64f6eaa4e76f1b797026fe611259708bcb88dfa4785da56fe85e16b0582",
+    "posterSha256": "8b129f2c6877c953aadfd3f78533a88fd33aaebfb46b85000a60195e35017b6d",
+    "creditsSha256": "76acdd4a954a043814b641e1004ff0ea82fdde2f21d7aa79689f8721613745a2",
+    "reviewedViewId": "butlerville-g508-corridor-stair",
+    "reviewRef": "independent-g508-corridor-stair-view",
+    "sourceCameraId": "G508",
+    "sourceWindow": {
+      "start": 160,
+      "end": 195
+    },
+    "loopNote": "Archived footage, not live. Reviewed fixed corridor/stairwell composition distinct from the accepted G508 classroom. Same official G508 hardware identifier; no claim of a new physical camera device. Quiet endpoint blend and modest codec noise remain. Prior same-view event HOLD is preserved; this is a separate reviewed-view admission.",
+    "admissionManifestSha256": "4bce3ecc81c44a98fa49281fd209916948cce8fe5901f345252b3b9bf6c9465a"
+  },
+  {
+    "cityId": "tokyo",
+    "city": "tokyo",
+    "feedId": "city-tokyo-commons-16a44e653491331c",
+    "source": "https://commons.wikimedia.org/wiki/File:Timelapse_of_a_road_bridge_in_Tokyo_and_a_moat.webm",
+    "credit": "The Nature Box",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "archiveLabel": "ARCHIVE / TIMELAPSE",
+    "locationClaim": "Shimizu-bori moat near Kitanomaru Park, Chiyoda-ku, Tokyo; author primary description",
+    "provenanceLevel": "STOCK_PUBLISHER_LOCATION",
+    "bundleProvenanceLevel": "publisher-city-claim",
+    "exactCameraCoordinatesVerified": false,
+    "originalAssetKey": "commons/Timelapse_of_a_road_bridge_in_Tokyo_and_a_moat.webm",
+    "originalAssetUrl": "https://upload.wikimedia.org/wikipedia/commons/5/59/Timelapse_of_a_road_bridge_in_Tokyo_and_a_moat.webm",
+    "originalSha256": "16a44e653491331c482efdec34ef31bd8803e8c9624977455e397954cd1e89c9",
+    "loopSha256": "07395cb9552d5486e98679301e8dd6c4e4df267c8b6b2270fcbc68f1c89aeeb8",
+    "posterSha256": "6344b7e80910e992a7c8ac21cdf33d20dc13295ac96c8692375cb5e13852df85",
+    "creditsSha256": "d31ad01bea00954b14147a717fa3e47307e824b37114c065c8bee077821dcc43",
+    "reviewedViewId": "tokyo-shimizu-bori-road-bridges",
+    "reviewRef": "r71-tokyo-bridge-independent-source-loop",
+    "sourceWindow": {
+      "start": 3.5,
+      "end": 18.5
+    },
+    "commons": {
+      "fileTitle": "File:Timelapse_of_a_road_bridge_in_Tokyo_and_a_moat.webm",
+      "revision": "546702357",
+      "sourcePageSha256": "a67325aacd47d06c2fee38ac8501f1fb240b29a7048da2c70aafa0aa1d4bace9",
+      "author": "The Nature Box",
+      "derivativeLicense": "CC BY-SA 4.0",
+      "derivativeLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "derivativeChanges": "excerpt 3.5–18.5s; muted; pixel aspect corrected to square-pixel 1280x720/24fps; half-second boundary dissolve, 14.5-second replay. No stabilization or invented frames beyond disclosed dissolve/interpolation inherent in fps conversion. Derivative distributed under CC BY-SA 4.0."
+    },
+    "loopNote": "Archived footage, not live. Source-author x9 timelapse, not live CCTV. Muted excerpt with square-pixel correction and a half-second boundary dissolve. Distant traffic and water dissolve remains disclosed; no exact camera GPS. Derivative distributed under CC BY-SA 4.0.",
+    "admissionManifestSha256": "38b037d03e6a56127e1b4967099fa9073ac364e4167de8c42ff4b20e1d445d88"
   }
 ]

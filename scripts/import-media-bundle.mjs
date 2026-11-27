@@ -7,7 +7,7 @@ const read = async p => JSON.parse(await fs.readFile(p, 'utf8'));
 const fail = message => { throw new Error(message); };
 const slug = s => typeof s === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(s);
 const hash = s => typeof s === 'string' && /^[a-f0-9]{64}$/.test(s);
-const clean = s => typeof s === 'string' && s.trim() && !/(?:^|\s)[A-Za-z]:[\\/]|\\\\|\/(?:Users|home)\/|localhost|127\.0\.0\.1/i.test(s);
+const clean = s => typeof s === 'string' && s.trim() && !/(?:^|\s)[A-Za-z]:[\\/]|\\\\|\/(?:Users|home)\/|localhost|127\.0\.0\.1|file:(?:[\\/]|[A-Za-z]:)/i.test(s);
 const inside = (root, p) => p.startsWith(root + path.sep);
 async function contained(root, relative) {
   if (typeof relative !== 'string' || relative.includes('\\') || relative.split('/').some(x => !x || x === '.' || x === '..') || path.isAbsolute(relative)) fail('invalid relative asset path');
@@ -23,13 +23,22 @@ export function validateItem(i, cityIds) {
     i = { ...i, notes: i.notes.join(' ') };
   }
   if (!safeNote(i.notes)) fail('missing or private metadata: notes');
-  if (!/^(?:(?:pexels|mixkit):[1-9][0-9]*|meva:[0-9A-Za-z.-]+\.avi)$/.test(i.key || '') || !slug(i.city) || !cityIds.includes(i.city) || !slug(i.viewId)) fail('invalid key/city/view');
+  if (!/^(?:(?:pexels|mixkit):[1-9][0-9]*|meva:[0-9A-Za-z.-]+\.avi|commons:[A-Za-z0-9_(). -]+\.(?:webm|ogv))$/.test(i.key || '') || !slug(i.city) || !cityIds.includes(i.city) || !slug(i.viewId)) fail('invalid key/city/view');
   for (const k of ['credit','reviewRef','locationClaim','provenanceLevel','notes']) if (!clean(i[k])) fail('missing or private metadata: ' + k);
   for (const k of ['originalSha256','loopSha256','posterSha256','creditsSha256']) if (!hash(i[k])) fail('missing SHA: ' + k);
   if (i.originalSha256 === i.loopSha256 || i.originalSha256 === i.posterSha256) fail('original cannot be derivative');
   if(i.exactCameraCoordinatesVerified !== false) fail('camera coordinates are not verified by this adapter');
   const [provider,id] = i.key.split(':'), s=url(i.source), m=url(i.originalMedia);
   const px=provider==='pexels';
+  if(provider==='commons'){
+    const name=id.replaceAll(' ','_'), md5=crypto.createHash('md5').update(name).digest('hex');
+    if(s.hostname!=='commons.wikimedia.org'||decodeURIComponent(s.pathname)!=='/wiki/File:'+name||m.hostname!=='upload.wikimedia.org'||decodeURIComponent(m.pathname)!==`/wikipedia/commons/${md5[0]}/${md5.slice(0,2)}/${name}`)fail('Commons source/item/media binding mismatch');
+    const c=i.commons;
+    if(!c||c.fileTitle!=='File:'+name||!/^\d+$/.test(c.revision)||!hash(c.sourcePageSha256)||!safeNote(c.author)||!safeNote(c.derivativeChanges))fail('missing Commons source/derivative provenance');
+    if(i.license!=='CC BY-SA 4.0'||i.licenseUrl!=='https://creativecommons.org/licenses/by-sa/4.0/'||c.derivativeLicense!==i.license||c.derivativeLicenseUrl!==i.licenseUrl)fail('unsupported Commons license or derivative ShareAlike');
+    if(i.provenanceLevel!=='publisher-city-claim'||!i.trim||!Number.isFinite(i.trim.start)||!Number.isFinite(i.trim.end)||i.trim.start<0||i.trim.end<=i.trim.start)fail('invalid Commons location/window');
+    return {cityId:i.city,city:i.city,feedId:'city-'+i.city+'-commons-'+i.originalSha256.slice(0,16),source:i.source,credit:i.credit,license:i.license,licenseUrl:i.licenseUrl,archiveLabel:/time.?lapse/i.test(i.notes)?'ARCHIVE / TIMELAPSE':'ARCHIVE / CITY VIEW',locationClaim:i.locationClaim,provenanceLevel:'STOCK_PUBLISHER_LOCATION',bundleProvenanceLevel:i.provenanceLevel,exactCameraCoordinatesVerified:false,originalAssetKey:'commons/'+name,originalAssetUrl:i.originalMedia,originalSha256:i.originalSha256,loopSha256:i.loopSha256,posterSha256:i.posterSha256,creditsSha256:i.creditsSha256,reviewedViewId:i.viewId,reviewRef:i.reviewRef,sourceWindow:{start:i.trim.start,end:i.trim.end},commons:{fileTitle:c.fileTitle,revision:c.revision,sourcePageSha256:c.sourcePageSha256,author:c.author,derivativeLicense:c.derivativeLicense,derivativeLicenseUrl:c.derivativeLicenseUrl,derivativeChanges:c.derivativeChanges},loopNote:'Archived footage, not live. '+i.notes};
+  }
   if(provider==='meva'){
     const name=m.pathname.split('/').at(-1),match=name?.match(/^(2018-\d{2}-\d{2})\.(\d{2})-\d{2}-\d{2}\.(\d{2})-\d{2}-\d{2}\.[a-z]+\.(G\d{3})\.r13\.avi$/);
     const parent=match&&('/drops-123-r13/'+match[1]+'/');
@@ -77,7 +86,10 @@ export async function importBundle({root,bundleDir,approvedManifestSha,apply=fal
     if(destExists&&!existing)fail('untracked destination already exists');
     for(const [kind,name,expected]of [['loop','loop.mp4',i.loopSha256],['poster','poster.jpg',i.posterSha256],['credits','CREDITS.txt',i.creditsSha256]]){
       const from=await contained(bundleDir,i.files?.[kind]), b=await fs.readFile(from);if(digest(b)!==expected)fail('bundle asset hash mismatch: '+kind);
-      if(kind==='credits'&&!clean(b.toString('utf8')))fail('private or missing credits');
+      if(kind==='credits'){
+        const credit=b.toString('utf8');if(!clean(credit))fail('private or missing credits');
+        if(i.key.startsWith('commons:')&&![i.source,i.originalMedia,i.licenseUrl,i.commons.author,i.commons.derivativeChanges].every(s=>credit.includes(s)))fail('Commons attribution/derivative credits mismatch');
+      }
       const to=path.join(dest,name);
       if(existing){const actual=await contained(media,row.feedId+'/'+name);if(digest(await fs.readFile(actual))!==expected)fail('existing asset mismatch');}
       else copies.push({to,bytes:b});
