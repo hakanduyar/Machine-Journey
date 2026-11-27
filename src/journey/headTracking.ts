@@ -20,25 +20,33 @@ export const trackingFor=(feedId:string)=>HEAD_TRACKING[feedId];
 /** Preserved accepted pilot alias for its dedicated regression fixtures. */
 export const PILOT_TRACKING=HEAD_TRACKING.m01;
 /** Sample only the actual decoder clock. Never extrapolate, wrap time or bridge missing/occluded annotations. */
-export function sampleHeadTracks(data:HeadTracking,time:number):HeadKey[] {
+export function sampleHeadTracks(data:HeadTracking,time:number):HeadKey[] {return sampleWithIds(data,time).map(s=>s.key);}
+/** Author-selected display emphasis only (one human track per feed); not a model classification, identity or threat claim. Source tracking data is never mutated. */
+export const HUMAN_HIGHLIGHT_TRACKS:Readonly<Record<string,readonly string[]>>=Object.freeze({m01:['person-01'],m02:['person-01'],'city-butlerville-event-6be3a62539fcd5e7e29c':['person-01']});
+export const HUMAN_MARKER_COLORS={neutral:'#f1f0ea',highlight:'#c9b45a'} as const;
+const OBJECT_MARKER_COLORS={'aircraft-triangle':'#78d47a','vehicle-square':'#f1f0ea'} as const;
+function sampleWithIds(data:HeadTracking,time:number):{key:HeadKey;id:string}[] {
  if(!Number.isFinite(time)||time<0||time>data.duration)return [];
- const result:HeadKey[]=[];
+ const result:{key:HeadKey;id:string}[]=[];
  for(const tr of data.tracks){const keys=tr.keyframes;if(time<keys[0].t||time>keys[keys.length-1].t)continue;let a=keys[0],b=a;for(const k of keys){if(k.t<=time)a=k;if(k.t>=time){b=k;break;}}
   const reviewed=tr.reviewedSpans?.some(r=>time>=r.start&&time<=r.end);
   if(tr.reviewedSpans && !reviewed)continue;
   if(!a.visible||!b.visible||(!reviewed && b.t-a.t>data.maxGapSeconds))continue;
-  const mix=b.t===a.t?0:(time-a.t)/(b.t-a.t);result.push({t:time,cx:a.cx+(b.cx-a.cx)*mix,cy:a.cy+(b.cy-a.cy)*mix,size:a.size+(b.size-a.size)*mix,visible:true,...(tr.marker?{marker:tr.marker}:{})});
+  const mix=b.t===a.t?0:(time-a.t)/(b.t-a.t);result.push({id:tr.id,key:{t:time,cx:a.cx+(b.cx-a.cx)*mix,cy:a.cy+(b.cy-a.cy)*mix,size:a.size+(b.size-a.size)*mix,visible:true,...(tr.marker?{marker:tr.marker}:{})}});
  }
  return result;
 }
-export function headSquares(data:HeadTracking,time:number,crop:SrcRect,width:number,height:number){
+function styledSquares(data:HeadTracking,time:number,crop:SrcRect,width:number,height:number){
  if(width<=0||height<=0||crop.sw<=0||crop.sh<=0)return [];
  const scale=Math.min(width/(crop.sw*data.sourceWidth),height/(crop.sh*data.sourceHeight));
- return sampleHeadTracks(data,time).map(k=>{const side=k.size*data.sourceHeight*scale,cx=(k.cx-crop.sx)/crop.sw*width,cy=(k.cy-crop.sy)/crop.sh*height;return {x:cx-side/2,y:cy-side/2,side,...(k.marker?{marker:k.marker}:{})};}).filter(r=>r.x+r.side>=0&&r.y+r.side>=0&&r.x<=width&&r.y<=height);
+ return sampleWithIds(data,time).map(({key:k,id})=>{const side=k.size*data.sourceHeight*scale,cx=(k.cx-crop.sx)/crop.sw*width,cy=(k.cy-crop.sy)/crop.sh*height;return {x:cx-side/2,y:cy-side/2,side,...(k.marker?{marker:k.marker}:{}),highlight:!k.marker&&!!HUMAN_HIGHLIGHT_TRACKS[data.feedId]?.includes(id)};}).filter(r=>r.x+r.side>=0&&r.y+r.side>=0&&r.x<=width&&r.y<=height);
+}
+export function headSquares(data:HeadTracking,time:number,crop:SrcRect,width:number,height:number){
+ return styledSquares(data,time,crop,width,height).map(({highlight:_h,...r})=>r);
 }
 /** Reference-derived neutral person square; display geometry only, no classification or inferred identity. */
 export function drawHeadTracks(ctx:CanvasRenderingContext2D,data:HeadTracking,time:number,crop:SrcRect,width:number,height:number,strokeScale=1):void {
  ctx.save();ctx.beginPath();ctx.rect(0,0,width,height);ctx.clip();for(const polygon of data.occlusionPolygons||[]){ctx.beginPath();ctx.rect(0,0,width,height);polygon.forEach((p,i)=>{const x=(p.x-crop.sx)/crop.sw*width,y=(p.y-crop.sy)/crop.sh*height;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});ctx.closePath();ctx.clip('evenodd');}ctx.strokeStyle='#f1f0ea';ctx.shadowColor='rgba(0,0,0,.6)';ctx.shadowBlur=1;
- for(const r of headSquares(data,time,crop,width,height)){const corner=r.side*.12;ctx.strokeStyle=r.marker==='aircraft-triangle'?'#78d47a':'#f1f0ea';ctx.lineWidth=strokeScale===1?1.4:Math.min(1.4*strokeScale,r.side*.22);ctx.setLineDash([r.side*.04,r.side*.04]);if(r.marker==='aircraft-triangle'){ctx.beginPath();ctx.moveTo(r.x+r.side/2,r.y);ctx.lineTo(r.x+r.side,r.y+r.side);ctx.lineTo(r.x,r.y+r.side);ctx.closePath();ctx.stroke();continue;}ctx.strokeRect(r.x,r.y,r.side,r.side);ctx.setLineDash([]);ctx.lineWidth=strokeScale===1?2.2:Math.min(2.2*strokeScale,r.side*.3);ctx.beginPath();for(const sx of [0,1])for(const sy of [0,1]){const x=r.x+sx*r.side,y=r.y+sy*r.side;ctx.moveTo(x+(sx?-corner:corner),y);ctx.lineTo(x,y);ctx.lineTo(x,y+(sy?-corner:corner));}ctx.stroke();}
+ for(const r of styledSquares(data,time,crop,width,height)){const corner=r.side*.12;ctx.strokeStyle=r.marker?OBJECT_MARKER_COLORS[r.marker]:r.highlight?HUMAN_MARKER_COLORS.highlight:HUMAN_MARKER_COLORS.neutral;ctx.lineWidth=strokeScale===1?1.4:Math.min(1.4*strokeScale,r.side*.22);ctx.setLineDash([r.side*.04,r.side*.04]);if(r.marker==='aircraft-triangle'){ctx.beginPath();ctx.moveTo(r.x+r.side/2,r.y);ctx.lineTo(r.x+r.side,r.y+r.side);ctx.lineTo(r.x,r.y+r.side);ctx.closePath();ctx.stroke();continue;}ctx.strokeRect(r.x,r.y,r.side,r.side);ctx.setLineDash([]);ctx.lineWidth=strokeScale===1?2.2:Math.min(2.2*strokeScale,r.side*.3);ctx.beginPath();for(const sx of [0,1])for(const sy of [0,1]){const x=r.x+sx*r.side,y=r.y+sy*r.side;ctx.moveTo(x+(sx?-corner:corner),y);ctx.lineTo(x,y);ctx.lineTo(x,y+(sy?-corner:corner));}ctx.stroke();}
  ctx.restore();
 }

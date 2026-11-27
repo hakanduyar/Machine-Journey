@@ -51,3 +51,16 @@ it('retains signed anatomical centres only when their square overlaps the source
  expect(()=>parseHeadTracking(fixture([{...k(0),cx:-.2}]))).toThrow();
  expect(()=>parseHeadTracking(fixture([{...k(0),cy:1.2}]))).toThrow();
 });
+
+it('G508 reviewed passage keeps signed entry, raw invisible guards and overhead mask',()=>{
+ const id='city-butlerville-meva-6ca7fe9c563418d9',d=trackingFor(id)!;
+ expect(crypto.createHash('sha256').update(fs.readFileSync(`public/media/${id}/loop.mp4`)).digest('hex')).toBe(d.videoSha256);
+ expect(d.videoSha256).toBe('0c17c64f6eaa4e76f1b797026fe611259708bcb88dfa4785da56fe85e16b0582');
+ expect(sampleHeadTracks(d,11.375)).toEqual([]);
+ const entry=sampleHeadTracks(d,274/24)[0];expect(entry.cx).toBeCloseTo(-8/1280);expect(entry.size).toBeCloseTo(30/720);
+ expect(sampleHeadTracks(d,13.25)).toHaveLength(1);expect(sampleHeadTracks(d,26.625)).toHaveLength(1);
+ expect(sampleHeadTracks(d,640/24)).toEqual([]);expect(sampleHeadTracks(d,0)).toEqual([]);
+ expect(d.maxGapSeconds).toBe(.51);expect(d.occlusionPolygons).toHaveLength(1);
+ const raw=JSON.parse(fs.readFileSync(`public/media/${id}/head-tracks.json`,'utf8'));
+ expect(raw.tracks[0].sourceFrames.filter((k:{visible:boolean})=>!k.visible).every((k:{target:unknown})=>k.target===null)).toBe(true);
+});

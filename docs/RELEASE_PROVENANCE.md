@@ -59,3 +59,11 @@ This curated update derives runtime, media, annotations and tests from accepted 
 The release adds Paris Saint-Eustache footage, two independently reviewed Butlerville events and a separately reviewed G505 canopy composition. Eight person feeds contain 18 tracks over bounded reviewed ranges; five object feeds have one target each. Native-time signed edge centres and fixed foreground masks preserve target geometry through partial visibility. Source hashes, original credits and measurement provenance remain bound to the accepted files. No unapproved clips or experimental display styles are included.
 
 Catalog fixture expectations were updated to the exact admitted inventory without removing ownership, alias, timing or capacity checks. The 78-recordings-per-city target remains unmet and issue6 stays open. Independent normal-navigation and served-byte checks distinguish selected-route evidence from isolated source playback; no exhaustive frame or camera coverage is claimed.
+
+## Reviewed Commons archive and corridor passage update
+
+This curated release derives runtime, media, annotations and tests from source snapshot `75c33c75b94ced05e465d9a696314d6514ac93c6`. Public history contains selected release files and GitHub noreply attribution. The catalog has 99 distinct views and 108 recordings: Butlerville 21 views / 30 recordings, including nine distinct events at existing authorized views, and Tokyo six views. Views do not count physical devices.
+
+The release adds a separately reviewed G508 corridor composition, a different G419 stair passage at the existing view, and The Nature Box’s Tokyo moat/bridge timelapse. The Commons derivative retains CC BY-SA 4.0 attribution, original URL, pinned source revision and modification notice. Source/file, original and derivative hashes, explicit public fields and replay checks protect imports. The event exception remains limited to the original authorized Butlerville views; later independently accepted views do not silently broaden that exception.
+
+Nine person feeds now contain 19 tracks over reviewed intervals, including the source-bound G508 passage. Five object feeds remain unchanged. Muted-yellow emphasis is an authored display role alongside neutral white, not a classification of real people. The full 78-recordings-per-city coverage and complete tracking remain open; held sources are excluded.
