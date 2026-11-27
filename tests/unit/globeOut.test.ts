@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { JourneyController, isHoldStage, yearAxis, type JourneyState } from '../../src/journey/controller';
 import { CITIES } from '../../src/journey/globe';
 import { anchorCityFor } from '../../src/journey/globeOut';
-import { LEG_K, legTime } from '../../src/journey/scale';
+import { LEG_K, legTime, globeLegClock, TIME_A, OUTBOUND_LATE_SPEEDUP } from '../../src/journey/scale';
 import { planLeg, reanchorTile } from '../../src/journey/route';
 import { generateMosaic } from '../../src/journey/layout';
 
@@ -62,7 +62,7 @@ describe('anchor', () => {
 });
 
 describe('controller endpoints on the shared scale curve', () => {
-  it('outbound: one gesture runs the whole leg (7-10 s) as ONE monotonic leg time 0 -> 1 and ends in the held composition', () => {
+  it('outbound: one gesture runs the whole accelerated-local-half leg as ONE monotonic leg time 0 -> 1 and ends in the held composition', () => {
     const c = make([{ kind: 'globe', after: 1 }]);
     leg(c); // camera hold on some feed
     const feed = feedOf(c.state.selectedId)!;
@@ -84,7 +84,15 @@ describe('controller endpoints on the shared scale curve', () => {
     expect(ts[0]).toBe(0);
     for (let i = 1; i < ts.length; i++) expect(ts[i]).toBeGreaterThanOrEqual(ts[i - 1] - 1e-9);
     expect(ts[ts.length - 1]).toBeGreaterThan(0.99);
-    expect(steps * 16).toBeGreaterThan(7000); expect(steps * 16).toBeLessThan(10000);
+    // Accepted pacing: the local clock is shorter; only the existing late global boost can shorten it further.
+    // Boost begins at globe progress .55 (T = TIME_A + .55*(1-TIME_A)) and never exceeds14%.
+    // Bound its maximum possible saving without reimplementing the controller's integrator.
+    const unboostedMs = LEG_K * TRAVEL * globeLegClock(1);
+    const lateGlobalShare = (1 - TIME_A) * (1 - .55);
+    const maxSavingMs = LEG_K * TRAVEL * lateGlobalShare * (1 - 1 / (1 + OUTBOUND_LATE_SPEEDUP));
+    const tickToleranceMs = 3 * 16; // initial sample and the two phase handoffs
+    expect(steps * 16).toBeGreaterThanOrEqual(unboostedMs - maxSavingMs - tickToleranceMs);
+    expect(steps * 16).toBeLessThanOrEqual(unboostedMs + tickToleranceMs);
     expect(c.state.globeP).toBe(1); expect(c.state.travelEased).toBe(0); expect(c.state.globeLeg).toBe(false);
   });
 
@@ -105,7 +113,7 @@ describe('controller endpoints on the shared scale curve', () => {
     expect(early[0].x).toBe(c.state.worldX);
     expect(ts[0]).toBeGreaterThan(0.98);
     for (let i = 1; i < ts.length; i++) expect(ts[i]).toBeLessThanOrEqual(ts[i - 1] + 1e-9);
-    expect(enterMs).toBeGreaterThan(LEG_K * TRAVEL - 100); expect(enterMs).toBeLessThan(LEG_K * TRAVEL + 100);
+    expect(enterMs).toBeGreaterThan(LEG_K * TRAVEL * globeLegClock(1) - 100); expect(enterMs).toBeLessThan(LEG_K * TRAVEL * globeLegClock(1) + 100);
     expect(c.state.entryTileId).toBeNull();
   });
 

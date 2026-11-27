@@ -1,0 +1,11 @@
+# Source-bound person annotations
+
+Six feeds (m01, m02, m03, m06, m07 and parking-walk) carry 16 anonymous person tracks over reviewed time ranges. Existing authored head keyframes and explicit visibility flags were converted offline. A few source-frame measurements corrected alignment; their evidence hashes and measurement uncertainty remain in the annotation JSON. These are display annotations, not identity or behavioral classification.
+
+The renderer is shared by mosaic/selected DOM panes and floating/neural WebGL screens. It samples video.currentTime, preserves the source head center and square geometry through crop, hides during seeks until a decoded frame is available, and does not extrapolate across wrap or explicit invisibility. The default interpolation gap is 1.05 seconds. Some sparse authored tracks permit interpolation only within explicitly reviewed intervals; those intervals are partial coverage, not proof that every intervening frame was checked. The sampler does not infer additional occlusions.
+
+The GL layer uses the existing video decoder and source-bound annotation canvas. Each renderer owns its GPU texture wrapper. Neural screens have a capped stroke-legibility adjustment without moving or enlarging the measured head square; DOM styling is unchanged. No detector, video upload, network analysis, extra video decoder or per-frame React state update is introduced.
+
+`node scripts/import-head-tracks.mjs INPUT_PACKET OUTPUT_JSON` verifies expected video and annotation SHA256 before converting normalized head rectangles to normalized squares. Input supplies dimensions, feed ID, exact file hashes and public source URL. Exact repeat writes nothing; differing existing output fails closed. Changed video bytes, crop or timing require newly bound annotations and independent review.
+
+Video-byte binding is verified offline and in executable tests, not through an additional full-video fetch at runtime. Desktop and emulated portrait/landscape alignment, seeks, gaps, wrap and normal navigation were sampled independently. This is not all-camera tracking, per-frame accuracy certification or physical-phone certification. Vehicles and other object-only footage are outside this person-head annotation release. Unannotated feeds remain untracked.

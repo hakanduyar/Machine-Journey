@@ -11,7 +11,7 @@ import { planNeuralRoute, type NeuralHold } from '../../src/journey/neuralRoute'
 
 const IDS = ALL_FEEDS.map((f) => f.id);
 const BUTLER = ['m01', 'm02', 'm06', 'parking-walk', 'm03', 'm07', 'covered-road', 'm04', 'm05', 'city-butlerville-school-hall', 'city-butlerville-cafe', 'city-butlerville-stairwell', 'city-butlerville-classroom', 'city-butlerville-courtyard', 'city-butlerville-bus-interior',
-  'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell'];
+  'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell', 'city-butlerville-event-6be3a62539fcd5e7e29c'];
 const BUTLER_PRIMARY = BUTLER.slice(0, 4);
 const catalog = (city: string) => catalogIndices(cityFeedIds(cityById(city)), IDS);
 
@@ -57,8 +57,8 @@ const toHold = (c: JourneyController) => { for (let i = 0; i < 6000 && !isHoldSt
 const fwd = (c: JourneyController) => { expect(c.dispatch({ type: 'intent' })).toBe(true); toHold(c); };
 const back = (c: JourneyController) => { expect(c.dispatch({ type: 'back' })).toBe(true); toHold(c); };
 
-describe('initial ownership: Butlerville (its nineteen real feeds)', () => {
-  it('opens in Butlerville and its mosaic is bound only to its nineteen feeds', () => {
+describe('initial ownership: Butlerville (its twenty real feeds)', () => {
+  it('opens in Butlerville and its mosaic is bound only to its twenty feeds', () => {
     const { c } = make();
     expect(c.activeCity).toBe('butlerville');
     expect(cityFeedIds(cityById(DEFAULT_CITY_ID))).toEqual(BUTLER);
@@ -66,7 +66,7 @@ describe('initial ownership: Butlerville (its nineteen real feeds)', () => {
     for (const f of feeds) expect(BUTLER).toContain(f);
     expect(feeds.size).toBeGreaterThan(1);
   });
-  it('startup sources: only Butlerville\'s nineteen; no other city / unowned clip is part of the opening pool', () => {
+  it('startup sources: only Butlerville\'s twenty; no other city / unowned clip is part of the opening pool', () => {
     const startup = new Set(cityFeedIds(cityById(DEFAULT_CITY_ID)));
     expect([...startup]).toEqual(BUTLER);
     for (const id of IDS) if (!startup.has(id)) expect(cityOfFeed(id, CITIES)?.id).not.toBe('butlerville');
@@ -217,7 +217,7 @@ describe('city context through the controller', () => {
 
 describe('capped playback for the active city', () => {
   const n = IDS.length;
-  it('route stages keep the cap of three even with a nineteen-feed pool; the globe hold plays nothing', () => {
+  it('route stages keep the cap of three even with a twenty-feed pool; the globe hold plays nothing', () => {
     const pool = catalog('butlerville');
     for (const stage of ['floating', 'floatMove', 'neural', 'neuralMove'] as const) {
       const d = desiredPlayback({ stage, selectedFeed: -1, targetFeed: -1, feedCount: n, pool, active: pool });

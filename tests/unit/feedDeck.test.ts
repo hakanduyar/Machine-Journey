@@ -43,10 +43,10 @@ describe('verified source places (truth over novelty)', () => {
     expect(c.feedId).toBe('parked-c130'); expect(c.feedIds).toEqual(['parked-c130', 'city-savannah-additional']);
     expect(c.verified!.url).toContain('dvidshub.net/video/554984');
   });
-  it('Butlerville (Muscatatuck, Indiana) opens only its nineteen MEVA Muscatatuck feeds, with the Census locality point; Palmdale the DC-8 plus its one approved additional clip', () => {
+  it('Butlerville (Muscatatuck, Indiana) opens only its twenty MEVA Muscatatuck feeds, with the Census locality point; Palmdale the DC-8 plus its one approved additional clip', () => {
     const b = cityById('butlerville')!;
     expect(b.feedIds).toEqual(['m01', 'm02', 'm06', 'parking-walk', 'm03', 'm07', 'covered-road', 'm04', 'm05', 'city-butlerville-school-hall', 'city-butlerville-cafe', 'city-butlerville-stairwell', 'city-butlerville-classroom', 'city-butlerville-courtyard', 'city-butlerville-bus-interior',
-      'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell']);
+      'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell', 'city-butlerville-event-6be3a62539fcd5e7e29c']);
     expect([b.lon, b.lat]).toEqual([-85.51, 39.03]);
     expect(b.verified!.note).toMatch(/not Indianapolis/);
     expect(b.verified!.note).toMatch(/camera position is not verified/);

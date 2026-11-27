@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { JourneyController, isHoldStage, yearAxis } from '../../src/journey/controller';
 import { ALL_FEEDS, FEEDS } from '../../src/journey/feeds';
-import { EXTRA_SOURCES } from '../../src/journey/cityFeeds';
+import { EXTRA_SOURCES, EVENT_SOURCES } from '../../src/journey/cityFeeds';
 import { ARCS, CITIES, HUBS, cityById, routeArcs, routeSig } from '../../src/journey/globe';
 import { planLeg, reanchorTile } from '../../src/journey/route';
 import { generateMosaic } from '../../src/journey/layout';
@@ -24,10 +24,10 @@ describe('catalog: authored demo cities plus verified source places on the twelv
     // (Savannah parked-c130; Butlerville m01 m02 m06 parking-walk m03 m07 covered-road m04 m05; Palmdale palmdale-dc8). The earlier "+ 6" omitted
     // Butlerville's five R51-admitted core feeds (m03 m07 covered-road m04 m05), so it was already 5 short of the real reach before any later row.
     const verifiedCoreFeeds = ['parked-c130', 'm01', 'm02', 'm06', 'parking-walk', 'm03', 'm07', 'covered-road', 'm04', 'm05', 'palmdale-dc8'];
-    expect(reach.size).toBe(21 + EXTRA_SOURCES.length + verifiedCoreFeeds.length);
+    expect(reach.size).toBe(21 + EXTRA_SOURCES.length + EVENT_SOURCES.length + verifiedCoreFeeds.length);
     // exact membership, not just a count: the reach is precisely the base clips, the extras and those known core feeds
     expect([...reach].sort()).toEqual([
-      ...CITIES.filter((c) => !c.verified).map((c) => `city-${c.id}`), ...EXTRA_SOURCES.map((s) => s.feedId), ...verifiedCoreFeeds,
+      ...CITIES.filter((c) => !c.verified).map((c) => `city-${c.id}`), ...EXTRA_SOURCES.map((s) => s.feedId), ...EVENT_SOURCES.map((s) => s.feedId), ...verifiedCoreFeeds,
     ].sort());
     // feeds no city owns stay unreachable (negative coverage)
     expect(reach.has('docked-cargo')).toBe(false);

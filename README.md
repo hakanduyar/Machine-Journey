@@ -4,7 +4,7 @@
 
 A Person of Interest-inspired interactive archive of recorded city views, explored through a camera mosaic, globe, floating field and neural scene. Each gesture completes one transition and holds until the next gesture. Back navigation revisits recorded stops.
 
-This is an unofficial, authored visual interface. Videos are licensed **recorded excerpts**, not live surveillance. Globe routes, lights and interface annotations are decorative; they do not represent real monitoring, identities or network activity.
+This is an unofficial, authored visual interface. Videos are licensed **recorded excerpts**, not live surveillance. Globe routes, lights and companion panels are decorative; they do not represent real monitoring, identities or network activity. Person reticles on a small subset of recordings follow authored, source-bound annotations.
 
 ## Run locally
 
@@ -37,7 +37,13 @@ The globe has 24 destinations. Twenty-one use separate city-labelled stock clips
 
 City videos load on demand. The active city now stays consistent across the mosaic, floating field and neural scene, including background cameras; Back and Redo restore the recorded city and feed choices. Animated companion panels show fictional dossiers, documents and audio-style graphics without claiming real analysis of the footage.
 
-Twenty-four additional licensed recordings expand the city pools. Reykjavík, Cairo, Johannesburg and Lagos still have one accepted recording each; additional clips for those four cities remain a follow-up. Some archive views are timelapses or stationary pans, identified in their credits.
+The city catalog contains **95 physical views and 96 recordings**. Butlerville has 19 physical views and one separately reviewed, genuinely different event from an existing camera; that event is not counted as a new physical view. New York has 23 recordings. Reykjavík, Cairo, Johannesburg and Lagos still have one each. Some archive views are timelapses or stationary pans, identified in their credits.
+
+Fresh globe destinations use a seeded shuffle cycle across the 24 cities. Floating and neural visits vary in length, capped by the city's available distinct recordings. Back and Redo preserve their original choices. The local half of a globe-to-camera approach accelerates toward the pane; its reverse contracts quickly before returning to the normal global leg.
+
+Six feeds carry 16 anonymous person tracks over reviewed time ranges: m01, m02, m03, m06, m07 and parking-walk. The square head reticles follow video time in mosaic/selected panes and floating/neural screens. Coverage is partial, manually authored and sampled; it is not live detection, identity recognition, complete scene tracking or vehicle tracking. See [tracking scope](scripts/HEAD_TRACKING.md).
+
+The default dense mosaic still repeats recordings. The optional ?catalog=unique diagnostic refuses to mount a city journey until every city can fill its whole mosaic with distinct admitted recordings; the current catalog remains insufficient. [Catalog expansion and full-mosaic uniqueness](https://github.com/hakanduyar/Machine-Journey/issues/6) remain open.
 
 ## Limits
 
