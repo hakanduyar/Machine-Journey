@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "feedId": "city-new-york-4272",
+  "videoSha256": "79a5d4d63462ff46b07160c342e53ffa9719ce923c28aeeb5a4efde899b04cf7",
+  "annotationSha256": "7933aa9acc8be8931c4424901b3e56279cf743d5466f7515195ed82709563860",
+  "sourceMediaUrl": "https://mixkit.co/free-stock-video/traffic-light-directing-traffic-4272/",
+  "sourceWidth": 1280,
+  "sourceHeight": 720,
+  "duration": 11.5,
+  "maxGapSeconds": 0.51,
+  "method": "Manual native-frame measurements of one selected yellow cab windscreen target; no identity inference.",
+  "reviewScope": "One selected already-visible cab only. Final edit dissolve is excluded by policy, not a physical exit; existing media ghost remains a known defect.",
+  "occlusionPolygons": [
+    [
+      {
+        "x": 0.5203125,
+        "y": 0.4388888888888889
+      },
+      {
+        "x": 0.57890625,
+        "y": 0.4388888888888889
+      },
+      {
+        "x": 0.57890625,
+        "y": 0.46111111111111114
+      },
+      {
+        "x": 0.60703125,
+        "y": 0.46944444444444444
+      },
+      {
+        "x": 0.60546875,
+        "y": 0.5111111111111111
+      },
+      {
+        "x": 0.57734375,
+        "y": 0.5083333333333333
+      },
+      {
+        "x": 0.57734375,
+        "y": 0.5194444444444445
+      },
+      {
+        "x": 0.60625,
+        "y": 0.5236111111111111
+      },
+      {
+        "x": 0.6046875,
+        "y": 0.5583333333333333
+      },
+      {
+        "x": 0.57734375,
+        "y": 0.5555555555555556
+      },
+      {
+        "x": 0.57734375,
+        "y": 0.5736111111111111
+      },
+      {
+        "x": 0.6046875,
+        "y": 0.5791666666666667
+      },
+      {
+        "x": 0.603125,
+        "y": 0.6152777777777778
+      },
+      {
+        "x": 0.5203125,
+        "y": 0.6152777777777778
+      }
+    ]
+  ],
+  "tracks": [
+    {
+      "id": "yellow-cab-windscreen",
+      "marker": "vehicle-square",
+      "keyframes": [
+        {
+          "t": 0,
+          "cx": 0.6359375,
+          "cy": 0.20694444444444443,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 0.5,
+          "cx": 0.6359375,
+          "cy": 0.20694444444444443,
+          "size": 0.06194444444444445,
+          "visible": true
+        },
+        {
+          "t": 1,
+          "cx": 0.6359375,
+          "cy": 0.20833333333333334,
+          "size": 0.06277777777777778,
+          "visible": true
+        },
+        {
+          "t": 1.5,
+          "cx": 0.63828125,
+          "cy": 0.20833333333333334,
+          "size": 0.0636111111111111,
+          "visible": true
+        },
+        {
+          "t": 2,
+          "cx": 0.63828125,
+          "cy": 0.20972222222222223,
+          "size": 0.06444444444444444,
+          "visible": true
+        },
+        {
+          "t": 2.5,
+          "cx": 0.6421875,
+          "cy": 0.2125,
+          "size": 0.06527777777777778,
+          "visible": true
+        },
+        {
+          "t": 3,
+          "cx": 0.64375,
+          "cy": 0.21805555555555556,
+          "size": 0.0661111111111111,
+          "visible": true
+        },
+        {
+          "t": 3.5,
+          "cx": 0.64921875,
+          "cy": 0.2361111111111111,
+          "size": 0.06694444444444445,
+          "visible": true
+        },
+        {
+          "t": 4,
+          "cx": 0.65078125,
+          "cy": 0.2569444444444444,
+          "size": 0.06777777777777777,
+          "visible": true
+        },
+        {
+          "t": 4.5,
+          "cx": 0.64921875,
+          "cy": 0.2847222222222222,
+          "size": 0.06861111111111111,
+          "visible": true
+        },
+        {
+          "t": 5,
+          "cx": 0.646875,
+          "cy": 0.3125,
+          "size": 0.06944444444444445,
+          "visible": true
+        },
+        {
+          "t": 5.5,
+          "cx": 0.64140625,
+          "cy": 0.3416666666666667,
+          "size": 0.07027777777777779,
+          "visible": true
+        },
+        {
+          "t": 6,
+          "cx": 0.63671875,
+          "cy": 0.37222222222222223,
+          "size": 0.07111111111111111,
+          "visible": true
+        },
+        {
+          "t": 6.5,
+          "cx": 0.63046875,
+          "cy": 0.39861111111111114,
+          "size": 0.07194444444444444,
+          "visible": true
+        },
+        {
+          "t": 7,
+          "cx": 0.6265625,
+          "cy": 0.4263888888888889,
+          "size": 0.07277777777777777,
+          "visible": true
+        },
+        {
+          "t": 7.5,
+          "cx": 0.62265625,
+          "cy": 0.45,
+          "size": 0.07361111111111111,
+          "visible": true
+        },
+        {
+          "t": 8,
+          "cx": 0.6171875,
+          "cy": 0.4736111111111111,
+          "size": 0.07444444444444445,
+          "visible": true
+        },
+        {
+          "t": 8.5,
+          "cx": 0.6125,
+          "cy": 0.49166666666666664,
+          "size": 0.07527777777777778,
+          "visible": true
+        },
+        {
+          "t": 9,
+          "cx": 0.60859375,
+          "cy": 0.5069444444444444,
+          "size": 0.0761111111111111,
+          "visible": true
+        },
+        {
+          "t": 9.5,
+          "cx": 0.60625,
+          "cy": 0.5180555555555556,
+          "size": 0.07694444444444444,
+          "visible": true
+        },
+        {
+          "t": 10,
+          "cx": 0.60546875,
+          "cy": 0.5236111111111111,
+          "size": 0.07777777777777778,
+          "visible": true
+        },
+        {
+          "t": 10.5,
+          "cx": 0.60546875,
+          "cy": 0.5236111111111111,
+          "size": 0.07777777777777778,
+          "visible": true
+        },
+        {
+          "t": 10.958333333333334,
+          "cx": 0.60546875,
+          "cy": 0.5236111111111111,
+          "size": 0.07777777777777778,
+          "visible": true
+        },
+        {
+          "t": 11,
+          "cx": 0,
+          "cy": 0,
+          "size": 0.07777777777777778,
+          "visible": false
+        },
+        {
+          "t": 11.5,
+          "cx": 0,
+          "cy": 0,
+          "size": 0.07777777777777778,
+          "visible": false
+        }
+      ]
+    }
+  ],
+  "sourceProvenance": {
+    "independentReviewSha256": "9650ed60ba03a3e8c05d769ee81cc4af9c494952ab560659a371e220be255c10",
+    "nativeTimebase": 12288,
+    "policyCutoff": {
+      "time": 11,
+      "evidenceKind": "POLICY_CUTOFF_NOT_NATIVE_MEASUREMENT",
+      "reason": "Existing final edit dissolve; selected vehicle remains physically visible."
+    }
+  }
+}

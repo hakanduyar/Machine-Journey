@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "feedId": "city-butlerville-roadside",
+  "videoSha256": "772c1e15ee9c0d4659543460a98660b06cd82a193d6c1fb5b8afaf23c70d7bbf",
+  "annotationSha256": "14c06674927c9110fe1ba750741c8033887e1908a2d66ac7beaa29ede811cea8",
+  "sourceMediaUrl": "https://mevadata-public-01.s3.amazonaws.com/drop-5-mevid/2018-05-18.14-30-07.14-35-07.bus.G340.r13.avi",
+  "sourceWidth": 1280,
+  "sourceHeight": 720,
+  "duration": 34.5,
+  "maxGapSeconds": 0.51,
+  "method": "Manual native-frame measurements of one selected red SUV windscreen target; no identity inference.",
+  "reviewScope": "One selected passage only. Approximate manual uncertainty 6 pixels interior and 10 pixels at partial edges; other vehicles unannotated.",
+  "tracks": [
+    {
+      "id": "red-suv-windscreen",
+      "marker": "vehicle-square",
+      "keyframes": [
+        {
+          "t": 0,
+          "cx": 0,
+          "cy": 0,
+          "size": 0.06111111111111111,
+          "visible": false
+        },
+        {
+          "t": 4.25,
+          "cx": 0,
+          "cy": 0,
+          "size": 0.06111111111111111,
+          "visible": false
+        },
+        {
+          "t": 4.375,
+          "cx": -0.0109375,
+          "cy": 0.2791666666666667,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 4.5,
+          "cx": 0.00546875,
+          "cy": 0.2791666666666667,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 5,
+          "cx": 0.0734375,
+          "cy": 0.2722222222222222,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 5.5,
+          "cx": 0.1484375,
+          "cy": 0.2708333333333333,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 6,
+          "cx": 0.23515625,
+          "cy": 0.26805555555555555,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 6.5,
+          "cx": 0.33671875,
+          "cy": 0.2708333333333333,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 7,
+          "cx": 0.45078125,
+          "cy": 0.26944444444444443,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 7.5,
+          "cx": 0.57421875,
+          "cy": 0.2722222222222222,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 8,
+          "cx": 0.7078125,
+          "cy": 0.2791666666666667,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 8.5,
+          "cx": 0.8453125,
+          "cy": 0.2847222222222222,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 9,
+          "cx": 0.98203125,
+          "cy": 0.29583333333333334,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 9.125,
+          "cx": 1.015625,
+          "cy": 0.2986111111111111,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 9.166666666666666,
+          "cx": 0,
+          "cy": 0,
+          "size": 0.06111111111111111,
+          "visible": false
+        },
+        {
+          "t": 34.5,
+          "cx": 0,
+          "cy": 0,
+          "size": 0.06111111111111111,
+          "visible": false
+        }
+      ]
+    }
+  ],
+  "sourceProvenance": {
+    "independentReviewSha256": "3f37ac1057d31bd695415761ee3d293e5f54e6010c0dabde25016a8c0a96b935",
+    "nativeTimebase": 12288,
+    "partialEdgeMethod": "Windscreen target contour and adjacent fully visible windscreen; signed centres preserved, no recentering onto bumper/rear body.",
+    "displaySidePixels": 44
+  }
+}
