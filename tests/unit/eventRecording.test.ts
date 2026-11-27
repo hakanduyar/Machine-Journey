@@ -9,7 +9,7 @@ const base=RECORDING_MANIFEST.find(c=>!c.reviewedEvent&&c.reviewedView!.viewId==
 const allocation=(e:RecordingCandidate)=>allocateCityRecordings(e.cityId,2,[{...base,cityId:e.cityId},e]);
 describe('explicit city-scoped event identity',()=>{
  it('counts the same physical camera once and its separate reviewed occurrence once',()=>{
-  expect(RECORDING_COUNTS).toEqual({physicalViews:99,recordings:108,eventRecordings:9});
+  expect(RECORDING_COUNTS).toEqual({physicalViews:100,recordings:109,eventRecordings:9});
   expect(event.reviewedView!.viewId).toBe('meva-mutc-g340');
   const a=allocation(event);expect(a.status).toBe('ready');
   if(a.status==='invalid')return;

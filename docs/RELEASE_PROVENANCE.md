@@ -73,3 +73,11 @@ Nine person feeds now contain 19 tracks over reviewed intervals, including the s
 This local curated candidate derives the shared renderer and accepted annotations from source snapshot `89d12c0a4ac975b6ad2b92d0cc28a1c73083843c`. Selected source files are exported without development history or private preparation evidence. The catalog remains108 recordings /99 distinct views; twelve human feeds carry25 partial tracks, and five object targets remain unchanged.
 
 Three G419 stair-passage tracks, two courtyard tracks and one cafe track retain exact video/annotation bindings, native timing, invisible guards and independently reviewed foreground masks. Per-person timed cutouts preserve source endpoint conventions without changing target geometry. Coverage and uncertainty remain bounded as described in the tracking guide. Full78-recordings-per-city coverage and whole-scene tracking remain open. Local release validation, publication and deployed verification have not yet been performed for this candidate.
+
+## Tokyo river and Paris-path annotation successor
+
+The completed local candidate derives accepted source files from `f742a26ae969f333aeb93a75685a816037e1c8fd`. It contains109 recordings /100 distinct views, including seven Tokyo views and nine additional Butlerville events. Thirteen human feeds contain31 partial tracks; five object targets are unchanged. The full78-per-city requirement remains open.
+
+Tokyo river footage retains The Nature Box attribution, Commons source revision1132580390, original-media URL, CC BY-SA4.0 and edit disclosure. The original x20 timelapse and half-second water/foliage dissolve are stated. Admission credits append the original URL without changing existing attribution or video/poster bytes. Paris head annotations preserve reviewed visibility and14-vertex foliage geometry; the pre-existing final ghosted dissolve remains a separate open media defect.
+
+Private source evidence, prompts, working paths and development history are excluded. Source and sampled private runtime gates passed; final public candidate validation and deployed verification are separate release steps. No newer source or annotation drafts are included.
