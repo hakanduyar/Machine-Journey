@@ -27,7 +27,7 @@ export const PILOT_TRACKING=HEAD_TRACKING.m01;
 /** Sample only the actual decoder clock. Never extrapolate, wrap time or bridge missing/occluded annotations. */
 export function sampleHeadTracks(data:HeadTracking,time:number):HeadKey[] {return sampleWithIds(data,time).map(s=>s.key);}
 /** Author-selected display emphasis only (one human track per feed); not a model classification, identity or threat claim. Source tracking data is never mutated. */
-export const HUMAN_HIGHLIGHT_TRACKS:Readonly<Record<string,readonly string[]>>=Object.freeze({m01:['person-01'],m02:['person-01'],'city-butlerville-event-6be3a62539fcd5e7e29c':['person-01']});
+export const HUMAN_HIGHLIGHT_TRACKS:Readonly<Record<string,readonly string[]>>=Object.freeze({m01:['person-01'],m02:['person-01'],'city-butlerville-event-6be3a62539fcd5e7e29c':['person-01'],'city-butlerville-event-0e5edab9c311666c7614':['person-01']});
 export const HUMAN_MARKER_COLORS={neutral:'#f1f0ea',highlight:'#c9b45a'} as const;
 const OBJECT_MARKER_COLORS={'aircraft-triangle':'#78d47a','vehicle-square':'#f1f0ea'} as const;
 function sampleWithIds(data:HeadTracking,time:number):{key:HeadKey;id:string}[] {

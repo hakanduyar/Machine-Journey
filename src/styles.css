@@ -73,7 +73,7 @@ button { font: inherit; color: inherit; }
 }
 
 /* ---- selected HUD ---- */
-.hud { position: absolute; inset: 0; pointer-events: none; z-index: 7; opacity: clamp(0, calc((var(--h) - 0.55) * 2.6), 1); }
+.hud { position: absolute; left: var(--hx, 0px); top: var(--hy, 0px); width: var(--hw, 100%); height: var(--hh, 100%); pointer-events: none; z-index: 7; opacity: clamp(0, calc((var(--h) - 0.55) * 2.6), 1); }
 .hud-tl { position: absolute; left: 20px; top: calc(18px + var(--safe-t)); display: flex; flex-direction: column; gap: 6px; }
 .hud .cam { font-size: 13px; letter-spacing: 0.22em; text-shadow: 0 0 6px #000; }
 .hud .yr { font-size: 13px; letter-spacing: 0.2em; color: rgba(232, 238, 244, 0.78); font-variant-numeric: tabular-nums; }
@@ -146,7 +146,11 @@ button { font: inherit; color: inherit; }
 
 @media (max-width: 520px) {
   .brand { letter-spacing: 0.2em; }
-  .hud .cam { max-width: calc(100vw - 110px); }
+  /* Labels live in the camera box (--hw); the left block wraps inside the width left of the clock, so the two never collide. */
+  .hud-tl { max-width: calc(100% - 112px); }
+  .hud .cam { max-width: 100%; font-size: 12px; letter-spacing: 0.14em; line-height: 1.35; white-space: normal; overflow-wrap: anywhere; }
+  .hud .yr, .hud .sc { max-width: 100%; overflow-wrap: anywhere; }
+  .hud-tr { white-space: nowrap; }
   .hud-tl, .hud-tr { left: 14px; }
   .hud-tr { left: auto; right: 14px; font-size: 12px; }
   .chrome button.open { padding: 0 12px; }

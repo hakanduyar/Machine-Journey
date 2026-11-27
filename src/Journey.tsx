@@ -18,7 +18,7 @@ import { ALL_FEEDS, YEARS, feedPosterUrl, feedVideoUrl } from './journey/feeds';
 import { familyFor } from './journey/companions';
 import { CityDecks, DEFAULT_CITY_ID, catalogIndices, cityFeedIds, stopFeeds, stopsFor } from './journey/cityContext';
 import {
-  computeCrop, easeInOut, lerpCrop, lerpRect, videoBoxForCrop, type CropParams, type Rect,
+  computeCrop, easeInOut, fullViewRect, lerpCrop, lerpRect, videoBoxForCrop, type CropParams, type Rect,
 } from './journey/geometry';
 import { generateMosaic, tileCountFor, type Mosaic, type Tile } from './journey/layout';
 import { IntentGate, keyDirection, type Dir } from './journey/intent';
@@ -491,7 +491,7 @@ export function Journey({ uniqueLayout, layoutRevision = 0, suspended = false, o
       }
       return footBand;
     };
-    let lastClock = '';
+    let lastClock = ''; let lastHudBox = '';
     let lastWx = NaN;
     let frameNo = 0;
     let neuralTile: Placed | undefined;
@@ -754,6 +754,9 @@ export function Journey({ uniqueLayout, layoutRevision = 0, suspended = false, o
       // on ONE log scale m: the DOM tiles, the repeated thumbnail field and the geography (canvas, same m) agree.
       let tile: Placed | undefined;
       let a1 = { x: 0, y: 0 };
+      // The opened camera's rect: the whole viewport, or on a narrow portrait the whole source frame (see fullViewRect).
+      const feedAspect = (i: number) => { const v = videoEls.current[i]; return v && v.videoWidth > 0 ? v.videoWidth / v.videoHeight : 16 / 9; };
+      const fullFor = (i: number): Rect => (i >= 0 ? fullViewRect(vw, vh, feedAspect(i)) : { x: 0, y: 0, w: vw, h: vh });
       let startRect: Rect = { x: 0, y: 0, w: vw, h: vh };
       let anchor = focal;
       if (pose) {
@@ -772,7 +775,10 @@ export function Journey({ uniqueLayout, layoutRevision = 0, suspended = false, o
         if (s.stage === 'neuralOut') {
           startRect = neuralOutStart ?? { x: vw * 0.3, y: vh * 0.3, w: vw * 0.4, h: vh * 0.4 };
           a1 = { x: startRect.x + startRect.w / 2, y: startRect.y + startRect.h / 2 };
-        } else a1 = focal; // final focus of a camera bridge: the shared focal point, not the tile's arbitrary mosaic position
+        } else {
+          a1 = focal; // final focus of a camera bridge: the shared focal point, not the tile's arbitrary mosaic position
+          startRect = fullFor(feedIdx); // the opened camera's rect (fitted on narrow portrait), matching the selected hold
+        }
         anchor = anchorAt(pose, a1, focal);
       }
       const spatialTile = pose && tile ? tile : undefined;
@@ -823,7 +829,7 @@ export function Journey({ uniqueLayout, layoutRevision = 0, suspended = false, o
       } else if (sel && s.progress > 0) {
         paneFeed = sel.feedIndex;
         const from: Rect = { x: sel.x - wx, y: sel.y, w: sel.w, h: sel.h };
-        paneRect = lerpRect(from, { x: 0, y: 0, w: vw, h: vh }, e);
+        paneRect = lerpRect(from, fullFor(sel.feedIndex), e);
         paneCrop = lerpCrop(sel.crop, FULL_CROP, e);
       }
 
@@ -913,6 +919,16 @@ export function Journey({ uniqueLayout, layoutRevision = 0, suspended = false, o
         }
       } else if (activePane >= 0) {
         hidePane(activePane); activePane = -1;
+      }
+      // Corner labels follow the opened camera's rect (the whole viewport except on a narrow portrait).
+      {
+        const hb = fullFor(activePane >= 0 ? activePane : sel ? sel.feedIndex : -1);
+        const key = `${hb.x}|${hb.y}|${hb.w}|${hb.h}`;
+        if (key !== lastHudBox) {
+          lastHudBox = key;
+          root.style.setProperty('--hx', `${hb.x}px`); root.style.setProperty('--hy', `${hb.y}px`);
+          root.style.setProperty('--hw', `${hb.w}px`); root.style.setProperty('--hh', `${hb.h}px`);
+        }
       }
       const clockFeed = floatHold && floatFeed >= 0 ? floatFeed : neuralClockFeed;
       if (clockFeed >= 0) {
