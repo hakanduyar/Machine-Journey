@@ -40,3 +40,16 @@ export function videoBoxForCrop(w: number, h: number, crop: SrcRect): Rect {
   const dh = h / crop.sh;
   return { x: -crop.sx * dw, y: -crop.sy * dh, w: dw, h: dh };
 }
+
+/** Widest viewport (px) treated as a narrow portrait screen; matches the 520px mobile breakpoint in styles.css. */
+export const NARROW_MAX_W = 520;
+/**
+ * The rect a fully opened camera occupies. Desktop / wide / landscape: the whole viewport (cover crop, unchanged). Narrow
+ * portrait: the whole source frame at its own aspect (full-width, vertically centred), so a "cover" crop never cuts subjects
+ * out. Being aspect-matched, `computeCrop` of FULL_CROP in this rect is the entire frame: one shared crop for video + markers.
+ */
+export function fullViewRect(vw: number, vh: number, srcAspect: number): Rect {
+  if (!(vw <= NARROW_MAX_W && vh > vw * 1.2 && srcAspect > vw / vh)) return { x: 0, y: 0, w: vw, h: vh };
+  const h = vw / srcAspect;
+  return { x: 0, y: (vh - h) / 2, w: vw, h };
+}

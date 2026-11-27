@@ -14,7 +14,7 @@ function recorder(){const shapes:unknown[]=[];let s:unknown='#000',pendingRect=f
  const ctx={...calls,get strokeStyle(){return s;},set strokeStyle(v:unknown){s=v;}} as unknown as CanvasRenderingContext2D;return {ctx,shapes,calls};}
 const rects=(r:ReturnType<typeof recorder>)=>r.calls.strokeRect.mock.calls.map(c=>(c as number[]).map(Math.round));
 it('configures one explicit highlighted human track in m01, m02 and the G340 event, without mutating source data',()=>{
- expect(HUMAN_HIGHLIGHT_TRACKS).toEqual({m01:['person-01'],m02:['person-01'],'city-butlerville-event-6be3a62539fcd5e7e29c':['person-01']});
+ expect(HUMAN_HIGHLIGHT_TRACKS).toEqual({m01:['person-01'],m02:['person-01'],'city-butlerville-event-6be3a62539fcd5e7e29c':['person-01'],'city-butlerville-event-0e5edab9c311666c7614':['person-01']});
  for(const [feed,ids] of Object.entries(HUMAN_HIGHLIGHT_TRACKS)){const d=trackingFor(feed)!,before=JSON.stringify(d);expect(d.tracks.map(t=>t.id)).toEqual(expect.arrayContaining([...ids]));drawHeadTracks(recorder().ctx,d,1,FULL,960,540);expect(JSON.stringify(d)).toBe(before);}
 });
 it('draws configured human muted yellow, other humans neutral, unknown feeds neutral, with identical geometry',()=>{
