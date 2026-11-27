@@ -1,0 +1,12 @@
+Video: Mixkit, tokyo aerial time lapse
+Source: https://mixkit.co/free-stock-video/tokyo-aerial-time-lapse-4309/
+Original media: https://assets.mixkit.co/videos/4309/4309-720.mp4
+License: Mixkit Stock Video Free License
+https://mixkit.co/license/modal/videoFree/
+Terms: https://mixkit.co/terms/
+City: publisher describes Tokyo; camera GPS not verified.
+Original SHA256: c7e33b4a8cfed425a05971ae3fe5dfa5f06152223be7a463d4c39370a78a6fe8
+Loop SHA256: c9277cf6e23c927998544a431a1f99c52382d54b9d94488116e1995c6c68e00a
+Changes: Muted720p24fps H264 excerpt; last0.5s dissolved into source first0.5s; no crop or synthetic frames apart from disclosed blend
+Quality: Stationary daytime skyline; shortened before major sunset shift; clouds dissolve at wrap.
+Recorded archive/timelapse, not live CCTV. No personal identity inference. Licensed only as project media; no standalone stock-library redistribution.

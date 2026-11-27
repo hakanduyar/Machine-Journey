@@ -1,0 +1,13 @@
+School hallway - MEVA camera G423
+Attribution: MEVA dataset, Kitware Inc. / IARPA.
+Source: https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/17/2018-03-07.17-05-01.17-10-01.school.G423.r13.avi
+Original SHA-256: BA4B0862A33BE7BD4DEDEB3094CF650B8E52F7DDF4283C7B9110FC84B0687309
+Prepared loop SHA-256: 3DE79124E45BF0C638B2B2F0EA085FD840803F8F300EDDD66D1B64209B1ED37F
+License: Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+Official license: https://mevadata.org/resources/MEVA-data-license.txt
+Collection site: Muscatatuck Urban Training Center / Butlerville, Indiana.
+Site evidence: https://arxiv.org/html/2012.00914#S3.SS3
+Changes: Excerpt 140-175s; output duration 34.5s; mute; 24fps H.264 1280x720 aspect-preserving fit; 0.5s N/12 tail-to-head dissolve; poster derived. No reverse playback.
+Archived staged activity, not live surveillance. Exact camera GPS unverified.
+CC BY 4.0 covers derived loop/poster; application MIT does not relicense this media.

@@ -1,0 +1,55 @@
+[
+  {
+    "key": "meva-event:6be3a62539fcd5e7e29c",
+    "city": "butlerville",
+    "viewId": "meva-mutc-g340",
+    "physicalCameraId": "meva-mutc-g340",
+    "sourceCameraId": "meva:KF1:G340",
+    "eventId": "meva:KF1:2018-05-16T19-51-28:G340:blue-shirt-pass",
+    "eventEquivalenceKey": "2018-05-16.19-50-03.19-55-03.bus.G340.r13.avi",
+    "originalRecordingId": "2018-05-16.19-50-03.19-55-03.bus.G340.r13.avi",
+    "source": "https://mevadata.org/",
+    "originalMedia": "https://mevadata-public-01.s3.amazonaws.com/drop-5-mevid/2018-05-16.19-50-03.19-55-03.bus.G340.r13.avi",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "credit": "MEVA / Kitware Inc. / IARPA",
+    "originalSha256": "c2ac487d4a064bc742efc4f5b2a7c6c5585ae3b38b650e2e2e7a1d803717c48c",
+    "loopSha256": "403481b973e03891f486db86e803555897a38e66358aee95e37fc727cf66bba0",
+    "posterSha256": "c2f7b95eac8c7d684f43a0202cd9c14d94fe90ba75d1e2c70d91e721a0e180a6",
+    "creditsSha256": "8cb3b5d43dc07698721f0a478fc55015e4fab991c9eb12a0687870795c50975e",
+    "trim": {
+      "startSec": 85,
+      "endSec": 140
+    },
+    "locationClaim": "MEVA KF1 at Muscatatuck Urban Training Center, Butlerville, Indiana; exact camera GPS unverified.",
+    "provenanceLevel": "official-dataset-site",
+    "exactCameraCoordinatesVerified": false,
+    "physicalViewIncrement": 0,
+    "eventRecordingIncrement": 1,
+    "authorization": {
+      "city": "butlerville",
+      "decisionSha256": "3cbf43f248a54d26d711d185e188fde7d018e5e895c670269e91eb70dbf9ec76"
+    },
+    "eventReview": {
+      "reviewSha256": "7dc9f124cb29ec97ef7887e2e6a801590bdc98421a062876a945e5082410c3e5",
+      "packetSha256": "8a654a1f9c8b658f2d7c9c6503b38f2cdb7c343fb960553eb6827d66515d5302",
+      "comparisonFeedId": "city-butlerville-roadside",
+      "comparisonOriginal": "https://mevadata-public-01.s3.amazonaws.com/drop-5-mevid/2018-05-18.14-30-07.14-35-07.bus.G340.r13.avi",
+      "visualProof": "Different original recording/time and visibly different occurrence from the same-camera accepted comparison; not a new physical viewpoint.",
+      "observedEvent": "Blue-shirt pedestrian enters naturally from lower frame and crosses left, with empty foreground boundaries; accepted May18 clip depicts vehicle traffic.",
+      "qualityNote": "Blue-shirt pedestrian pass versus accepted May18 vehicle event; stable source framing, actual native wrap readyState4. Bounded visual pass with visible contrast dissolve and a very brief sliver at far-left frame edge; not imperceptibly seamless."
+    },
+    "reviewRef": "independent-r56-g340-event-bounded",
+    "files": {
+      "loop": "meva-g340-6be3a62539fc/loop.mp4",
+      "poster": "meva-g340-6be3a62539fc/poster.jpg",
+      "credits": "meva-g340-6be3a62539fc/CREDITS.txt"
+    },
+    "cityId": "butlerville",
+    "feedId": "city-butlerville-event-6be3a62539fcd5e7e29c",
+    "archiveLabel": "ARCHIVE / DISTINCT EVENT",
+    "originalAssetKey": "meva/2018-05-16.19-50-03.19-55-03.bus.G340.r13.avi",
+    "originalAssetUrl": "https://mevadata-public-01.s3.amazonaws.com/drop-5-mevid/2018-05-16.19-50-03.19-55-03.bus.G340.r13.avi",
+    "admissionManifestSha256": "3fbca0519ddf96a84928c6268d76f2c6556d3206f5ba9a3de544630d4737333d"
+  }
+]

@@ -1,8 +1,8 @@
 import { clamp, easeInOut } from './geometry';
-import { angularDistance, lerpAim, routeArcs, type GlobeAim } from './globe';
-import { mulberry32 } from './layout';
+import { angularDistance, lerpAim, type GlobeAim } from './globe';
+import { CityBag } from './cityBag';
 import { anchorCityFor } from './globeOut';
-import { CONTRACT_K, LEG_K, OUT_K, outboundLateBoost } from './scale';
+import { CONTRACT_K, LEG_K, TIME_A, advanceGlobeLeg, outboundLateBoost } from './scale';
 import { feedOfVirtualTile, isCityFeed, virtualTileId } from './feeds';
 import type { FeedSelector } from './feedDeck';
 
@@ -96,6 +96,8 @@ interface HoldBase {
 interface MosaicHold extends HoldBase { kind: 'mosaic'; x: number }
 interface SelectedHold extends HoldBase {
   kind: 'selected'; id: string; feedId: string | null; x: number; ww: number; vw: number; city: string | null;
+  /** Layout geometry identity when recorded (candidate unique layouts only): x is exact only under the same geometry. */
+  gk?: string;
   /** Semantic archive year index of this stop; fixed when the stop is reached, independent of the physical tile. */
   year: number | null;
 }
@@ -200,6 +202,8 @@ export interface JourneyOptions {
   feedOfTile?: (tileId: string, cityId?: string | null) => string | null;
   /** Archive year index of a tile in the CURRENT layout; recorded once when a selected stop is reached. */
   yearOfTile?: (tileId: string) => number | null;
+  /** Candidate only: identity of the tile geometry (layout revision). Absent = widths alone decide (accepted runtime, unchanged). */
+  geometryKey?: () => string;
   /** Camera holds that must be reached before each globe branch (cycled). Authored 2..4. Ignored when `branches` is given. */
   globeGaps?: readonly number[];
   /** Fixture route of branches (cycled) for deterministic tests. Default: a globe branch after each of `globeGaps`. */
@@ -245,6 +249,7 @@ export class JourneyController {
   private peeked = -1;
   private feedOfTile: JourneyOptions['feedOfTile'];
   private yearOfTile: JourneyOptions['yearOfTile'];
+  private geometryKey: JourneyOptions['geometryKey'];
   private semYear: number | null = null;
   /** Semantic archive year of the open selected stop (null when unknown); not changed by responsive rebase. */
   get selectedYear(): number | null { return this.semYear; }
@@ -260,7 +265,7 @@ export class JourneyController {
   private legTarget: { id: string; x: number } | null = null;
   private holds = 0;
   private globeVisits = 0;
-  private lastCityId: string | null = null;
+  private cityBag: CityBag;
   private fromFeedId: string | null = null;
   private scanFrom = 0;
   private scanTo = 0;
@@ -278,8 +283,7 @@ export class JourneyController {
   private deck: FeedSelector | undefined;
   /** Counts FRESH globe visits only (replays reuse the recorded key): a deterministic counter, not an RNG draw. */
   private routeSerial = 0;
-  /** The most recent fresh city destinations (novelty window). */
-  private recent: string[] = [];
+
   private listeners = new Set<JourneyListener>();
   private s: JourneyState = {
     stage: 'mosaic', progress: 0, eased: 0, selectedId: null, pendingId: null,
@@ -305,6 +309,7 @@ export class JourneyController {
     this.travelMs = o.travelMs ?? 950;
     this.cities = o.cities ?? [];
     this.seed = o.seed ?? 0;
+    this.cityBag = new CityBag(this.cities.map(c => c.id), this.seed);
     this.deck = o.deck;
     this.planner = o.planner;
     // City-owned clips (R49 C) have no tile in the core-only mosaic: they land on a stable VIRTUAL tile (`virtual:<feedId>`),
@@ -318,6 +323,7 @@ export class JourneyController {
     this.feedOfTile = o.feedOfTile ? (id, cityId) => (this.ctx ? null : feedOfVirtualTile(id)) ?? o.feedOfTile!(id, cityId) : undefined;
     this.cityStatus = o.cityStatus;
     this.yearOfTile = o.yearOfTile;
+    this.geometryKey = o.geometryKey;
     this.floatPlan = o.floatPlan;
     this.neuralPlan = o.neuralPlan;
     this.neuralLegScale = o.neuralLegScale;
@@ -419,6 +425,7 @@ export class JourneyController {
         return Object.freeze({
           kind: 'selected', id: s.selectedId, feedId: this.feedOfTile?.(s.selectedId, cityId) ?? null, x: s.worldX,
           ww: this.worldWidth, vw: this.viewportWidth, city: s.sceneCityId, year: this.semYear, holds, cityId,
+          ...(this.geometryKey ? { gk: this.geometryKey() } : {}),
         });
       }
       case 'floating':
@@ -443,7 +450,8 @@ export class JourneyController {
   /** The tile + scroll a recorded camera hold maps to in the CURRENT layout (exact when the layout is unchanged). */
   private resolve(e: SelectedHold): { id: string; x: number } | null {
     const feedNow = this.feedOfTile?.(e.id, e.cityId) ?? null;
-    if (e.ww === this.worldWidth && e.vw === this.viewportWidth && feedNow === e.feedId) return { id: e.id, x: this.clampX(e.x) };
+    const sameGeometry = !this.geometryKey || e.gk === this.geometryKey();
+    if (sameGeometry && e.ww === this.worldWidth && e.vw === this.viewportWidth && feedNow === e.feedId) return { id: e.id, x: this.clampX(e.x) };
     if (e.feedId && this.anchorFeed) {
       const a = this.anchorFeed(e.feedId, e.x * (this.worldWidth / Math.max(1, e.ww)), e.cityId);
       if (a) return { id: a.id, x: this.clampX(a.x) };
@@ -838,7 +846,7 @@ export class JourneyController {
     }
     const k = s.stage === 'neuralIn' ? 1.7 : s.stage === 'neuralOut' ? LEG_K : move; // neuralOut: the shared globe-leg scale curve
     if (s.legRev) { // a recorded leg played backwards: the very same pose / path, progress running 1 -> 0
-      s.neuralP = Math.max(0, s.neuralP - (dtMs * (s.stage === 'neuralOut' ? outboundLateBoost(s.neuralP) : 1)) / (this.travelMs * k));
+      s.neuralP = s.stage === 'neuralOut' ? advanceGlobeLeg(s.neuralP, -dtMs * outboundLateBoost(s.neuralP) / (this.travelMs * k)) : Math.max(0, s.neuralP - dtMs / (this.travelMs * k));
       if (s.stage === 'neuralOut') { s.globeP = s.neuralP; s.globeEased = easeInOut(s.neuralP); }
       if (s.neuralP > 0) return true;
       s.neuralP = 0;
@@ -847,7 +855,7 @@ export class JourneyController {
       this.emit(null);
       return true;
     }
-    s.neuralP = Math.min(1, s.neuralP + (dtMs * (s.stage === 'neuralOut' ? outboundLateBoost(s.neuralP) : 1)) / (this.travelMs * k));
+    s.neuralP = s.stage === 'neuralOut' ? advanceGlobeLeg(s.neuralP, dtMs * outboundLateBoost(s.neuralP) / (this.travelMs * k)) : Math.min(1, s.neuralP + dtMs / (this.travelMs * k));
     if (s.stage === 'neuralOut') { s.globeP = s.neuralP; s.globeEased = easeInOut(s.neuralP); }
     if (s.neuralP < 1) return true;
     s.neuralP = 0;
@@ -946,46 +954,11 @@ export class JourneyController {
     if (c) { s.lon = c.lon; s.lat = c.lat; }
   }
 
-  /** A different city every visit: not the previous city, preferably a different feed and a visible rotation. */
+  /** Fair seeded destination cycle; failed sources are unavailable, history and prewarm do not consume it. */
   private pickCity(): GlobeCity | null {
-    const n = this.cities.length;
-    if (!n) return null;
-    const here = { lon: this.s.lon, lat: this.s.lat };
-    const s = this.s;
-    // The destinations this visit's route bundles lead to: the arcs on screen are the places the globe can fly to.
-    const linked = new Set<string>();
-    if (s.outCityId) for (const [a, b] of routeArcs(s.outCityId, s.routeKey, this.seed)) { linked.add(a); linked.add(b); }
-    const fresh = (c: GlobeCity) => !this.recent.includes(c.id);
-    const feedOk = (c: GlobeCity) => { const f = this.entryFeed(c); return !f || f !== this.fromFeedId; };
-    // Novelty: the city's feed (verified places: one of their own feeds) is still unseen in the shared deck's cycle. A city
-    // is never given a different, merely-fresh feed to look new.
-    const pool = this.deck && !this.deck.hasUnseen ? new Set(this.deck.eligible([this.fromFeedId])) : null;
-    // A city-owned clip is outside the (core-only) deck and unique to its city: it is novel whenever its city is `fresh`.
-    const novel = (c: GlobeCity) => {
-      if (this.deck?.hasUnseen) return this.deck.hasUnseen(c.id); // per-city decks: the city still has a source new to its own cycle
-      if (!pool) return true;
-      const f = this.entryFeed(c);
-      return !!f && (pool.has(f) || !(this.deck?.ids?.includes(f) ?? true));
-    };
-    const far = (c: GlobeCity) => angularDistance(here.lon, here.lat, c.lon, c.lat) >= 0.5;
-    const ok = [
-      (c: GlobeCity) => novel(c) && fresh(c) && feedOk(c) && far(c) && linked.has(c.id),
-      (c: GlobeCity) => novel(c) && fresh(c) && feedOk(c) && far(c),
-      (c: GlobeCity) => novel(c) && c.id !== this.lastCityId && feedOk(c),
-      (c: GlobeCity) => c.id !== this.lastCityId && feedOk(c) && far(c),
-      (c: GlobeCity) => c.id !== this.lastCityId && feedOk(c),
-      (c: GlobeCity) => c.id !== this.lastCityId,
-      () => true,
-    ];
-    const rnd = mulberry32((Math.imul(this.seed | 0, 0x9e3779b1) + this.globeVisits * 7919 + 17) | 0); // reproducible per seed; fresh picks only
-    let avail = this.cities.filter((c) => { const f = this.entryFeed(c); return !f || !this.failedFeeds.has(f); }); // never a city whose own clip failed
-    // Entering "another city" means a different one than the active city (the context only changes by actually entering).
-    if (s.cityId) { const others = avail.filter((c) => c.id !== s.cityId); if (others.length) avail = others; }
-    for (const test of ok) {
-      const cands = avail.filter(test);
-      if (cands.length) return cands[Math.floor(rnd() * cands.length)];
-    }
-    return null;
+    const available = new Set(this.cities.filter(c => { const f = this.entryFeed(c); return !f || !this.failedFeeds.has(f); }).map(c => c.id));
+    const id = this.cityBag.peek(available, this.s.cityId, new Set(this.cities.filter(c => this.entryFeed(c) === this.fromFeedId).map(c => c.id)));
+    return this.cities.find(c => c.id === id) ?? null;
   }
 
   /**
@@ -1022,8 +995,6 @@ export class JourneyController {
     }
     if (!city) return 'none';
     this.globeVisits++;
-    this.lastCityId = city.id;
-    this.recent.push(city.id); if (this.recent.length > 6) this.recent.shift();
     // The camera that will open is fixed now, so the whole entry zooms toward ITS place in the regional field.
     const feed = this.entryFeed(city);
     s.entryFeedId = feed;
@@ -1073,6 +1044,7 @@ export class JourneyController {
     s.worldX = s.targetX = this.clampX(a.x);
     s.progress = 1; s.eased = 1; this.dir = 0;
     s.sceneCityId = city ? city.id : null; s.destId = null;
+    if (city && !this.rp) this.cityBag.arrive(city.id); // commit only the actual fresh arrival, never Back/Redo
     if (city && this.ctx) this.setCity(city.id); // the globe actually ENTERED this city: the context is committed at arrival
     s.globeP = 0; s.globeEased = 0; s.travelP = 0; s.travelEased = 0;
     this.holds = 1;
@@ -1100,19 +1072,19 @@ export class JourneyController {
     const s = this.s;
     let changed = false;
     if (this.gdir === 1) {
-      s.globeP = clamp(s.globeP + (dtMs * outboundLateBoost(s.globeP)) / (this.travelMs * OUT_K), 0, 1);
+      s.globeP = clamp((advanceGlobeLeg(TIME_A + (1 - TIME_A) * s.globeP, (dtMs * outboundLateBoost(s.globeP)) / (this.travelMs * LEG_K)) - TIME_A) / (1 - TIME_A), 0, 1);
       s.globeEased = easeInOut(s.globeP);
       changed = true;
       if (s.globeP >= 1) { this.gdir = 0; this.globeArrived(); }
     }
     if (this.tdir === 1) {
-      s.travelP = clamp(s.travelP + dtMs / (this.travelMs * LEG_K), 0, 1); // the outbound curve, reversed
+      s.travelP = 1 - advanceGlobeLeg(1 - s.travelP, -dtMs / (this.travelMs * LEG_K)); // the outbound curve, reversed
       s.travelEased = easeInOut(s.travelP);
       changed = true;
       if (s.travelP >= 1) { this.finishEntry(); return true; }
     }
     if (this.tdir === -1) { // a recorded city entry played backwards: the same curve and speed, travelP 1 -> 0
-      s.travelP = clamp(s.travelP - dtMs / (this.travelMs * LEG_K), 0, 1);
+      s.travelP = 1 - advanceGlobeLeg(1 - s.travelP, dtMs / (this.travelMs * LEG_K));
       s.travelEased = easeInOut(s.travelP);
       changed = true;
       if (s.travelP <= 0) {
@@ -1181,7 +1153,9 @@ export class JourneyController {
     let changed = false;
     if (this.dir !== 0) {
       const span = s.globeLeg ? this.travelMs * CONTRACT_K : this.travelMs; // a globe leg's first sector is paced by the shared curve
-      s.progress = clamp(s.progress + (this.dir * dtMs) / span, 0, 1);
+      s.progress = s.globeLeg
+        ? clamp(1 - advanceGlobeLeg(TIME_A * (1 - s.progress), -this.dir * dtMs / (this.travelMs * LEG_K)) / TIME_A, 0, 1)
+        : clamp(s.progress + (this.dir * dtMs) / span, 0, 1);
       const arrived = (this.dir === 1 && s.progress >= 1) || (this.dir === -1 && s.progress <= 0);
       if (arrived) this.dir = 0;
       const stageChanged = this.recompute();

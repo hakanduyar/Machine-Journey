@@ -1,4 +1,4 @@
-import { CITY_SOURCES, EXTRA_SOURCES, cityFeedId, type CitySource } from './cityFeeds';
+import { CITY_SOURCES, EXTRA_SOURCES, EVENT_SOURCES, cityFeedId, type CitySource } from './cityFeeds';
 
 export interface Feed {
   id: string;
@@ -40,6 +40,7 @@ const cityFeed = (id: string, s: CitySource): Feed => ({
 export const CITY_FEEDS: Feed[] = [
   ...CITY_SOURCES.map((s) => cityFeed(cityFeedId(s.cityId), s)),
   ...EXTRA_SOURCES.map((s) => cityFeed(s.feedId, s)),
+  ...EVENT_SOURCES.map((s) => cityFeed(s.feedId, s)),
 ];
 /** Every playable element, core first: indices < CORE_FEED_COUNT are the original pool. */
 export const ALL_FEEDS: Feed[] = [...FEEDS, ...CITY_FEEDS];

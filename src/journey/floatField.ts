@@ -149,7 +149,7 @@ export interface FloatPlan { feeds: string[]; framing: FloatFraming[]; slots: nu
  * to fullscreen. Consecutive stops prefer an odd slot distance, so their medium panes sit on opposite sides.
  */
 export function planFloatRoute(startFeedId: string | null, stops: number, visit: number, destFeeds?: readonly string[], allowRepeat = false): FloatPlan | null {
-  const n = clamp(Math.round(stops), 2, 4);
+  const n = clamp(Math.round(stops), 2, 6);
   let start = startFeedId ? slotOfFeed(startFeedId) : -1;
   if (start < 0) start = (visit * 3 + 1) % FLOAT_STOPS.length;
   const slots = [start];

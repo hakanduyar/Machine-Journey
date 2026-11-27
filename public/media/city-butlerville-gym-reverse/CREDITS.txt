@@ -1,0 +1,12 @@
+Gym reverse view - MEVA camera G299
+Attribution: MEVA dataset, Kitware Inc. / IARPA.
+Source: https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/16/2018-03-11.16-45-00.16-50-00.school.G299.r13.avi
+Original SHA-256: 2EE0ED03AA9BAD3325AC3375E626C0E8E42491C9E23A864607DA3955CF8C1B58
+Prepared SHA-256: F0BC8430C422A9F673D77B5AD9A9076A1AF0CEA5261A68E6B23C0C57852ED34B
+License: Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+Official license: https://mevadata.org/resources/MEVA-data-license.txt
+Collection site: Muscatatuck Urban Training Center / Butlerville, Indiana.
+Site evidence: https://arxiv.org/html/2012.00914#S3.SS3
+Changes: Excerpt145-190s; output44.5s; muted24fps H.2641280x720 aspect-preserving fit;0.5s N/12 tail-to-head dissolve; derived poster; no reverse playback.
+Recorded staged activity, not live surveillance. Exact camera GPS unverified. CC BY4.0 covers loop/poster; application MIT does not relicense media.

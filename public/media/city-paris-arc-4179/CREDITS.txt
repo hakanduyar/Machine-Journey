@@ -1,0 +1,19 @@
+Paris archived camera view — city-paris-arc-4179
+
+Publisher: Mixkit
+Source: https://mixkit.co/free-stock-video/time-lapse-of-the-arc-of-triumph-4179/
+Downloaded original rendition: https://assets.mixkit.co/videos/4179/4179-720.mp4
+Original rendition SHA-256: ecd42351165e745700a6b2c15324a28f5b95921088e5bfa5e30b5a415dd5ba28
+License: Mixkit Stock Video Free License
+https://mixkit.co/license/modal/videoFree/
+Terms: https://mixkit.co/terms/
+
+Muted H.264,1280x720,24fps. First18s or full5.7s sourcewindow. First0.5s blended into last0.5s using N/12; body starts0.5s. No reverse motion.
+Prepared loop SHA-256: bfb23e12f6f11555341849774b05985da6cd629a9cab8e58610c3c5d632eafea
+Poster SHA-256: 16cfcd058d23ffe497a84b700813880a887d9927dc4323081b06ecfc57294552
+
+Curated view: paris-arc-ground-oblique-night
+Review: visual-r51-paris-arc-4179
+Original spaced frames and prepared first/last plus8frame wrap sequence personally inspected. Stationary vantage, distinct from current five Paris views and each other (wide elevated daytime vs close ground oblique nighttime). No sampled black frames or abrupt framing reset. Timelapse and short dissolve remain visible; not a real live feed or all-frame smoothness guarantee.
+Location: Publisher names Arc de Triomphe in Paris; landmark agrees with sampled footage. Exact camera coordinates unverified.
+This is recorded stock footage, not a live camera. Source license governs media; do not redistribute as a stock inventory.

@@ -1,0 +1,10 @@
+city-new-york-pexels-34118767
+Attribution: ubeyonroad / Pexels
+https://www.pexels.com/video/busy-new-york-city-street-with-traffic-and-pedestrians-34118767/
+Pexels License
+https://www.pexels.com/license/
+https://www.pexels.com/terms-of-service/
+Original SHA256: c96f3d0ff8ae622a543aeb72a0a2ade649621d0ac1b6a1c4c0618f91fd32ef5d
+Prepared loop SHA256: c0a680c80b2641203aa3791d1d512478fe88d2a4859492306f59136df2b7b58d
+First18s or shorter original; muted H2641280x72024fps. Body starts0.5s, last0.5s blended into original first0.5s using N/12. No reverse motion.
+Archive footage, not live. Exact camera coordinates unverified.

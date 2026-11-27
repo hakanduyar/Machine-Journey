@@ -1,0 +1,9 @@
+CREDITS / PROVENANCE - pexels:4978758
+Source page: https://www.pexels.com/video/time-lapse-video-of-brooklyn-bridge-4978758/
+Publisher/author: Sarowar Hussain (as shown on the Pexels item page)
+License: Pexels License - https://www.pexels.com/license/. Use as a modified in-project clip only; no standalone stock/wallpaper redistribution, no implied endorsement by the creator.
+Exact downloaded media URL: https://videos.pexels.com/video-files/4978758/4978758-uhd_2560_1440_30fps.mp4
+City basis (publisher text and/or visible landmarks, as recorded by the preparer): Pexels title 'Time Lapse Video of Brooklyn Bridge', description 'Stunning view of NYC skyline with Brooklyn Bridge on a sunny day' (uploader Sarowar Hussain). Brooklyn Bridge and the Lower Manhattan skyline with One WTC visible; low waterfront vantage; exact camera position not independently geolocated. No surveyed GPS, no exact street claim.
+Changes: excerpt 4s +8s of source, scaled to 1280x720, 24 fps, audio removed, 12-frame (0.5 s) dissolve of tail into head for looping.
+Nature: archived/timelapse stock footage. NOT live, NOT a real-time camera feed, NOT seamless; the loop wrap is a visible dissolve of moving elements.
+Review status (independent, by publisher key): INDEPENDENT_READY

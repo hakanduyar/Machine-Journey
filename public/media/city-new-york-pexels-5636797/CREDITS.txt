@@ -1,0 +1,12 @@
+Video: Sarowar Hussain / Pexels
+Source: https://www.pexels.com/video/time-lapse-video-of-brooklyn-bridge-scenery-during-nighttime-5636797/
+Original media: https://videos.pexels.com/video-files/5636797/5636797-hd_1920_1080_30fps.mp4
+License: Pexels License
+https://www.pexels.com/license/
+Location: Pexels item title 'Time Lapse Video of Brooklyn Bridge Scenery During Nighttime', description 'Stunning timelapse of the Brooklyn Bridge and NYC skyline at night' (uploader Sarowar Hussain). Brooklyn Bridge and lower-Manhattan skyline with One WTC are visible; viewpoint is a waterfront boardwalk on the Brooklyn side. Exact camera position not independently geolocated.
+Original SHA256: 53c8483d68f4cb07136434543a4e15f42f1152e876a8e6dd5a0780aa01c24098
+Loop SHA256: 964993b715c7e36c1ec0758510c2b6ea9af71e4d9034c772c987dc061499b3f6
+Poster SHA256: 2d08d960ee9f7a3436a71e4b619c842ba3bac95b26a6e509c628c43a484edf09
+Changes: muted720p24fps H264,8s excerpt starting1s;0.5s end-to-start dissolve.
+Archived timelapse, not live:8s Brooklyn waterfront boardwalk view, source starts1s with0.5s boundary dissolve; water and modest pedestrian dissolve perceptible, not certified seamless. Exact camera coordinates unverified.
+Project media only; no standalone stock-library redistribution or implied endorsement. Not official CCTV or live footage.

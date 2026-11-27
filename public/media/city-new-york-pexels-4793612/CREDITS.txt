@@ -1,0 +1,11 @@
+Video: Sarowar Hussain / Pexels
+Source: https://www.pexels.com/video/time-lapse-video-of-manhattan-bridge-4793612/
+Original media: https://videos.pexels.com/video-files/4793612/4793612-uhd_2560_1440_30fps.mp4
+License: Pexels License
+https://www.pexels.com/license/
+Location: Pexels title 'Time Lapse Video of Manhattan Bridge', description 'Timelapse of Manhattan Bridge with cityscape and East River' (uploader Sarowar Hussain). Manhattan Bridge and East River visible from a rocky Brooklyn-side shore; exact camera position not independently geolocated.
+Original SHA256: de872cd3bc9662322e4dcbc21561d54645ee7686488aa00323666379080bad65
+Loop SHA256: a911ce5704d6d25b9ff0a4bb050a8b29fbb56461c384f62515366e58d6e71bcd
+Poster SHA256: a251b846f7ed255b74b859bde77a44c7fba9a69e575909dd4e173cf64691e711
+Changes and limits: Archived timelapse, not live: 10s fixed observational excerpt starting at source 0.5s, muted720p24fps; perceptible0.5s water/cloud/distant pedestrian dissolve, not certified seamless. Exact camera coordinates unverified.
+Project media only; no standalone stock-library redistribution or implied endorsement. Not official CCTV or live footage.

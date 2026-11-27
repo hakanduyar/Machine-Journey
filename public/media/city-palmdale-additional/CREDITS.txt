@@ -3,6 +3,8 @@ Source: https://svs.gsfc.nasa.gov/12488/
 Credit: NASA / Steve Parcel
 License: NASA media usage guidelines
 License URL: https://www.nasa.gov/nasa-brand-center/images-and-media/
-Original SHA256: 7a3e3ef4a04e225a356cb4b74120417b4bbe8664c6a9be3b8563d2153ff34ceb
+Original SHA256: 9200B39F53F4FF63DAFD9187FD8550FD8032D2EEB4B6082333FA3D1B0EDDFC2A
+Trimmed derivative SHA256: 7A3E3EF4A04E225A356CB4B74120417B4BBE8664C6A9BE3B8563D2153FF34CEB
 Archive: ARCHIVE / LOCAL CAMERA; not live surveillance.
+Location: 
 Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

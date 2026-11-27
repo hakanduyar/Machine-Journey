@@ -6,6 +6,7 @@
  * locality overview point, never a camera position.
  */
 import extraRows from '../../public/media/city-sources-extra.json';
+import eventRows from '../../public/media/city-event-sources.json';
 
 export interface CitySource {
   cityId: string;
@@ -68,4 +69,7 @@ export const EXTRA_SOURCES: readonly ExtraCitySource[] = validRows(extraRows).ma
   cityId: r.cityId, feedId: r.feedId, archiveLabel: r.archiveLabel, credit: r.credit, license: r.license, licenseUrl: r.licenseUrl, source: r.source,
 }));
 /** Feed ids of a city's additional clips, in deterministic manifest order. */
-export const extraFeedIds = (cityId: string): string[] => EXTRA_SOURCES.filter((s) => s.cityId === cityId).map((s) => s.feedId);
+export const extraFeedIds = (cityId: string): string[] => [...EXTRA_SOURCES, ...EVENT_SOURCES].filter((s) => s.cityId === cityId).map((s) => s.feedId);
+
+/** Separately authorized different events, never additional physical views. */
+export const EVENT_SOURCES: readonly ExtraCitySource[] = validRows(eventRows);

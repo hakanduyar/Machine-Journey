@@ -1,0 +1,364 @@
+{
+  "derivedCorrections": {
+    "evidenceSha256": "24576f2a2fda54674b1b45594b237854be53964fcf55ae32f892681ba76cf179",
+    "reviewRef": "R55 measured source-frame corrections",
+    "measurement": "Manual source-frame head bounds; approximately 2–3 pixels uncertainty.",
+    "keys": [
+      {
+        "sourceTrackIndex": 1,
+        "t": 27,
+        "cx": 0.48385416666666664,
+        "cy": 0.35462962962962963,
+        "w": 0.015625,
+        "h": 0.03518518518518519,
+        "frameSha256": "c9800209267136cbeed8ca818f7f7efbf1f4bf10544900794fc587ef68379bd7"
+      },
+      {
+        "sourceTrackIndex": 1,
+        "t": 37.5,
+        "cx": 0.984375,
+        "cy": 0.262037037037037,
+        "w": 0.014583333333333334,
+        "h": 0.03518518518518519,
+        "frameSha256": "769226e38e8fdf895dc8e6e9c1f783bd0ef85cda2467dea8217bbd180fb3a90d"
+      }
+    ]
+  },
+  "policyReviewRef": "R55 independently sampled person alignment; 3689766b460e6afa4045d9d7d0a8fbd6452896040f3ba9a2e419f56ae4175b02",
+  "coverage": "Only independently supported tracks and time ranges; not complete person coverage.",
+  "excludedTracks": [],
+  "schemaVersion": 1,
+  "feedId": "parking-walk",
+  "videoSha256": "4bfdc569336b7a8819a736400321b86336fa50956887b162f3fad40b8cff9b18",
+  "annotationSha256": "d8d5d955fc0d69a44063106f91c6206b481916efe156a04616fd3a94975e3aa4",
+  "sourceMediaUrl": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-09/10/2018-03-09.10-10-00.10-15-00.school.G424.r13.avi",
+  "method": "Existing authored head keyframes; visibility preserved. No automated detection or real-world identity classification.",
+  "geometryReference": "Existing Machine neutral person reticle: off-white dashed square and corner ticks;1.36scale and0.94extent.",
+  "sourceWidth": 960,
+  "sourceHeight": 540,
+  "duration": 42,
+  "maxGapSeconds": 1.05,
+  "reviewScope": "Authored tracks require independent alignment review",
+  "tracks": [
+    {
+      "id": "person-01",
+      "sourceTrackIndex": 0,
+      "reviewedSpans": [
+        {
+          "start": 20,
+          "end": 37.5,
+          "reviewRef": "R55 independently sampled person alignment; 3689766b460e6afa4045d9d7d0a8fbd6452896040f3ba9a2e419f56ae4175b02"
+        }
+      ],
+      "keyframes": [
+        {
+          "t": 0,
+          "cx": 0.022920000000000003,
+          "cy": 0.950005,
+          "size": 0.06155495999999999,
+          "visible": false
+        },
+        {
+          "t": 3.9,
+          "cx": 0.022920000000000003,
+          "cy": 0.950005,
+          "size": 0.06155495999999999,
+          "visible": false
+        },
+        {
+          "t": 4,
+          "cx": 0.0125,
+          "cy": 0.9425749999999999,
+          "size": 0.06155495999999999,
+          "visible": true
+        },
+        {
+          "t": 4.2,
+          "cx": 0.022920000000000003,
+          "cy": 0.931485,
+          "size": 0.06155495999999999,
+          "visible": true
+        },
+        {
+          "t": 8,
+          "cx": 0.27188,
+          "cy": 0.7648149999999999,
+          "size": 0.06155495999999999,
+          "visible": true
+        },
+        {
+          "t": 12,
+          "cx": 0.38854000000000005,
+          "cy": 0.65926,
+          "size": 0.05918992,
+          "visible": true
+        },
+        {
+          "t": 13,
+          "cx": 0.34691500000000003,
+          "cy": 0.6527999999999999,
+          "size": 0.054459839999999995,
+          "visible": true
+        },
+        {
+          "t": 14,
+          "cx": 0.279165,
+          "cy": 0.63333,
+          "size": 0.05208201600000001,
+          "visible": true
+        },
+        {
+          "t": 15,
+          "cx": 0.218195,
+          "cy": 0.6157450000000001,
+          "size": 0.04971697600000001,
+          "visible": true
+        },
+        {
+          "t": 16,
+          "cx": 0.156255,
+          "cy": 0.60371,
+          "size": 0.047351936000000004,
+          "visible": true
+        },
+        {
+          "t": 17,
+          "cx": 0.108375,
+          "cy": 0.5759,
+          "size": 0.047300800000000004,
+          "visible": true
+        },
+        {
+          "t": 18,
+          "cx": 0.107295,
+          "cy": 0.540745,
+          "size": 0.044986896000000005,
+          "visible": true
+        },
+        {
+          "t": 20,
+          "cx": 0.171875,
+          "cy": 0.496295,
+          "size": 0.042609072,
+          "visible": true
+        },
+        {
+          "t": 24,
+          "cx": 0.309375,
+          "cy": 0.4037,
+          "size": 0.040244032000000006,
+          "visible": true
+        },
+        {
+          "t": 30,
+          "cx": 0.59479,
+          "cy": 0.33333500000000005,
+          "size": 0.037878992,
+          "visible": true
+        },
+        {
+          "t": 36,
+          "cx": 0.8770800000000001,
+          "cy": 0.285185,
+          "size": 0.037878992,
+          "visible": true
+        },
+        {
+          "t": 38,
+          "cx": 0.9635400000000001,
+          "cy": 0.26666500000000004,
+          "size": 0.037878992,
+          "visible": true
+        },
+        {
+          "t": 38.5,
+          "cx": 0.98277,
+          "cy": 0.264815,
+          "size": 0.037878992,
+          "visible": true
+        },
+        {
+          "t": 38.7,
+          "cx": 0.9932300000000001,
+          "cy": 0.266315,
+          "size": 0.037878992,
+          "visible": true
+        },
+        {
+          "t": 38.8,
+          "cx": 0.9932300000000001,
+          "cy": 0.266315,
+          "size": 0.037878992,
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "person-02",
+      "sourceTrackIndex": 1,
+      "reviewedSpans": [
+        {
+          "start": 20,
+          "end": 37.5,
+          "reviewRef": "R55 supplemental parking subject-02 interior-frame review; 4bca68b8778f24e662e6664252b52c1084552e6073059c5e729ec70c3a26e076"
+        }
+      ],
+      "keyframes": [
+        {
+          "t": 0,
+          "cx": 0.05146,
+          "cy": 0.93892,
+          "size": 0.056812096,
+          "visible": false
+        },
+        {
+          "t": 2.9,
+          "cx": 0.01146,
+          "cy": 0.95182,
+          "size": 0.056812096,
+          "visible": false
+        },
+        {
+          "t": 3,
+          "cx": 0.01146,
+          "cy": 0.95182,
+          "size": 0.056812096,
+          "visible": true
+        },
+        {
+          "t": 3.5,
+          "cx": 0.03956,
+          "cy": 0.93332,
+          "size": 0.056812096,
+          "visible": true
+        },
+        {
+          "t": 3.8,
+          "cx": 0.062459999999999995,
+          "cy": 0.91482,
+          "size": 0.056812096,
+          "visible": true
+        },
+        {
+          "t": 4,
+          "cx": 0.08542,
+          "cy": 0.91296,
+          "size": 0.056812096,
+          "visible": true
+        },
+        {
+          "t": 8,
+          "cx": 0.343745,
+          "cy": 0.74444,
+          "size": 0.056812096,
+          "visible": true
+        },
+        {
+          "t": 12,
+          "cx": 0.448955,
+          "cy": 0.63148,
+          "size": 0.056812096,
+          "visible": true
+        },
+        {
+          "t": 13,
+          "cx": 0.390415,
+          "cy": 0.6213,
+          "size": 0.054459839999999995,
+          "visible": true
+        },
+        {
+          "t": 14,
+          "cx": 0.32395500000000005,
+          "cy": 0.59259,
+          "size": 0.05208201600000001,
+          "visible": true
+        },
+        {
+          "t": 15,
+          "cx": 0.252075,
+          "cy": 0.576845,
+          "size": 0.04971697600000001,
+          "visible": true
+        },
+        {
+          "t": 16,
+          "cx": 0.194795,
+          "cy": 0.55741,
+          "size": 0.047351936000000004,
+          "visible": true
+        },
+        {
+          "t": 17,
+          "cx": 0.155755,
+          "cy": 0.5360999999999999,
+          "size": 0.044999680000000014,
+          "visible": true
+        },
+        {
+          "t": 18,
+          "cx": 0.15937500000000002,
+          "cy": 0.5203650000000001,
+          "size": 0.042609072,
+          "visible": true
+        },
+        {
+          "t": 20,
+          "cx": 0.227085,
+          "cy": 0.477775,
+          "size": 0.042609072,
+          "visible": true
+        },
+        {
+          "t": 24,
+          "cx": 0.36041500000000004,
+          "cy": 0.39259,
+          "size": 0.040244032000000006,
+          "visible": true
+        },
+        {
+          "t": 27,
+          "cx": 0.48385416666666664,
+          "cy": 0.35462962962962963,
+          "size": 0.04498074074074074,
+          "visible": true
+        },
+        {
+          "t": 30,
+          "cx": 0.63229,
+          "cy": 0.32593,
+          "size": 0.040244032000000006,
+          "visible": true
+        },
+        {
+          "t": 36,
+          "cx": 0.9145800000000001,
+          "cy": 0.27407,
+          "size": 0.040244032000000006,
+          "visible": true
+        },
+        {
+          "t": 37.5,
+          "cx": 0.984375,
+          "cy": 0.262037037037037,
+          "size": 0.04498074074074074,
+          "visible": true
+        },
+        {
+          "t": 37.9,
+          "cx": 0.9854200000000001,
+          "cy": 0.28147999999999995,
+          "size": 0.040244032000000006,
+          "visible": true
+        },
+        {
+          "t": 38,
+          "cx": 0.9854200000000001,
+          "cy": 0.28147999999999995,
+          "size": 0.040244032000000006,
+          "visible": false
+        }
+      ]
+    }
+  ]
+}

@@ -36,6 +36,13 @@ Changes made (derivative material)
     bounds (top-left origin) for each marker, not output of live inference and
     not an identification of any person.
 
+Location and provenance
+  - Place: Muscatatuck Training Center, Butlerville, Indiana, the documented
+    MEVA collection site (dataset site above). Camera G639 is a distinct
+    physical camera named in the source file name. The exact camera position
+    is not verified.
+  - Archived recording replayed in a loop; the loop restart is not seamless.
+
 Notes
   - This is an ordinary recorded replay shown inside a fictional interface.
     It is not a live camera, and the loop point is not guaranteed to be seamless.

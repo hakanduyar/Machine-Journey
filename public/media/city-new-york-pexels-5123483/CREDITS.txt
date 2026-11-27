@@ -1,0 +1,11 @@
+Video: Sarowar Hussain / Pexels
+Source: https://www.pexels.com/video/a-time-lapse-of-the-east-river-5123483/
+Original media: https://videos.pexels.com/video-files/5123483/5123483-uhd_2560_1440_30fps.mp4
+License: Pexels License
+https://www.pexels.com/license/
+Location: Pexels title 'A Time Lapse of the East River', description 'Capture of Brooklyn Bridge over East River with skyline view in New York' (uploader Sarowar Hussain). Both Manhattan Bridge (left) and Brooklyn Bridge (right) visible across the water; exact camera position not independently geolocated.
+Original SHA256: b015bffc78cdd274a1ee16885ed60df695785594868400ce86278babb964b9a5
+Loop SHA256: a353a510ce45c1a4352f8255cc26922aa44540390be59e096b179db50519a0de
+Poster SHA256: a5efc909c3d5fd9ae98340d0654a3ff3daca178531476f42fddc743fe0fd79c9
+Changes and limits: Archived timelapse, not live: 8s fixed observational excerpt starting at source 2s, muted720p24fps; perceptible0.5s water/cloud/distant pedestrian dissolve, not certified seamless. Exact camera coordinates unverified.
+Project media only; no standalone stock-library redistribution or implied endorsement. Not official CCTV or live footage.

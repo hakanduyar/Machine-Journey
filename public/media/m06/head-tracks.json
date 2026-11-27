@@ -1,0 +1,325 @@
+{
+  "policyReviewRef": "R55 independently sampled person alignment; 3689766b460e6afa4045d9d7d0a8fbd6452896040f3ba9a2e419f56ae4175b02",
+  "coverage": "Only independently supported tracks and time ranges; not complete person coverage.",
+  "excludedTracks": [],
+  "schemaVersion": 1,
+  "feedId": "m06",
+  "videoSha256": "be9a010a04d614c3d36cd8d93774a578ba5e36d5bf4199cac69e8f978ea6f8d4",
+  "annotationSha256": "c061863aec24988960d25fe5efab97e7796770f3e2d6b508710c3c20119b5698",
+  "sourceMediaUrl": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-13/17/2018-03-13.17-35-00.17-40-00.school.G328.r13.avi",
+  "method": "Existing authored head keyframes; visibility preserved. No automated detection or real-world identity classification.",
+  "geometryReference": "Existing Machine neutral person reticle: off-white dashed square and corner ticks;1.36scale and0.94extent.",
+  "sourceWidth": 960,
+  "sourceHeight": 540,
+  "duration": 35,
+  "maxGapSeconds": 1.05,
+  "reviewScope": "Sampled full-clip motion audit, not per-frame or pixel-perfect validation",
+  "tracks": [
+    {
+      "id": "person-01",
+      "sourceTrackIndex": 0,
+      "reviewedSpans": [
+        {
+          "start": 3,
+          "end": 33.7,
+          "reviewRef": "R55 independently sampled person alignment; 3689766b460e6afa4045d9d7d0a8fbd6452896040f3ba9a2e419f56ae4175b02"
+        }
+      ],
+      "keyframes": [
+        {
+          "t": 0,
+          "cx": 0.75,
+          "cy": 0.6351851851851852,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 0.5,
+          "cx": 0.7479166666666667,
+          "cy": 0.6351851851851852,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 2.5,
+          "cx": 0.7364583333333333,
+          "cy": 0.6333333333333333,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 4.5,
+          "cx": 0.7177083333333334,
+          "cy": 0.6296296296296297,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 5,
+          "cx": 0.7166666666666667,
+          "cy": 0.6296296296296297,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 6.5,
+          "cx": 0.6979166666666666,
+          "cy": 0.6277777777777778,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 8.5,
+          "cx": 0.6802083333333333,
+          "cy": 0.6240740740740741,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 10.5,
+          "cx": 0.66875,
+          "cy": 0.6240740740740741,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 12.5,
+          "cx": 0.6541666666666667,
+          "cy": 0.6240740740740741,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 14.5,
+          "cx": 0.6541666666666667,
+          "cy": 0.6240740740740741,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 16.5,
+          "cx": 0.6489583333333333,
+          "cy": 0.6240740740740741,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 18.5,
+          "cx": 0.6458333333333334,
+          "cy": 0.6277777777777778,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 20.5,
+          "cx": 0.64375,
+          "cy": 0.6277777777777778,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 22.5,
+          "cx": 0.653125,
+          "cy": 0.6296296296296297,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 24.5,
+          "cx": 0.6666666666666666,
+          "cy": 0.6314814814814815,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 25,
+          "cx": 0.665625,
+          "cy": 0.6314814814814815,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 26.5,
+          "cx": 0.684375,
+          "cy": 0.6333333333333333,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 28.5,
+          "cx": 0.7020833333333334,
+          "cy": 0.6370370370370371,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 30.5,
+          "cx": 0.7125,
+          "cy": 0.6351851851851852,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 32.5,
+          "cx": 0.7177083333333334,
+          "cy": 0.6333333333333333,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 34.98,
+          "cx": 0.703125,
+          "cy": 0.6333333333333333,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 35,
+          "cx": 0.703125,
+          "cy": 0.6333333333333333,
+          "size": 0.02604148148148148,
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "person-02",
+      "sourceTrackIndex": 1,
+      "reviewedSpans": [
+        {
+          "start": 3,
+          "end": 16,
+          "reviewRef": "R55 independently sampled person alignment; 3689766b460e6afa4045d9d7d0a8fbd6452896040f3ba9a2e419f56ae4175b02"
+        }
+      ],
+      "keyframes": [
+        {
+          "t": 2.48,
+          "cx": 0.565625,
+          "cy": 0.5222222222222223,
+          "size": 0.023674074074074077,
+          "visible": false
+        },
+        {
+          "t": 2.5,
+          "cx": 0.565625,
+          "cy": 0.5222222222222223,
+          "size": 0.023674074074074077,
+          "visible": true
+        },
+        {
+          "t": 4.5,
+          "cx": 0.5625,
+          "cy": 0.525925925925926,
+          "size": 0.023674074074074077,
+          "visible": true
+        },
+        {
+          "t": 6.5,
+          "cx": 0.5614583333333334,
+          "cy": 0.5351851851851852,
+          "size": 0.023674074074074077,
+          "visible": true
+        },
+        {
+          "t": 8.5,
+          "cx": 0.5593750000000001,
+          "cy": 0.5407407407407407,
+          "size": 0.023674074074074077,
+          "visible": true
+        },
+        {
+          "t": 10.5,
+          "cx": 0.5604166666666667,
+          "cy": 0.55,
+          "size": 0.023674074074074077,
+          "visible": true
+        },
+        {
+          "t": 12.5,
+          "cx": 0.571875,
+          "cy": 0.5611111111111111,
+          "size": 0.023674074074074077,
+          "visible": true
+        },
+        {
+          "t": 14.5,
+          "cx": 0.5906250000000001,
+          "cy": 0.5685185185185185,
+          "size": 0.023674074074074077,
+          "visible": true
+        },
+        {
+          "t": 16.5,
+          "cx": 0.6302083333333334,
+          "cy": 0.5814814814814815,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 18.5,
+          "cx": 0.6875,
+          "cy": 0.5888888888888889,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 20.5,
+          "cx": 0.7197916666666667,
+          "cy": 0.5981481481481481,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 22.5,
+          "cx": 0.740625,
+          "cy": 0.6092592592592593,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 24.5,
+          "cx": 0.7614583333333333,
+          "cy": 0.6203703703703703,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 25,
+          "cx": 0.7572916666666667,
+          "cy": 0.6240740740740741,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 26.5,
+          "cx": 0.7833333333333333,
+          "cy": 0.6333333333333333,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 28,
+          "cx": 0.809375,
+          "cy": 0.6425925925925926,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 29,
+          "cx": 0.8291666666666667,
+          "cy": 0.6462962962962963,
+          "size": 0.02604148148148148,
+          "visible": true
+        },
+        {
+          "t": 29.02,
+          "cx": 0.8291666666666667,
+          "cy": 0.6462962962962963,
+          "size": 0.02604148148148148,
+          "visible": false
+        }
+      ]
+    }
+  ]
+}

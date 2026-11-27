@@ -1,0 +1,12 @@
+Video: Mixkit, city of tokyo at night
+Source: https://mixkit.co/free-stock-video/city-of-tokyo-at-night-4383/
+Original media: https://assets.mixkit.co/videos/4383/4383-720.mp4
+License: Mixkit Stock Video Free License
+https://mixkit.co/license/modal/videoFree/
+Terms: https://mixkit.co/terms/
+City: publisher describes Tokyo; camera GPS not verified.
+Original SHA256: c2860221d84538933c057469e071bde528991c35a19b39d745f9b12b76c2d2a9
+Loop SHA256: 7284e7b20cc35b1a71d6f3abccab168b90a91725552c68ea5481de773fa005e1
+Changes: Muted720p24fps H264 excerpt; last0.5s dissolved into source first0.5s; no crop or synthetic frames apart from disclosed blend
+Quality: Stationary elevated Rainbow Bridge panorama; water/boat dissolve visible, structures stable.
+Recorded archive/timelapse, not live CCTV. No personal identity inference. Licensed only as project media; no standalone stock-library redistribution.

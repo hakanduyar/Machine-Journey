@@ -1,0 +1,9 @@
+CREDITS / PROVENANCE - pexels:6755998
+Source page: https://www.pexels.com/video/video-of-a-road-in-new-york-6755998/
+Publisher/author: Pablo Diaz (as shown on the Pexels item page)
+License: Pexels License - https://www.pexels.com/license/. Use as a modified in-project clip only; no standalone stock/wallpaper redistribution, no implied endorsement by the creator.
+Exact downloaded media URL: https://videos.pexels.com/video-files/6755998/6755998-hd_1920_1080_30fps.mp4
+City basis (publisher text and/or visible landmarks, as recorded by the preparer): Pexels title 'Video of a Road in New York', description 'Dynamic street view of New York City at night with traffic and steam' (uploader Pablo Diaz). Hotel-style building facades, taxis and a steam vent; exact street not independently geolocated. No surveyed GPS, no exact street claim.
+Changes: excerpt 6s +8s of source, scaled to 1280x720, 24 fps, audio removed, 12-frame (0.5 s) dissolve of tail into head for looping.
+Nature: archived/timelapse stock footage. NOT live, NOT a real-time camera feed, NOT seamless; the loop wrap is a visible dissolve of moving elements.
+Review status (independent, by publisher key): INDEPENDENT_READY

@@ -3,12 +3,12 @@ import { FeedDeck, type FeedSelector } from './feedDeck';
 /**
  * City context (pure, no DOM). `activeCity` is the persistent semantic place of the journey: every camera pane in every
  * mode (mosaic, selected, floating field, neural network, background panes) shows ONLY sources owned by it, until the
- * globe actually enters another city. A city's catalog is finite and honest: Butlerville owns 4 real feeds, the other
+ * globe actually enters another city. A city's catalog is finite and honest: Butlerville owns 19 real feeds, the other
  * cities one clip each. Nothing here ever falls back to another city's feed.
  */
 export interface CityLike { id: string; feedId?: string; feedIds?: readonly string[] }
 
-/** The city the journey opens in: the four real Butlerville (MEVA) feeds. */
+/** The city the journey opens in: the nineteen real Butlerville (MEVA) feeds. */
 export const DEFAULT_CITY_ID = 'butlerville';
 
 /** Feed ids a city owns (verified places: all of their own feeds; stock cities: their one clip). Empty for an unknown city. */
@@ -49,7 +49,7 @@ export function stopFeeds(pool: readonly string[], from: string | null, count: n
 
 /** Number of stops worth planning for a visit: a one-source city needs no more than the minimum two. */
 export function stopsFor(requested: number, poolSize: number): number {
-  const n = Math.max(2, Math.min(4, Math.round(requested)));
+  const n = Math.max(2, Math.min(6, Math.round(requested)));
   return poolSize <= 1 ? 2 : Math.min(n, Math.max(2, poolSize));
 }
 

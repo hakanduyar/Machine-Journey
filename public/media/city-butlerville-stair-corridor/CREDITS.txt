@@ -1,0 +1,12 @@
+Overhead stair corridor - MEVA camera G329
+Attribution: MEVA dataset, Kitware Inc. / IARPA.
+Source: https://mevadata-public-01.s3.amazonaws.com/drop-5-mevid/2018-05-18.14-30-00.14-35-00.admin.G329.r13.avi
+Original SHA-256: 8DB8B56EF19359D899B1F0C79F8EEBF37C7CBF3A1482033D8119FF8CFEDF7A28
+Prepared SHA-256: B0FEE5442FB5EC5665CD992E2A3635A1600FB1926B73167E79134D58F0745104
+License: Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+Official license: https://mevadata.org/resources/MEVA-data-license.txt
+Collection site: Muscatatuck Urban Training Center / Butlerville, Indiana.
+Site evidence: https://arxiv.org/html/2012.00914#S3.SS3
+Changes: Excerpt0-35s; output34.5s; muted24fps H.2641280x720 aspect-preserving fit;0.5s N/12 tail-to-head dissolve; derived poster; no reverse playback.
+Recorded staged activity, not live surveillance. Exact camera GPS unverified. CC BY4.0 covers loop/poster; application MIT does not relicense media.
