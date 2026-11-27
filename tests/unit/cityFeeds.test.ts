@@ -22,7 +22,7 @@ describe('city catalog: 24 globe cities own their sources', () => {
     expect(ALL_FEEDS.slice(0, 12).map((f) => f.id)).toEqual(CORE_IDS);
     // the 21 base city clips follow in their original order, then the approved additional clips (catalog intentionally expanded)
     expect(ALL_FEEDS.slice(12, 33).map((f) => f.id)).toEqual(CITY_SOURCES.map((s) => `city-${s.cityId}`));
-    expect(ALL_FEEDS.length).toBe(41 + EXTRA_SOURCES.length);
+    expect(ALL_FEEDS.length).toBe(42 + EXTRA_SOURCES.length);
     expect(ALL_FEEDS.slice(33).map((f) => f.id)).toEqual([...EXTRA_SOURCES, ...EVENT_SOURCES].map((s) => s.feedId));
   });
 
@@ -81,7 +81,7 @@ describe('additional approved city clips (data-driven catalog expansion)', () =>
       const city = CITIES.find((c) => c.id === m.cityId);
       expect(city, `${String(m.cityId)} is an existing city`).toBeTruthy();
       // an official place's extra clip carries official source locality; every stock city's is the publisher-named place
-      expect(m.provenanceLevel).toBe(m.feedId === 'city-butlerville-meva-e00f38fcfeed15f3' ? 'OFFICIAL_DATASET_SITE' : city!.verified ? 'OFFICIAL_SOURCE_LOCALITY' : 'STOCK_PUBLISHER_LOCATION');
+      expect(m.provenanceLevel).toBe(['city-butlerville-meva-e00f38fcfeed15f3', 'city-butlerville-meva-6ca7fe9c563418d9'].includes(String(m.feedId)) ? 'OFFICIAL_DATASET_SITE' : city!.verified ? 'OFFICIAL_SOURCE_LOCALITY' : 'STOCK_PUBLISHER_LOCATION');
       expect(m.exactCameraCoordinatesVerified).toBe(false);
       expect(String(m.feedId)).toMatch(/^city-[a-z0-9-]+$/);
       expect(CORE_IDS).not.toContain(m.feedId);
@@ -100,7 +100,7 @@ describe('additional approved city clips (data-driven catalog expansion)', () =>
       const city = CITIES.find((c) => c.id === id)!;
       const own = cityFeedIds(city);
       // the primary pool first (a stock city's base clip, or a verified place's official feeds), then its approved extras in manifest order
-      expect(own).toEqual([...(city.verified ? ({ savannah: ['parked-c130'], butlerville: ['m01', 'm02', 'm06', 'parking-walk', 'm03', 'm07', 'covered-road', 'm04', 'm05'], palmdale: ['palmdale-dc8'] } as Record<string, string[]>)[id] : [`city-${id}`]), ...EXTRA_SOURCES.filter((s) => s.cityId === id).map((s) => s.feedId), ...(id === 'butlerville' ? ['city-butlerville-event-6be3a62539fcd5e7e29c', 'city-butlerville-event-5b53880db45458d170a8', 'city-butlerville-event-aa4fd544b8e12da53881', 'city-butlerville-event-42b9a7d07894762477da', 'city-butlerville-event-788995c15491e2f58728', 'city-butlerville-event-0cb69d3407458efbd9cb', 'city-butlerville-event-7d31316b3ce1c2c82ffc', 'city-butlerville-event-0be6b9181c39c2a7d918'] : [])]);
+      expect(own).toEqual([...(city.verified ? ({ savannah: ['parked-c130'], butlerville: ['m01', 'm02', 'm06', 'parking-walk', 'm03', 'm07', 'covered-road', 'm04', 'm05'], palmdale: ['palmdale-dc8'] } as Record<string, string[]>)[id] : [`city-${id}`]), ...EXTRA_SOURCES.filter((s) => s.cityId === id).map((s) => s.feedId), ...(id === 'butlerville' ? ['city-butlerville-event-6be3a62539fcd5e7e29c', 'city-butlerville-event-5b53880db45458d170a8', 'city-butlerville-event-aa4fd544b8e12da53881', 'city-butlerville-event-42b9a7d07894762477da', 'city-butlerville-event-788995c15491e2f58728', 'city-butlerville-event-0cb69d3407458efbd9cb', 'city-butlerville-event-7d31316b3ce1c2c82ffc', 'city-butlerville-event-0be6b9181c39c2a7d918', 'city-butlerville-event-dfdbfd1a0a68b6f25919'] : [])]);
       expect(own.length).toBeGreaterThanOrEqual(2);
       for (const f of ALL_FEEDS.map((x) => x.id)) if (!own.includes(f)) expect(cityOfFeed(f, CITIES)?.id).not.toBe(id);
       const idx = catalogIndices(own, ALL_FEEDS.map((x) => x.id));
@@ -116,7 +116,7 @@ describe('additional approved city clips (data-driven catalog expansion)', () =>
     expect(cityFeedIds(CITIES.find((c) => c.id === 'butlerville'))).toEqual([
       'm01', 'm02', 'm06', 'parking-walk', 'm03', 'm07', 'covered-road', 'm04', 'm05', 'city-butlerville-school-hall', 'city-butlerville-cafe',
       'city-butlerville-stairwell', 'city-butlerville-classroom', 'city-butlerville-courtyard', 'city-butlerville-bus-interior',
-      'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell', 'city-butlerville-meva-e00f38fcfeed15f3', 'city-butlerville-event-6be3a62539fcd5e7e29c', 'city-butlerville-event-5b53880db45458d170a8', 'city-butlerville-event-aa4fd544b8e12da53881', 'city-butlerville-event-42b9a7d07894762477da', 'city-butlerville-event-788995c15491e2f58728', 'city-butlerville-event-0cb69d3407458efbd9cb', 'city-butlerville-event-7d31316b3ce1c2c82ffc', 'city-butlerville-event-0be6b9181c39c2a7d918']);
+      'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell', 'city-butlerville-meva-e00f38fcfeed15f3', 'city-butlerville-meva-6ca7fe9c563418d9', 'city-butlerville-event-6be3a62539fcd5e7e29c', 'city-butlerville-event-5b53880db45458d170a8', 'city-butlerville-event-aa4fd544b8e12da53881', 'city-butlerville-event-42b9a7d07894762477da', 'city-butlerville-event-788995c15491e2f58728', 'city-butlerville-event-0cb69d3407458efbd9cb', 'city-butlerville-event-7d31316b3ce1c2c82ffc', 'city-butlerville-event-0be6b9181c39c2a7d918', 'city-butlerville-event-dfdbfd1a0a68b6f25919']);
   });
 });
 

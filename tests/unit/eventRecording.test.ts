@@ -9,7 +9,7 @@ const base=RECORDING_MANIFEST.find(c=>!c.reviewedEvent&&c.reviewedView!.viewId==
 const allocation=(e:RecordingCandidate)=>allocateCityRecordings(e.cityId,2,[{...base,cityId:e.cityId},e]);
 describe('explicit city-scoped event identity',()=>{
  it('counts the same physical camera once and its separate reviewed occurrence once',()=>{
-  expect(RECORDING_COUNTS).toEqual({physicalViews:97,recordings:105,eventRecordings:8});
+  expect(RECORDING_COUNTS).toEqual({physicalViews:99,recordings:108,eventRecordings:9});
   expect(event.reviewedView!.viewId).toBe('meva-mutc-g340');
   const a=allocation(event);expect(a.status).toBe('ready');
   if(a.status==='invalid')return;
@@ -35,4 +35,4 @@ describe('explicit city-scoped event identity',()=>{
  });
 });
 
-it('new reviewed events retain their existing physical camera identities',()=>{const expected=[["city-butlerville-event-5b53880db45458d170a8","butlerville-meva-g326"],["city-butlerville-event-aa4fd544b8e12da53881","butlerville-meva-g423-school-hall"],["city-butlerville-event-42b9a7d07894762477da","meva-mutc-g419"],["city-butlerville-event-788995c15491e2f58728","butlerville-meva-g639-passage"],["city-butlerville-event-0cb69d3407458efbd9cb","meva-mutc-g419"]];for(const[id,view]of expected){const e=RECORDING_MANIFEST.find(r=>r.feedId===id)!;expect(e.reviewedEvent).toBeDefined();expect(e.reviewedView!.viewId).toBe(view);expect(RECORDING_MANIFEST.some(r=>!r.reviewedEvent&&r.reviewedView!.viewId===view)).toBe(true);}expect(new Set(manifestCandidatesFor('butlerville').map(r=>r.reviewedView!.viewId)).size).toBe(20);});
+it('new reviewed events retain their existing physical camera identities',()=>{const expected=[["city-butlerville-event-5b53880db45458d170a8","butlerville-meva-g326"],["city-butlerville-event-aa4fd544b8e12da53881","butlerville-meva-g423-school-hall"],["city-butlerville-event-42b9a7d07894762477da","meva-mutc-g419"],["city-butlerville-event-788995c15491e2f58728","butlerville-meva-g639-passage"],["city-butlerville-event-0cb69d3407458efbd9cb","meva-mutc-g419"]];for(const[id,view]of expected){const e=RECORDING_MANIFEST.find(r=>r.feedId===id)!;expect(e.reviewedEvent).toBeDefined();expect(e.reviewedView!.viewId).toBe(view);expect(RECORDING_MANIFEST.some(r=>!r.reviewedEvent&&r.reviewedView!.viewId===view)).toBe(true);}expect(new Set(manifestCandidatesFor('butlerville').map(r=>r.reviewedView!.viewId)).size).toBe(21);});
