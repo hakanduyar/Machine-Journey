@@ -22,3 +22,40 @@ test('an overlapping incoming recording cannot be appended as a second event',()
 test('no explicit approved byte SHA means no filesystem action',async()=>{await assert.rejects(importEventBatch({root:'.',bundleDir:'.',approvedManifestSha:'',acceptedBaselineFile:'absent',apply:true}),/explicit approved/);});
 
 test('public projection excludes unknown private fields at every nested boundary',()=>{const f=fixture(),i=f.m.items[0],privateValue='C:/Users/private-owner/private-prompt.txt';i.privateSourcePath=privateValue;i.eventReview.privateReportPath=privateValue;i.trim.privateEvidence=privateValue;i.authorization.privateNotes=privateValue;i.files.privateOriginal=privateValue;const row=validate(f).next[0];assert.equal(JSON.stringify(row).includes(privateValue),false);assert.deepEqual(Object.keys(row.eventReview).sort(),['reviewSha256','packetSha256','comparedAcceptedFeedIds','comparisonFeedId','comparisonOriginal','visualProof','observedEvent','qualityNote'].sort());assert.deepEqual(Object.keys(row.files).sort(),['loop','poster','credits'].sort());assert.equal(row.eventReview.visualProof,i.eventReview.visualProof);});
+
+// ---- schema4: separately reviewed used-interval distinction ----
+const T=s=>Date.parse(s+'Z')/1000,H2=n=>String(n).repeat(64);
+function overlapFixture(){
+ const f=fixture(),i=f.m.items[0],ex=f.evidence.acceptedEvents[0];
+ ex.trim={startSec:200,endSec:260};                       // accepted used 10:03:20-10:04:20 on 2018-03-02
+ const id='2018-03-02.10-04-59.10-10-00.school.G423.r13.avi';  // full file overlaps accepted 10:00-10:05 by 1s
+ i.originalMedia=url('02').replace(/[^/]+$/,id);i.originalRecordingId=i.eventEquivalenceKey=id;i.trim={startSec:10,endSec:30}; // used 10:05:09-10:05:29
+ f.m.schemaVersion=4;f.base=H2('f');
+ i.recordingIntervalNonoverlapAllAccepted=false;
+ i.fullFileOverlap=[{feedId:ex.feedId,originalRecordingId:ex.originalRecordingId,overlapSec:1}];
+ i.usedIntervalDistinctReview={status:'SEPARATE_ROOT_EVENT_INTERVAL_REVIEW_APPROVED',acceptedBaselineSha256:f.base,reviewSha256:H2('e'),candidateUsed:{start:T('2018-03-02T10:05:09'),end:T('2018-03-02T10:05:29')},acceptedUsed:[{feedId:ex.feedId,start:T('2018-03-02T10:03:20'),end:T('2018-03-02T10:04:20')}]};
+ return f;
+}
+const v4=f=>validateEventBatch(f.m,f.evidence,f.current,f.rows,H('d'),f.base);
+test('legacy schema3 overlap still rejected and schema3 output has no interval labels',()=>{const f=overlapFixture();f.m.schemaVersion=3;assert.throws(()=>v4(f),/recording overlap/);const g=fixture();assert.equal('usedIntervalDistinctReview' in validate(g).next[0],false);});
+test('schema4 without proof for an overlap is rejected (never auto-accepted)',()=>{const f=overlapFixture(),i=f.m.items[0];for(const k of ['recordingIntervalNonoverlapAllAccepted','fullFileOverlap','usedIntervalDistinctReview'])delete i[k];assert.throws(()=>v4(f),/recording overlap|schema4 requires/);});
+test('valid reviewed case projects labelled numeric proof only; flag stays false',()=>{const f=overlapFixture(),r=v4(f).next[0];assert.equal(r.recordingIntervalNonoverlapAllAccepted,false);assert.deepEqual(r.fullFileOverlap,[{feedId:'fixture-event',originalRecordingId:f.evidence.acceptedEvents[0].originalRecordingId,overlapSec:1}]);assert.equal(r.usedIntervalDistinctReview.candidateUsed.start,T('2018-03-02T10:05:09'));assert.equal(r.usedIntervalDistinctReview.acceptedUsed[0].end,T('2018-03-02T10:04:20'));assert.equal(r.usedIntervalDistinctReview.reviewSha256,H2('e'));});
+test('forged time/hash/status/extra/missing/flag proofs are rejected',()=>{
+ const bad={candStart:i=>i.usedIntervalDistinctReview.candidateUsed.start+=1,candMs:i=>i.usedIntervalDistinctReview.candidateUsed.end*=1000,accEnd:i=>i.usedIntervalDistinctReview.acceptedUsed[0].end+=1,accFeed:i=>i.usedIntervalDistinctReview.acceptedUsed[0].feedId='fixture-physical',
+  status:i=>i.usedIntervalDistinctReview.status='PENDING',base:i=>i.usedIntervalDistinctReview.acceptedBaselineSha256=H2('0'),hash:i=>i.usedIntervalDistinctReview.reviewSha256='x',
+  extraKey:i=>i.usedIntervalDistinctReview.note='x',extraUsed:i=>i.usedIntervalDistinctReview.acceptedUsed.push({feedId:'x',start:1,end:2}),missingUsed:i=>i.usedIntervalDistinctReview.acceptedUsed=[],
+  full:i=>i.fullFileOverlap[0].overlapSec=2,fullRec:i=>i.fullFileOverlap[0].originalRecordingId='x',fullMissing:i=>i.fullFileOverlap=[],fullExtra:i=>i.fullFileOverlap.push({feedId:'a',originalRecordingId:'b',overlapSec:1}),
+  flagTrue:i=>i.recordingIntervalNonoverlapAllAccepted=true,flagGone:i=>delete i.recordingIntervalNonoverlapAllAccepted,nanNum:i=>i.usedIntervalDistinctReview.candidateUsed.start=NaN,strNum:i=>i.usedIntervalDistinctReview.candidateUsed.start=String(i.usedIntervalDistinctReview.candidateUsed.start)};
+ for(const[k,c]of Object.entries(bad)){const f=overlapFixture();c(f.m.items[0]);assert.throws(()=>v4(f),Error,k);}
+ const f=overlapFixture();assert.throws(()=>validateEventBatch(f.m,f.evidence,f.current,f.rows,H('d'),H2('0')),/baseline/);});
+test('no accepted trim, touching or overlapping used time, and proof without overlap are rejected',()=>{
+ const a=overlapFixture();delete a.evidence.acceptedEvents[0].trim;assert.throws(()=>v4(a),/no valid trim/);
+ const b=overlapFixture();b.m.items[0].trim={startSec:0,endSec:30};b.m.items[0].usedIntervalDistinctReview.candidateUsed={start:T('2018-03-02T10:04:59'),end:T('2018-03-02T10:05:29')};b.evidence.acceptedEvents[0].trim={startSec:240,endSec:300};b.m.items[0].usedIntervalDistinctReview.acceptedUsed[0]={feedId:'fixture-event',start:T('2018-03-02T10:04:00'),end:T('2018-03-02T10:05:00')};assert.throws(()=>v4(b),/touch or overlap/);
+ const c=overlapFixture();c.m.items[0].trim={startSec:0,endSec:30};c.m.items[0].usedIntervalDistinctReview.candidateUsed={start:T('2018-03-02T10:04:59'),end:T('2018-03-02T10:05:29')};c.evidence.acceptedEvents[0].trim={startSec:240,endSec:299};c.m.items[0].usedIntervalDistinctReview.acceptedUsed[0]={feedId:'fixture-event',start:T('2018-03-02T10:04:00'),end:T('2018-03-02T10:04:59')};assert.throws(()=>v4(c),/touch or overlap/);
+ const d=fixture();d.m.schemaVersion=4;d.base=H2('f');Object.assign(d.m.items[0],{recordingIntervalNonoverlapAllAccepted:false,fullFileOverlap:[],usedIntervalDistinctReview:{}});assert.throws(()=>v4(d),/without any accepted overlap/);});
+test('same-original replay and incoming overlap stay rejected even with proof',()=>{
+ const f=overlapFixture();f.m.items[0].originalSha256=f.evidence.acceptedEvents[0].originalSha256;assert.throws(()=>v4(f),/replay or alias/);
+ const g=overlapFixture(),i=g.m.items[0],j=structuredClone(i);j.key='meva-event:'+'e'.repeat(20);j.eventId='other';j.originalSha256=H2('1');j.loopSha256=H2('2');j.posterSha256=H2('3');j.creditsSha256=H2('4');g.m.items.push(j);g.m.proposedEventRecords=2;assert.throws(()=>v4(g),/alias|overlap/);
+ const h=overlapFixture();h.evidence.physicalRecords[0].trim={startSec:0,endSec:10};h.evidence.physicalRecords[0].originalAssetUrl=url('02').replace(/[^/]+$/,'2018-03-02.10-00-00.10-05-00.school.G423.r13.avi');assert.throws(()=>v4(h));});
+test('public row exposes only numeric/safe proof fields',()=>{const f=overlapFixture(),i=f.m.items[0];i.usedIntervalDistinctReview.acceptedUsed[0].feedId='fixture-event';const r=v4(f).next[0];assert.deepEqual(Object.keys(r.usedIntervalDistinctReview).sort(),['acceptedBaselineSha256','acceptedUsed','candidateUsed','reviewSha256','status']);assert.equal(/Users|C:\|\\/.test(JSON.stringify(r.usedIntervalDistinctReview)+JSON.stringify(r.fullFileOverlap)),false);});
+test('schema4 repeat of an applied reviewed row is idempotent',()=>{const f=overlapFixture(),p=v4(f);f.rows.push(p.next[0]);f.current.push({...p.next[0],reviewedView:{viewId:'fixture-g423'},reviewedEvent:{eventId:'new-event',equivalenceKey:p.next[0].eventEquivalenceKey}});const q=v4(f);assert.equal(q.existing.length,1);assert.equal(q.next.length,1);});

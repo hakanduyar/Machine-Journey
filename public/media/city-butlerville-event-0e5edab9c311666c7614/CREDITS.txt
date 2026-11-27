@@ -1,0 +1,12 @@
+MEVA G420 recorded training activity - Butlerville / Muscatatuck Urban Training Center, Indiana.
+Video: "Multiview Extended Video with Activities" (MEVA) dataset by Kitware Inc. and the Intelligence Advanced Research Projects Activity (IARPA).
+Credit: MEVA / Kitware Inc. / IARPA. Dataset site: https://mevadata.org/
+Original recording: https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-12/10/2018-03-12.10-50-00.10-55-01.school.G420.r13.avi
+Original SHA256: c6b5291696622a98eeaec8f8f8d3f76d14651603cd8ea4d99bcd4c57b17c6cd6
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/
+Official dataset license statement: https://mevadata.org/resources/MEVA-data-license.txt
+Changes made (adapted material): cut a 16 second excerpt (source seconds 41-57) from the original recording; no audio in the output; re-encoded once as H.264 (libx264 crf 20, yuv420p) at the native 1920x1072 and 30 fps, forward playback, no speed change, no loop or crossfade; poster is a still extracted from the excerpt (frame at 7 s of the excerpt (source second 48)).
+Location: MEVA KF1 at Muscatatuck Urban Training Center, Butlerville, Indiana; exact camera GPS unverified.
+Not live footage: staged recorded training activity by archive participants; no identity inference. Not endorsed by or affiliated with MEVA, Kitware or IARPA.
+Physical camera meva:KF1:G420; separate recorded occurrence from an existing authorized view, not a new camera view.
