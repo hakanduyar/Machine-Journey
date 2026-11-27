@@ -442,7 +442,7 @@
     "loopSha256": "3DE79124E45BF0C638B2B2F0EA085FD840803F8F300EDDD66D1B64209B1ED37F",
     "reviewedViewId": "butlerville-meva-g423-school-hall",
     "reviewRef": "visual-r51-butlerville-g423",
-    "loopNote": "Archived staged activity, not live. The 0.5 s loop dissolve may be perceptible; not certified seamless. No tracking file."
+    "loopNote": "Archived staged activity, not live. The 0.5 s loop dissolve may be perceptible; not certified seamless. Two reviewed partial head passages; visibility and per-person occlusion masks are source-bound."
   },
   {
     "cityId": "butlerville",
@@ -461,7 +461,7 @@
     "loopSha256": "3703232A45C8F1ED9F481AD672ED562056DFFE41DD4A2151C0F16C58961ABBC1",
     "reviewedViewId": "butlerville-meva-g421-cafe",
     "reviewRef": "visual-r51-butlerville-g421",
-    "loopNote": "Archived staged activity, not live. The 0.5 s loop dissolve may be perceptible; not certified seamless. No tracking file."
+    "loopNote": "Archived staged activity, not live. The 0.5 s loop dissolve may be perceptible; not certified seamless. One reviewed partial head passage with explicit doorway occlusion and signed entry."
   },
   {
     "cityId": "new-york",
@@ -1306,5 +1306,42 @@
     },
     "loopNote": "Archived footage, not live. Source-author x9 timelapse, not live CCTV. Muted excerpt with square-pixel correction and a half-second boundary dissolve. Distant traffic and water dissolve remains disclosed; no exact camera GPS. Derivative distributed under CC BY-SA 4.0.",
     "admissionManifestSha256": "38b037d03e6a56127e1b4967099fa9073ac364e4167de8c42ff4b20e1d445d88"
+  },
+  {
+    "cityId": "tokyo",
+    "city": "tokyo",
+    "feedId": "city-tokyo-commons-cee65e4f566847d5",
+    "source": "https://commons.wikimedia.org/wiki/File:River_timelapse_x20.webm",
+    "credit": "The Nature Box",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "archiveLabel": "ARCHIVE / TIMELAPSE",
+    "locationClaim": "Publisher describes Shakujii River near Johoku-Chuo Park, Nerima-ku, Tokyo, Japan; exact camera coordinates unverified.",
+    "provenanceLevel": "STOCK_PUBLISHER_LOCATION",
+    "bundleProvenanceLevel": "publisher-city-claim",
+    "exactCameraCoordinatesVerified": false,
+    "originalAssetKey": "commons/River_timelapse_x20.webm",
+    "originalAssetUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2c/River_timelapse_x20.webm",
+    "originalSha256": "cee65e4f566847d5e88f1c4e3bcbba9c556ce104566a26e6c83d5dcfd45337c5",
+    "loopSha256": "38df2726a96753833e9245ec9c9b30175b3d182931385c3e49182e5f119a126e",
+    "posterSha256": "d6f392ac716f9de21afa0d1e2db3b8c4ae38fee8791b7b34bb05d110987c5cfb",
+    "creditsSha256": "0a53e18cbdb909ca34a40468a568af1ebf0508e2fe5b4accf73645bfb88a23cb",
+    "reviewedViewId": "tokyo-shakujii-river-johoku-channel",
+    "reviewRef": "r89-tokyo-river-independent-source-loop",
+    "sourceWindow": {
+      "start": 0,
+      "end": 15
+    },
+    "commons": {
+      "fileTitle": "File:River_timelapse_x20.webm",
+      "revision": "1132580390",
+      "sourcePageSha256": "ec2a1daf3bc2d0af4ceed12fcb887fa77e0029927e09e1e450a6d9f3a2af8479",
+      "author": "The Nature Box",
+      "derivativeLicense": "CC BY-SA 4.0",
+      "derivativeLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "derivativeChanges": "muted; source0–15s; body0.5–14.5 plus0.5s tail-to-head dissolve; resized1920x1080 to1280x720; H.26424fps14.5s loop. Original is x20 time-lapse, not real-time CCTV."
+    },
+    "loopNote": "Archived footage, not live. Source-author x20 timelapse, not live CCTV. Muted resized excerpt with half-second water/foliage boundary dissolve; not certified seamless. Derivative distributed under CC BY-SA 4.0.",
+    "admissionManifestSha256": "9c8d00228ca277e3ee5ca864dab2cbb72110f9bb32c47e51d0d6f774f52aeda7"
   }
 ]

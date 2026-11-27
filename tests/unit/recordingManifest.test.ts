@@ -256,7 +256,7 @@ describe('recordingManifest (legacy and reviewed imported views)', () => {
         "poster": "2d08d960ee9f7a3436a71e4b619c842ba3bac95b26a6e509c628c43a484edf09"
     }
 ];
-    expect(manifestCandidatesFor('tokyo')).toHaveLength(6);
+    expect(manifestCandidatesFor('tokyo')).toHaveLength(7);
     expect(manifestCandidatesFor('new-york')).toHaveLength(expectedNY);
     for (const e of expected) {
       const c = RECORDING_MANIFEST.find(c => c.feedId === e.feed)!;
@@ -336,3 +336,5 @@ it('data adapter preserves legacy identity and rejects conflicting or missing re
  expect(()=>mergeReviewedViews({a:'view-a'},[{feedId:'b',reviewedViewId:'view-a',reviewRef:'r'}])).toThrow();
  for(const row of importedRows){const c=RECORDING_MANIFEST.find(c=>c.feedId===row.feedId)!;expect(c.reviewedView).toEqual({viewId:row.reviewedViewId,reviewRef:row.reviewRef});expect(c.originalSha256).toBe(row.originalSha256);expect(row.originalSha256).not.toBe(row.loopSha256);expect(row.creditsSha256).toMatch(/^[a-f0-9]{64}$/);}
 });
+
+

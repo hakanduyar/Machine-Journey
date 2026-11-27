@@ -64,3 +64,73 @@ it('G508 reviewed passage keeps signed entry, raw invisible guards and overhead 
  const raw=JSON.parse(fs.readFileSync(`public/media/${id}/head-tracks.json`,'utf8'));
  expect(raw.tracks[0].sourceFrames.filter((k:{visible:boolean})=>!k.visible).every((k:{target:unknown})=>k.target===null)).toBe(true);
 });
+
+it('G419 native annotation keeps per-person cutouts and inclusive source end frames',()=>{
+ const id='city-butlerville-event-dfdbfd1a0a68b6f25919',d=trackingFor(id)!;
+ expect(crypto.createHash('sha256').update(fs.readFileSync(`public/media/${id}/loop.mp4`)).digest('hex')).toBe(d.videoSha256);
+ expect(d.tracks).toHaveLength(3);expect(d.occlusionPolygons).toBeUndefined();
+ expect(d.tracks[0].timedOcclusionPolygons![0].end).toBeCloseTo(14+1/24);
+ expect(d.tracks[0].timedOcclusionPolygons!.at(-1)!.start).toBe(39.5);
+ expect(d.tracks.slice(1).every(t=>t.timedOcclusionPolygons!.every(w=>w.start<39))).toBe(true);
+ expect(sampleHeadTracks(d,22.75)).toHaveLength(2);expect(sampleHeadTracks(d,39.875)).toHaveLength(1);expect(sampleHeadTracks(d,40)).toEqual([]);
+});
+
+it('courtyard passage preserves source half-open masks and head visibility guards',()=>{
+ const id='city-butlerville-courtyard',d=trackingFor(id)!;
+ expect(crypto.createHash('sha256').update(fs.readFileSync(`public/media/${id}/loop.mp4`)).digest('hex')).toBe(d.videoSha256);
+ expect(d.tracks).toHaveLength(2);expect(d.occlusionPolygons).toBeUndefined();
+ expect(d.tracks.map(t=>t.timedOcclusionPolygons!.map(w=>[w.start,w.end]))).toEqual([[[7.5,9.5],[24,25.25]],[[10,11],[27.5,31.25]]]);
+ expect(sampleHeadTracks(d,0)).toEqual([]);expect(sampleHeadTracks(d,15.25)).toHaveLength(2);
+ expect(sampleHeadTracks(d,32)).toEqual([]);
+ expect(d.tracks.reduce((n,t)=>n+t.keyframes.filter(k=>k.visible).length,0)).toBe(83);
+});
+
+it('cafe head keeps signed entry, opaque post nulls and half-open glass cutouts',()=>{
+ const id='city-butlerville-cafe',d=trackingFor(id)!;
+ expect(crypto.createHash('sha256').update(fs.readFileSync(`public/media/${id}/loop.mp4`)).digest('hex')).toBe(d.videoSha256);
+ expect(d.tracks).toHaveLength(1);expect(d.tracks[0].keyframes.filter(k=>k.visible)).toHaveLength(34);
+ expect(sampleHeadTracks(d,28.25)[0].cx).toBeCloseTo(1288/1280);
+ expect(sampleHeadTracks(d,34.5)).toEqual([]);expect(sampleHeadTracks(d,35.875)).toHaveLength(1);
+ expect(sampleHeadTracks(d,38)).toEqual([]);
+ const mask=d.tracks[0].timedOcclusionPolygons![0];expect([mask.start,mask.end]).toEqual([32.75,37.5]);expect(mask.polygons).toHaveLength(4);
+ expect(d.occlusionPolygons).toBeUndefined();
+});
+
+it('Paris path keeps six reviewed heads, per-person foliage and dissolve policy null',()=>{
+ const id='city-paris-path',d=trackingFor(id)!;
+ expect(crypto.createHash('sha256').update(fs.readFileSync(`public/media/${id}/loop.mp4`)).digest('hex')).toBe(d.videoSha256);
+ expect(d.tracks).toHaveLength(6);expect(d.tracks.reduce((n,t)=>n+t.keyframes.filter(k=>k.visible).length,0)).toBe(75);
+ expect(d.tracks[0].timedOcclusionPolygons![0].end).toBe(1);
+ expect(d.tracks[4].timedOcclusionPolygons![0].end).toBe(10);
+ expect(d.tracks[0].timedOcclusionPolygons![0].polygons[0]).toHaveLength(14);
+ for(const i of[1,2,3,5])expect(d.tracks[i].timedOcclusionPolygons).toBeUndefined();
+ expect(sampleHeadTracks(d,17)).toHaveLength(1);expect(sampleHeadTracks(d,17.25)).toEqual([]);
+ const raw=JSON.parse(fs.readFileSync(`public/media/${id}/head-tracks.json`,'utf8'));
+ const guard=raw.tracks[5].sourceFrames.find((k:{reason:string})=>k.reason==='LOOP_DISSOLVE_UNCERTAINTY');
+ expect(guard.sourceFrameSha256).toBeNull();expect(guard.evidenceKind).toBe('POLICY_CUTOFF_NOT_NATIVE_MEASUREMENT');
+});
+
+describe('occlusion polygon vertex bound is exactly 3..14',()=>{
+ const ring=(n:number)=>Array.from({length:n},(_,i)=>({x:.5+.3*Math.cos(2*Math.PI*i/n),y:.5+.3*Math.sin(2*Math.PI*i/n)}));
+ const global=(n:number):HeadTracking=>({...fixture([k(1),k(2)]),occlusionPolygons:[ring(n)]});
+ const timed=(n:number):HeadTracking=>{const d=fixture([k(1),k(2)]);d.tracks[0].timedOcclusionPolygons=[{start:1,end:2,polygons:[ring(n)]}];return d;};
+ it('global polygons accept 14 vertices and reject 15, keeping the minimum of 3',()=>{
+  expect(parseHeadTracking(global(14)).occlusionPolygons![0]).toHaveLength(14);
+  expect(()=>parseHeadTracking(global(15))).toThrow();
+  expect(parseHeadTracking(global(3))).toBeDefined();expect(()=>parseHeadTracking(global(2))).toThrow();
+ });
+ it('timed per-track polygons accept 14 vertices and reject 15, keeping the minimum of 3',()=>{
+  expect(parseHeadTracking(timed(14)).tracks[0].timedOcclusionPolygons![0].polygons[0]).toHaveLength(14);
+  expect(()=>parseHeadTracking(timed(15))).toThrow();
+  expect(parseHeadTracking(timed(3))).toBeDefined();expect(()=>parseHeadTracking(timed(2))).toThrow();
+ });
+ it('still rejects out-of-range vertices at 14 points in both forms',()=>{
+  const g=global(14);g.occlusionPolygons![0][13]={x:1.01,y:.5};expect(()=>parseHeadTracking(g)).toThrow();
+  const t=timed(14);t.tracks[0].timedOcclusionPolygons![0].polygons[0][13]={x:.5,y:-.01};expect(()=>parseHeadTracking(t)).toThrow();
+ });
+ it('allows mixed masked and unmasked tracks when the optional field is omitted, but not an empty array',()=>{
+  const d=timed(14);d.tracks.push({id:'unmasked',keyframes:[k(1),k(2)]});
+  expect(parseHeadTracking(d).tracks[1].timedOcclusionPolygons).toBeUndefined();
+  d.tracks[1].timedOcclusionPolygons=[];expect(()=>parseHeadTracking(d)).toThrow();
+ });
+});
