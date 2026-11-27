@@ -43,7 +43,7 @@ const SNAP = () => {
   const tile = s.selectedId ? tiles.find((t) => t.dataset.tile === s.selectedId) : null;
   const feed = tile?.dataset.feed ?? null;
   const v = feed ? document.querySelector(`video[data-feed="${feed}"]`) : null;
-  if (v && !v.__uid) v.__uid = Math.random().toString(36).slice(2);
+  if (v && !v.__uid) v.__uid = crypto.randomUUID();
   const w = document.querySelector('.world');
   let area = 0; let out = 0;
   const ww = parseFloat(w?.style.width ?? '0'); const wh = parseFloat(w?.style.height ?? '0');
