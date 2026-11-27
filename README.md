@@ -4,7 +4,7 @@
 
 A Person of Interest-inspired interactive archive of recorded city views, explored through a camera mosaic, globe, floating field and neural scene. Each gesture completes one transition and holds until the next gesture. Back navigation revisits recorded stops.
 
-This is an unofficial, authored visual interface. Videos are licensed **recorded excerpts**, not live surveillance. Globe routes, lights and companion panels are decorative; they do not represent real monitoring, identities or network activity. Person reticles on a small subset of recordings follow reviewed, source-bound annotations.
+This is an unofficial, authored visual interface. Videos are licensed **recorded excerpts**, not live surveillance. Globe routes, lights and companion panels are decorative; they do not represent real monitoring, identities or network activity. Person and vehicle markers on a small subset of recordings follow reviewed, source-bound annotations.
 
 ## Run locally
 
@@ -37,11 +37,11 @@ The globe has 24 destinations. Twenty-one use separate city-labelled stock clips
 
 City videos load on demand. The active city now stays consistent across the mosaic, floating field and neural scene, including background cameras; Back and Redo restore the recorded city and feed choices. Animated companion panels show fictional dossiers, documents and audio-style graphics without claiming real analysis of the footage.
 
-The city catalog contains **95 physical views and 101 recordings**. Butlerville has 19 physical views and six separately reviewed, genuinely different events from existing cameras, giving it 25 recordings. Those events are not counted as new physical views. New York has 23 recordings. Reykjavík, Cairo, Johannesburg and Lagos still have one each. Some archive views are timelapses or stationary pans, identified in their credits.
+The city catalog contains **97 distinct views and 105 recordings**. Butlerville has 20 reviewed views and eight separately reviewed, genuinely different events, giving it 28 recordings. A distinct view is a reviewed camera composition, not necessarily a different physical device: two G505 recordings have independently reviewed different sightlines. The eight event recordings do not add views. Paris has nine recordings. New York has 23 recordings. Reykjavík, Cairo, Johannesburg and Lagos still have one each. Some archive views are timelapses or stationary pans, identified in their credits.
 
 Fresh globe destinations use a seeded shuffle cycle across the 24 cities. Floating and neural visits vary in length, capped by the city's available distinct recordings. Back and Redo preserve their original choices. The local half of a globe-to-camera approach accelerates toward the pane; its reverse contracts quickly before returning to the normal global leg.
 
-Seven feeds carry 17 anonymous person tracks over reviewed time ranges: m01, m02, m03, m06, m07, parking-walk and the school-hall recording. The square head reticles follow video time in mosaic/selected panes and floating/neural screens. Coverage is partial and sampled. It combines authored annotations with one offline motion-tracked interval corrected against reviewed source frames; it is not live detection, identity recognition, complete scene tracking or vehicle tracking. See [tracking scope](scripts/HEAD_TRACKING.md).
+Eight feeds carry 18 anonymous person tracks over reviewed time ranges. Five further feeds carry one aircraft or vehicle target each: compact green aircraft triangles and white vehicle squares. Markers follow video time in mosaic/selected panes and floating/neural screens. Reviewed edge targets retain their source centre and clip at the viewport; fixed foreground masks hide vehicle markers behind pillars or buildings. Coverage remains limited to selected subjects and reviewed intervals, not live detection, identity recognition or complete scene tracking. See [tracking scope](scripts/HEAD_TRACKING.md).
 
 The default dense mosaic still repeats recordings. The optional ?catalog=unique diagnostic refuses to mount a city journey until every city can fill its whole mosaic with distinct admitted recordings; the current catalog remains insufficient. [Catalog expansion and full-mosaic uniqueness](https://github.com/hakanduyar/Machine-Journey/issues/6) remain open.
 

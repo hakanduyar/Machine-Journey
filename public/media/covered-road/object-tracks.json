@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "feedId": "covered-road",
+  "videoSha256": "a98328c58d8f66fd5c267de7462d3c3af3107011e064107a2fb1556e4e3dfe1d",
+  "annotationSha256": "ca5f812442ada92fb0e06ef0572627354b496b8d0799fa95756e59e8fcb95168",
+  "sourceMediaUrl": "https://mevadata-public-01.s3.amazonaws.com/drop-5-mevid/2018-05-18.14-25-00.14-30-00.bus.G505.r13.avi",
+  "sourceWidth": 960,
+  "sourceHeight": 540,
+  "duration": 20,
+  "maxGapSeconds": 1.05,
+  "method": "Existing exact-source authored object bounds converted offline to compact source-bound display markers; no object detection or identity inference.",
+  "reviewScope": "Red SUV central target passage9.7–14.6s. Vehicle extremities enter earlier9.3 and leave later14.95; the central target is outside the viewport then, not recentered onto bumpers. Edge centres estimated from adjacent full vehicle width and visible contour; approximately6px uncertainty. Existing interior target retained. Fixed pillar clips marker. Independent runtime review pending.",
+  "geometryPolicy": {
+    "marker": "vehicle-square",
+    "anchorXFraction": 0.5,
+    "anchorYFraction": 0.5,
+    "sizeRatioOfShorterBound": 0.85,
+    "basis": "Independently confirmed original reference visual family; compact size/anchor are authored implementation choices requiring runtime review, not universal canonical dimensions.",
+    "referenceEvidenceSha256": "4a8a82284083b4f167355317034a80cc8f8c17230b2d2faf6bdfed53daa8f5cb",
+    "referenceReviewSha256": "4f004e48ec2b06ca056555ce4ae140112de11e4f8f6fb51cac778cb323f8ed45"
+  },
+  "tracks": [
+    {
+      "id": "object-01",
+      "marker": "vehicle-square",
+      "reviewedSpans": [
+        {
+          "start": 9.7,
+          "end": 14.6,
+          "reviewRef": "native-fixed-central-target-candidate"
+        }
+      ],
+      "keyframes": [
+        {
+          "t": 9.69,
+          "cx": 0,
+          "cy": 0.4388888888888889,
+          "size": 0.1,
+          "visible": false
+        },
+        {
+          "t": 9.7,
+          "cx": -0.008333333333333333,
+          "cy": 0.4388888888888889,
+          "size": 0.1,
+          "visible": true
+        },
+        {
+          "t": 9.9,
+          "cx": 0.029166666666666667,
+          "cy": 0.43703703703703706,
+          "size": 0.1,
+          "visible": true
+        },
+        {
+          "t": 10,
+          "cx": 0.052083333333333336,
+          "cy": 0.4351851851851852,
+          "size": 0.1,
+          "visible": true
+        },
+        {
+          "t": 10.25,
+          "cx": 0.10002,
+          "cy": 0.43705000000000005,
+          "size": 0.10072499999999998,
+          "visible": true
+        },
+        {
+          "t": 10.5,
+          "cx": 0.15105,
+          "cy": 0.43889999999999996,
+          "size": 0.11016,
+          "visible": true
+        },
+        {
+          "t": 11,
+          "cx": 0.26044999999999996,
+          "cy": 0.45555,
+          "size": 0.113305,
+          "visible": true
+        },
+        {
+          "t": 11.5,
+          "cx": 0.3656,
+          "cy": 0.4944,
+          "size": 0.12274,
+          "visible": true
+        },
+        {
+          "t": 12,
+          "cx": 0.46665,
+          "cy": 0.51475,
+          "size": 0.125885,
+          "visible": true
+        },
+        {
+          "t": 12.5,
+          "cx": 0.5677,
+          "cy": 0.55745,
+          "size": 0.14169499999999996,
+          "visible": true
+        },
+        {
+          "t": 13,
+          "cx": 0.67295,
+          "cy": 0.60185,
+          "size": 0.14798499999999998,
+          "visible": true
+        },
+        {
+          "t": 13.5,
+          "cx": 0.7781,
+          "cy": 0.6500499999999999,
+          "size": 0.14798499999999998,
+          "visible": true
+        },
+        {
+          "t": 14,
+          "cx": 0.88545,
+          "cy": 0.7018500000000001,
+          "size": 0.160565,
+          "visible": true
+        },
+        {
+          "t": 14.3,
+          "cx": 0.9520833333333333,
+          "cy": 0.7388888888888889,
+          "size": 0.16111111111111112,
+          "visible": true
+        },
+        {
+          "t": 14.5,
+          "cx": 0.9958333333333333,
+          "cy": 0.7592592592592593,
+          "size": 0.16111111111111112,
+          "visible": true
+        },
+        {
+          "t": 14.6,
+          "cx": 1.0177083333333334,
+          "cy": 0.7703703703703704,
+          "size": 0.16111111111111112,
+          "visible": true
+        },
+        {
+          "t": 14.7,
+          "cx": 1,
+          "cy": 0.7814814814814814,
+          "size": 0.16111111111111112,
+          "visible": false
+        }
+      ]
+    }
+  ],
+  "occlusionPolygons": [
+    [
+      {
+        "x": 0.26145833333333335,
+        "y": 0.19074074074074074
+      },
+      {
+        "x": 0.33125,
+        "y": 0.21296296296296297
+      },
+      {
+        "x": 0.29270833333333335,
+        "y": 0.9981481481481481
+      },
+      {
+        "x": 0.225,
+        "y": 0.9981481481481481
+      }
+    ]
+  ],
+  "occlusionProvenance": {
+    "method": "Manual fixed foreground pillar contour measured on native960x540 frames; approximately3pixels uncertainty.",
+    "sampleFrames": [
+      279,
+      285,
+      300,
+      309,
+      315,
+      321,
+      327,
+      333,
+      339,
+      420,
+      435,
+      448
+    ],
+    "timebase": "30frames per second",
+    "centralTargetMeasurements": {
+      "frames": [
+        291,
+        297,
+        429,
+        435
+      ],
+      "nativeWidth": 960,
+      "nativeHeight": 540,
+      "partialContourAndAdjacentWidthEstimate": true,
+      "uncertaintyPixels": 6
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "feedId": "parked-c130",
+  "videoSha256": "95e74bfab7392110de6e407f2b9ef829c3d98a04842454ab7f92476cb7181729",
+  "annotationSha256": "869a3ecf2f95fcd4324da8a985925a1b6fb2c7e27692d3ed0f73adb7931a4766",
+  "sourceMediaUrl": "https://www.dvidshub.net/video/554984/c-130-engine-check",
+  "sourceWidth": 960,
+  "sourceHeight": 540,
+  "duration": 8,
+  "maxGapSeconds": 1.05,
+  "method": "Existing exact-source authored object bounds converted offline to compact source-bound display markers; no object detection or identity inference.",
+  "reviewScope": "Single stationary aircraft annotation; sampled source-frame alignment, not complete scene/object coverage.",
+  "geometryPolicy": {
+    "marker": "aircraft-triangle",
+    "anchorXFraction": 0.5,
+    "anchorYFraction": 0.68,
+    "sizeRatioOfShorterBound": 0.45,
+    "basis": "Independently confirmed original reference visual family; compact size/anchor are authored implementation choices requiring runtime review, not universal canonical dimensions.",
+    "referenceEvidenceSha256": "4a8a82284083b4f167355317034a80cc8f8c17230b2d2faf6bdfed53daa8f5cb",
+    "referenceReviewSha256": "4f004e48ec2b06ca056555ce4ae140112de11e4f8f6fb51cac778cb323f8ed45"
+  },
+  "tracks": [
+    {
+      "id": "object-01",
+      "marker": "aircraft-triangle",
+      "reviewedSpans": [
+        {
+          "start": 0,
+          "end": 8,
+          "reviewRef": "candidate-source-frame-bounds-inspection"
+        }
+      ],
+      "keyframes": [
+        {
+          "t": 0,
+          "cx": 0.4729,
+          "cy": 0.447268,
+          "size": 0.19917,
+          "visible": true
+        },
+        {
+          "t": 8,
+          "cx": 0.4729,
+          "cy": 0.447268,
+          "size": 0.19917,
+          "visible": true
+        }
+      ]
+    }
+  ]
+}

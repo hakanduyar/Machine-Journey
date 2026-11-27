@@ -11,7 +11,7 @@ import { planNeuralRoute, type NeuralHold } from '../../src/journey/neuralRoute'
 
 const IDS = ALL_FEEDS.map((f) => f.id);
 const BUTLER = ['m01', 'm02', 'm06', 'parking-walk', 'm03', 'm07', 'covered-road', 'm04', 'm05', 'city-butlerville-school-hall', 'city-butlerville-cafe', 'city-butlerville-stairwell', 'city-butlerville-classroom', 'city-butlerville-courtyard', 'city-butlerville-bus-interior',
-  'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell', 'city-butlerville-event-6be3a62539fcd5e7e29c', 'city-butlerville-event-5b53880db45458d170a8', 'city-butlerville-event-aa4fd544b8e12da53881', 'city-butlerville-event-42b9a7d07894762477da', 'city-butlerville-event-788995c15491e2f58728', 'city-butlerville-event-0cb69d3407458efbd9cb'];
+  'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell', 'city-butlerville-meva-e00f38fcfeed15f3', 'city-butlerville-event-6be3a62539fcd5e7e29c', 'city-butlerville-event-5b53880db45458d170a8', 'city-butlerville-event-aa4fd544b8e12da53881', 'city-butlerville-event-42b9a7d07894762477da', 'city-butlerville-event-788995c15491e2f58728', 'city-butlerville-event-0cb69d3407458efbd9cb', 'city-butlerville-event-7d31316b3ce1c2c82ffc', 'city-butlerville-event-0be6b9181c39c2a7d918'];
 const BUTLER_PRIMARY = BUTLER.slice(0, 4);
 const catalog = (city: string) => catalogIndices(cityFeedIds(cityById(city)), IDS);
 
@@ -57,8 +57,8 @@ const toHold = (c: JourneyController) => { for (let i = 0; i < 6000 && !isHoldSt
 const fwd = (c: JourneyController) => { expect(c.dispatch({ type: 'intent' })).toBe(true); toHold(c); };
 const back = (c: JourneyController) => { expect(c.dispatch({ type: 'back' })).toBe(true); toHold(c); };
 
-describe('initial ownership: Butlerville (its twenty-five real feeds)', () => {
-  it('opens in Butlerville and its mosaic is bound only to its twenty-five feeds', () => {
+describe('initial ownership: Butlerville (its twenty-eight real feeds)', () => {
+  it('opens in Butlerville and its mosaic is bound only to its twenty-eight feeds', () => {
     const { c } = make();
     expect(c.activeCity).toBe('butlerville');
     expect(cityFeedIds(cityById(DEFAULT_CITY_ID))).toEqual(BUTLER);
@@ -66,7 +66,7 @@ describe('initial ownership: Butlerville (its twenty-five real feeds)', () => {
     for (const f of feeds) expect(BUTLER).toContain(f);
     expect(feeds.size).toBeGreaterThan(1);
   });
-  it('startup sources: only Butlerville\'s twenty-five; no other city / unowned clip is part of the opening pool', () => {
+  it('startup sources: only Butlerville\'s twenty-eight; no other city / unowned clip is part of the opening pool', () => {
     const startup = new Set(cityFeedIds(cityById(DEFAULT_CITY_ID)));
     expect([...startup]).toEqual(BUTLER);
     for (const id of IDS) if (!startup.has(id)) expect(cityOfFeed(id, CITIES)?.id).not.toBe('butlerville');
@@ -77,9 +77,9 @@ describe('initial ownership: Butlerville (its twenty-five real feeds)', () => {
     for (const t of layoutOf('cairo')) expect(IDS[t.feedIndex]).toBe('city-cairo'); // Cairo still owns exactly one clip
     expect(layoutOf('cairo').map((t) => t.id)).toEqual(layoutOf('butlerville').map((t) => t.id)); // stable tile ids across cities
   });
-  it('a multi-clip city (Paris owns 8) binds its tiles only to its own eight and its deck cycles only them', () => {
+  it('a multi-clip city (Paris owns 9) binds its tiles only to its own nine and its deck cycles only them', () => {
     const own = cityFeedIds(cityById('paris'));
-    expect(own.length).toBe(8); expect(own[0]).toBe('city-paris');
+    expect(own.length).toBe(9); expect(own[0]).toBe('city-paris');
     const used = new Set(layoutOf('paris').map((t) => IDS[t.feedIndex]));
     for (const f of used) expect(own).toContain(f);
     expect(used.size).toBeGreaterThan(1);
@@ -217,7 +217,7 @@ describe('city context through the controller', () => {
 
 describe('capped playback for the active city', () => {
   const n = IDS.length;
-  it('route stages keep the cap of three even with a twenty-five-feed pool; the globe hold plays nothing', () => {
+  it('route stages keep the cap of three even with a twenty-eight-feed pool; the globe hold plays nothing', () => {
     const pool = catalog('butlerville');
     for (const stage of ['floating', 'floatMove', 'neural', 'neuralMove'] as const) {
       const d = desiredPlayback({ stage, selectedFeed: -1, targetFeed: -1, feedCount: n, pool, active: pool });
@@ -232,8 +232,8 @@ describe('capped playback for the active city', () => {
     const ent = desiredPlayback({ stage: 'entering', selectedFeed: -1, targetFeed: cairo, feedCount: n, pool: catalog('cairo'), extra: [cairo] });
     expect(IDS.filter((_, i) => ent[i])).toEqual(['city-cairo']);
   });
-  it('entering an eight-clip city decodes the ready target plus a small near set of its OWN feeds, never more than three; a mosaic hold plays the city pool', () => {
-    const pool = catalog('paris'); expect(pool.length).toBe(8);
+  it('entering an nine-clip city decodes the ready target plus a small near set of its OWN feeds, never more than three; a mosaic hold plays the city pool', () => {
+    const pool = catalog('paris'); expect(pool.length).toBe(9);
     const target = pool[2];
     const ent = desiredPlayback({ stage: 'entering', selectedFeed: -1, targetFeed: target, feedCount: n, pool, extra: [target] });
     const on = IDS.filter((_, i) => ent[i]);

@@ -1,0 +1,13 @@
+City: paris
+Source: https://www.pexels.com/video/the-saint-eustache-church-and-paris-city-skyline-under-a-cloudy-sky-13316516/
+Media: https://videos.pexels.com/video-files/13316516/13316516-uhd_2560_1440_25fps.mp4
+Credit: Yago Trillo / Pexels
+License: Pexels License
+License URL: https://www.pexels.com/license/
+Original SHA256: B7A576272039956B267E770FE956C5DE89DC0D450955E08E0C2A42A361F02449
+Loop SHA256: 5AD0EDB7C88CEAF16A59ADC4B75A143E459785926668980991886818D2F7B564
+Poster SHA256: 84B9687F587A81FC2D9E18146ED67119B2E2636151E8DDE7E5FEF010D43AFDD0
+Archive: ARCHIVE / RECORDED STOCK; not live surveillance.
+Location: publisher-stated city/place only (Publisher title names Saint-Eustache Church and Paris skyline; tags Paris, Paris France); exact camera GPS unverified.
+Edits: trim 0.5s+13s; muted; 24fps 1280x720; 0.5s end-to-start dissolve loop; no reverse playback.
+Status: PREPARED_UNREVIEWED; seam and fixed-camera limits in FINAL-packet.json. Distinct camera identity provisional.

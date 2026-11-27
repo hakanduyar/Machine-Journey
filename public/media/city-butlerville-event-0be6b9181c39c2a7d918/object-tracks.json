@@ -1,0 +1,493 @@
+{
+  "schemaVersion": 1,
+  "feedId": "city-butlerville-event-0be6b9181c39c2a7d918",
+  "videoSha256": "e1a91287f0309bc7cc6f6e23679ff7806a527d35383330a5af4426cb41fb5360",
+  "annotationSha256": "a134398ca195e90c00f02aa8b52d7b55ca0620e0e0cdd86bbbb9ca5e337e83a1",
+  "sourceMediaUrl": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-15/15/2018-03-15.15-30-01.15-35-01.school.G328.r13.avi",
+  "sourceWidth": 1280,
+  "sourceHeight": 720,
+  "duration": 39.5,
+  "maxGapSeconds": 1,
+  "method": "Offline native source-frame measurements of one fixed vehicle target; no inference or identity classification.",
+  "reviewScope": "Complete observed chosen target passage; vehicle extremities may precede/follow the central target. No full-vehicle detector or person/identity inference.",
+  "targetPolicy": "Compact front cabin/window target, not whole bus body. Same target disappears behind foreground building; do not move marker to remaining rear body.",
+  "occlusionPolygons": [
+    [
+      {
+        "x": 0.8890625,
+        "y": 0.575
+      },
+      {
+        "x": 1,
+        "y": 0.575
+      },
+      {
+        "x": 1,
+        "y": 1
+      },
+      {
+        "x": 0.875,
+        "y": 1
+      },
+      {
+        "x": 0.88046875,
+        "y": 0.7027777777777777
+      }
+    ]
+  ],
+  "tracks": [
+    {
+      "id": "object-01",
+      "marker": "vehicle-square",
+      "keyframes": [
+        {
+          "t": 0,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 12.5,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 12.625,
+          "cx": 0.0015625,
+          "cy": 0.7277777777777777,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 12.75,
+          "cx": 0.009375,
+          "cy": 0.725,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 13,
+          "cx": 0.0234375,
+          "cy": 0.7222222222222222,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 14,
+          "cx": 0.109375,
+          "cy": 0.7194444444444444,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 15,
+          "cx": 0.2203125,
+          "cy": 0.7166666666666667,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 16,
+          "cx": 0.309375,
+          "cy": 0.7138888888888889,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 17,
+          "cx": 0.396875,
+          "cy": 0.7138888888888889,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 18,
+          "cx": 0.4734375,
+          "cy": 0.7138888888888889,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 19,
+          "cx": 0.534375,
+          "cy": 0.7138888888888889,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 20,
+          "cx": 0.571875,
+          "cy": 0.7166666666666667,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 21,
+          "cx": 0.6125,
+          "cy": 0.7166666666666667,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 22,
+          "cx": 0.653125,
+          "cy": 0.7166666666666667,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 23,
+          "cx": 0.7078125,
+          "cy": 0.7138888888888889,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 24,
+          "cx": 0.7578125,
+          "cy": 0.7138888888888889,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 25,
+          "cx": 0.8125,
+          "cy": 0.7138888888888889,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 25.75,
+          "cx": 0.8484375,
+          "cy": 0.7111111111111111,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 26,
+          "cx": 0.8609375,
+          "cy": 0.7111111111111111,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 26.25,
+          "cx": 0.875,
+          "cy": 0.7111111111111111,
+          "size": 0.03611111111111111,
+          "visible": true
+        },
+        {
+          "t": 26.5,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 39.5,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        }
+      ],
+      "sourceFrames": [
+        {
+          "t": 0,
+          "frame": 0,
+          "pts": 0,
+          "sourceFrameSha256": null,
+          "basis": "TARGET_OUT_OF_FRAME",
+          "target": null,
+          "visible": false
+        },
+        {
+          "t": 12.5,
+          "frame": 300,
+          "pts": 153600,
+          "sourceFrameSha256": null,
+          "basis": "TARGET_OUT_OF_FRAME",
+          "target": null,
+          "visible": false
+        },
+        {
+          "t": 12.625,
+          "frame": 303,
+          "pts": 155136,
+          "sourceFrameSha256": "e1f0f6928f5f5decf7a6ad3297ac280544fae5e82b93fc4722359269f94f1c59",
+          "basis": "MANUALLY_ESTIMATED_PARTIAL_CENTRAL_TARGET_FROM_VISIBLE_CONTOUR_AND_ADJACENT_FULL_FRAME",
+          "target": {
+            "x": 2,
+            "y": 524,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 12.75,
+          "frame": 306,
+          "pts": 156672,
+          "sourceFrameSha256": "e487771e02dfa24d153347e453d4eb25ac4f9597c40532a20978a9eff6855849",
+          "basis": "MANUALLY_ESTIMATED_PARTIAL_CENTRAL_TARGET_FROM_VISIBLE_CONTOUR_AND_ADJACENT_FULL_FRAME",
+          "target": {
+            "x": 12,
+            "y": 522,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 13,
+          "frame": 312,
+          "pts": 159744,
+          "sourceFrameSha256": "46ea75d3a8c2dc37e64c32040dec03e1eadb17a85eac061cf6b516c16c372cb8",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 30,
+            "y": 520,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 14,
+          "frame": 336,
+          "pts": 172032,
+          "sourceFrameSha256": "177cb444111973364afde7423281f6c076b70171855d2939985ee0be36e35eca",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 140,
+            "y": 518,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 15,
+          "frame": 360,
+          "pts": 184320,
+          "sourceFrameSha256": "7f27214672d5e3060c6696b8eaf2f1bbc4c5d4f54c9ea524f67682132dc3a9ad",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 282,
+            "y": 516,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 16,
+          "frame": 384,
+          "pts": 196608,
+          "sourceFrameSha256": "7e17bf7c7ce56884146d2e3f5d9fc6e44dff059d7be0e7293b568737d6cde5ad",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 396,
+            "y": 514,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 17,
+          "frame": 408,
+          "pts": 208896,
+          "sourceFrameSha256": "ab97521e660d1601933c5867997f1a64fb847710ceffbe9eb79c958dd0689ba2",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 508,
+            "y": 514,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 18,
+          "frame": 432,
+          "pts": 221184,
+          "sourceFrameSha256": "cf5bb7305e1bc81a1767e2dc78c39938b550dce84ade0576164b192d38a3a6d9",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 606,
+            "y": 514,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 19,
+          "frame": 456,
+          "pts": 233472,
+          "sourceFrameSha256": "84f5ce661cbd8932591f5467d3b59653b483b73acdf1dfe87b9668a218bb52d3",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 684,
+            "y": 514,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 20,
+          "frame": 480,
+          "pts": 245760,
+          "sourceFrameSha256": "21979174d7c2cdeaac45cb3fef9065a04edfb5cd1e5cb2b07386ddc324ba9c1d",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 732,
+            "y": 516,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 21,
+          "frame": 504,
+          "pts": 258048,
+          "sourceFrameSha256": "8b6e84b371addaa54981a6bf787c469a54ecacad8abbadbd81fee55702daa631",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 784,
+            "y": 516,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 22,
+          "frame": 528,
+          "pts": 270336,
+          "sourceFrameSha256": "4bf2407ea4e64efd33b7d5bf6797671a6a0d980a429314b5ae3e688b0934badb",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 836,
+            "y": 516,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 23,
+          "frame": 552,
+          "pts": 282624,
+          "sourceFrameSha256": "f30b47ea819f0d5e7a45cec3c2ffc657238c45b219cf49d94ad890f961d48dc2",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 906,
+            "y": 514,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 24,
+          "frame": 576,
+          "pts": 294912,
+          "sourceFrameSha256": "6da4e5828827363f73163f8b93f0dae7310361a3a55f2537a6becf4ff19ee6bc",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 970,
+            "y": 514,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 25,
+          "frame": 600,
+          "pts": 307200,
+          "sourceFrameSha256": "9b86a297709c48a67aa8ca5aa530d431192c3b4500bb167d1f231f5445c3b5c9",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1040,
+            "y": 514,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 25.75,
+          "frame": 618,
+          "pts": 316416,
+          "sourceFrameSha256": "aa68052f1e457cfda1c242fb89ab2d7b8b183ed3a8da7eb851c75f0a00fa745c",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1086,
+            "y": 512,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 26,
+          "frame": 624,
+          "pts": 319488,
+          "sourceFrameSha256": "4c25ec26d835bd6df0cc636af2aa50717c5b0c0f801dce503fbd974e4f258e9d",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1102,
+            "y": 512,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 26.25,
+          "frame": 630,
+          "pts": 322560,
+          "sourceFrameSha256": "ceb5ca19b6f1e15030e0945fed8b3de790ee350b1ed2de0294a7ec3f1c16b07d",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1120,
+            "y": 512,
+            "side": 26
+          },
+          "visible": true
+        },
+        {
+          "t": 26.5,
+          "frame": 636,
+          "pts": 325632,
+          "sourceFrameSha256": null,
+          "basis": "TARGET_FULLY_OCCLUDED_BY_FOREGROUND_BUILDING",
+          "target": null,
+          "visible": false
+        },
+        {
+          "t": 39.5,
+          "frame": 948,
+          "pts": 485376,
+          "sourceFrameSha256": null,
+          "basis": "TARGET_NOT_REAPPEARING",
+          "target": null,
+          "visible": false
+        }
+      ]
+    }
+  ],
+  "sourceProvenance": {
+    "independentReviewSha256": "574829b7a1c679159557a56656f63df985c70f50c1bbe42083a9c7c020a91872",
+    "packetSha256": "05de7f749d5e01f6a0ad2bc4448aa2b8b5abce6e09bfd7c27f43df3788fce6c4",
+    "nativeTimebase": "1/12288",
+    "manualUncertaintyPixels": {
+      "interior": 6,
+      "partialEdge": 10
+    },
+    "occlusionEvidence": [
+      {
+        "basis": "Manually measured fixed foreground parapet/building from pinned native frame26.25, polygon only relevant at target y512; no moving masks.",
+        "sourceFrameSha256": "ceb5ca19b6f1e15030e0945fed8b3de790ee350b1ed2de0294a7ec3f1c16b07d"
+      }
+    ],
+    "limitations": [
+      "Manual6px interior/10px edge uncertainty; not statistical accuracy.",
+      "One-second interior key spacing needs independent actual interpolation review, especially SUV turn.",
+      "Null time boundaries are bounded by inspected native frames, not detector confidence.",
+      "No production changes or runtime acceptance."
+    ]
+  }
+}

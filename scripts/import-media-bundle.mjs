@@ -23,13 +23,21 @@ export function validateItem(i, cityIds) {
     i = { ...i, notes: i.notes.join(' ') };
   }
   if (!safeNote(i.notes)) fail('missing or private metadata: notes');
-  if (!/^(pexels|mixkit):[1-9][0-9]*$/.test(i.key || '') || !slug(i.city) || !cityIds.includes(i.city) || !slug(i.viewId)) fail('invalid key/city/view');
+  if (!/^(?:(?:pexels|mixkit):[1-9][0-9]*|meva:[0-9A-Za-z.-]+\.avi)$/.test(i.key || '') || !slug(i.city) || !cityIds.includes(i.city) || !slug(i.viewId)) fail('invalid key/city/view');
   for (const k of ['credit','reviewRef','locationClaim','provenanceLevel','notes']) if (!clean(i[k])) fail('missing or private metadata: ' + k);
   for (const k of ['originalSha256','loopSha256','posterSha256','creditsSha256']) if (!hash(i[k])) fail('missing SHA: ' + k);
   if (i.originalSha256 === i.loopSha256 || i.originalSha256 === i.posterSha256) fail('original cannot be derivative');
   if(i.exactCameraCoordinatesVerified !== false) fail('camera coordinates are not verified by this adapter');
   const [provider,id] = i.key.split(':'), s=url(i.source), m=url(i.originalMedia);
   const px=provider==='pexels';
+  if(provider==='meva'){
+    const name=m.pathname.split('/').at(-1),match=name?.match(/^(2018-\d{2}-\d{2})\.(\d{2})-\d{2}-\d{2}\.(\d{2})-\d{2}-\d{2}\.[a-z]+\.(G\d{3})\.r13\.avi$/);
+    const parent=match&&('/drops-123-r13/'+match[1]+'/');
+    if(!match||m.hostname!=='mevadata-public-01.s3.amazonaws.com'||s.href!==m.href||id!==name||!([match[2],match[3]].some(hour=>m.pathname===parent+hour+'/'+name)||m.pathname==='/drop-5-mevid/'+name))fail('MEVA source/item/media binding mismatch');
+    if(i.city!=='butlerville'||i.license!=='CC BY 4.0'||i.licenseUrl!=='https://mevadata.org/resources/MEVA-data-license.txt'||i.provenanceLevel!=='official-camera-location')fail('unsupported MEVA location/license');
+    if(!i.trim||!Number.isFinite(i.trim.start)||!Number.isFinite(i.trim.end)||i.trim.start<0||i.trim.end<=i.trim.start||i.trim.end>300)fail('invalid MEVA trim');
+    return {cityId:i.city,city:i.city,feedId:'city-'+i.city+'-meva-'+i.originalSha256.slice(0,16),source:i.source,credit:i.credit,license:i.license,licenseUrl:i.licenseUrl,archiveLabel:'ARCHIVE / CITY VIEW',locationClaim:i.locationClaim,provenanceLevel:'OFFICIAL_DATASET_SITE',bundleProvenanceLevel:i.provenanceLevel,exactCameraCoordinatesVerified:false,originalAssetKey:'meva/'+name,originalAssetUrl:i.originalMedia,originalSha256:i.originalSha256,loopSha256:i.loopSha256,posterSha256:i.posterSha256,creditsSha256:i.creditsSha256,reviewedViewId:i.viewId,reviewRef:i.reviewRef,sourceCameraId:match[4],sourceWindow:{start:i.trim.start,end:i.trim.end},loopNote:'Archived footage, not live. '+i.notes};
+  }
   if (!(px ? ['www.pexels.com','pexels.com'].includes(s.hostname) && new RegExp('^/video/[^/]+-'+id+'/$').test(s.pathname) && m.hostname==='videos.pexels.com' && m.pathname.startsWith('/video-files/'+id+'/') : s.hostname==='mixkit.co' && new RegExp('^/free-stock-video/[^/]+-'+id+'/$').test(s.pathname) && m.hostname==='assets.mixkit.co' && m.pathname.startsWith('/videos/'+id+'/'+id+'-'))) fail('source/item/media binding mismatch');
   if (!/^[\w./-]+\.mp4$/.test(m.pathname)) fail('invalid media URL');
   if(i.license !== (px?'Pexels License':'Mixkit Stock Video Free License') || i.licenseUrl !== (px?'https://www.pexels.com/license/':'https://mixkit.co/license/modal/videoFree/')) fail('unsupported license');
@@ -54,9 +62,9 @@ export async function importBundle({root,bundleDir,approvedManifestSha,apply=fal
   const media=await fs.realpath(path.join(root,'public/media'));
   if(!inside(root,media))fail('destination media escapes app');
   const rowPath=await contained(media,'city-sources-extra.json'), oldBytes=await fs.readFile(rowPath), rows=JSON.parse(oldBytes);
-  const additions=[], copies=[], keys=new Set(), records=[...data.records];
+  const additions=[], copies=[], feedIds=[], keys=new Set(), records=[...data.records];
   for(const i of manifest.items){
-    const row=validateItem(i,cities);
+    const row=validateItem(i,cities); feedIds.push(row.feedId);
     if(keys.has(i.key))fail('duplicate bundle item'); keys.add(i.key);
     const existing=rows.find(r=>r.feedId===row.feedId);
     if(existing && JSON.stringify(existing)!==JSON.stringify({...row,admissionManifestSha256:approvedManifestSha})) fail('existing feed metadata conflict');
@@ -83,7 +91,7 @@ export async function importBundle({root,bundleDir,approvedManifestSha,apply=fal
     try {for(const row of additions){const d=path.join(media,row.feedId);await fs.mkdir(d);created.push(d);} for(const c of copies)await fs.writeFile(c.to,c.bytes,{flag:'wx'});await fs.writeFile(temp,JSON.stringify([...rows,...additions],null,2)+'\n',{flag:'wx'});await fs.rename(temp,rowPath);}
     catch(e){await fs.rm(temp,{force:true});for(const d of created)await fs.rm(d,{recursive:true,force:true});throw e;}
   }
-  return {status:apply?'APPLIED_PENDING_RUNTIME_REVIEW':'DRY_RUN',approvedManifestSha,items:manifest.items.length,added:additions.length,unchanged:manifest.items.length-additions.length,filesWritten:apply?copies.length+(additions.length?1:0):0,feedIds:manifest.items.map(i=>`city-${i.city}-${i.key.replace(':','-')}`)};
+  return {status:apply?'APPLIED_PENDING_RUNTIME_REVIEW':'DRY_RUN',approvedManifestSha,items:manifest.items.length,added:additions.length,unchanged:manifest.items.length-additions.length,filesWritten:apply?copies.length+(additions.length?1:0):0,feedIds};
 }
 if(process.argv[1]&&fileURLToPath(import.meta.url)===path.resolve(process.argv[1])){
  const [bundleDir,approvedManifestSha,flag]=process.argv.slice(2);if(flag&&flag!=='--apply')throw Error('only --apply supported');

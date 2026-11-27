@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "feedId": "palmdale-dc8",
+  "videoSha256": "5e2dd27902145f27dbfb0ec7bdc3a816a046a2f2e4a08f861a3c0c54e962c0c4",
+  "annotationSha256": "f64266f46f5c655ab9d38a34732eace1bbce00407632071a561c7cc61b27de04",
+  "sourceMediaUrl": "https://svs.gsfc.nasa.gov/12488/",
+  "sourceWidth": 960,
+  "sourceHeight": 540,
+  "duration": 33,
+  "maxGapSeconds": 1.05,
+  "method": "Existing exact-source authored object bounds converted offline to compact source-bound display markers; no object detection or identity inference.",
+  "reviewScope": "Single stationary aircraft annotation; sampled source-frame alignment, not complete scene/object coverage.",
+  "geometryPolicy": {
+    "marker": "aircraft-triangle",
+    "anchorXFraction": 0.5,
+    "anchorYFraction": 0.5,
+    "sizeRatioOfShorterBound": 0.45,
+    "basis": "Independently confirmed original reference visual family; compact size/anchor are authored implementation choices requiring runtime review, not universal canonical dimensions.",
+    "referenceEvidenceSha256": "4a8a82284083b4f167355317034a80cc8f8c17230b2d2faf6bdfed53daa8f5cb",
+    "referenceReviewSha256": "4f004e48ec2b06ca056555ce4ae140112de11e4f8f6fb51cac778cb323f8ed45"
+  },
+  "tracks": [
+    {
+      "id": "object-01",
+      "marker": "aircraft-triangle",
+      "reviewedSpans": [
+        {
+          "start": 0,
+          "end": 33,
+          "reviewRef": "candidate-source-frame-bounds-inspection"
+        }
+      ],
+      "keyframes": [
+        {
+          "t": 0,
+          "cx": 0.4234375,
+          "cy": 0.6083333333333334,
+          "size": 0.14583333333333334,
+          "visible": true
+        },
+        {
+          "t": 2,
+          "cx": 0.425,
+          "cy": 0.6111111111111112,
+          "size": 0.14333333333333334,
+          "visible": true
+        },
+        {
+          "t": 6,
+          "cx": 0.42291666666666666,
+          "cy": 0.6166666666666667,
+          "size": 0.145,
+          "visible": true
+        },
+        {
+          "t": 10,
+          "cx": 0.421875,
+          "cy": 0.6185185185185185,
+          "size": 0.14333333333333334,
+          "visible": true
+        },
+        {
+          "t": 14,
+          "cx": 0.4239583333333333,
+          "cy": 0.6148148148148148,
+          "size": 0.14666666666666667,
+          "visible": true
+        },
+        {
+          "t": 18,
+          "cx": 0.4239583333333333,
+          "cy": 0.6092592592592593,
+          "size": 0.145,
+          "visible": true
+        },
+        {
+          "t": 22,
+          "cx": 0.42604166666666665,
+          "cy": 0.6092592592592593,
+          "size": 0.145,
+          "visible": true
+        },
+        {
+          "t": 26,
+          "cx": 0.4239583333333333,
+          "cy": 0.6092592592592592,
+          "size": 0.14833333333333334,
+          "visible": true
+        },
+        {
+          "t": 30,
+          "cx": 0.425,
+          "cy": 0.6074074074074074,
+          "size": 0.14666666666666667,
+          "visible": true
+        },
+        {
+          "t": 33,
+          "cx": 0.425,
+          "cy": 0.6074074074074074,
+          "size": 0.14666666666666667,
+          "visible": true
+        }
+      ]
+    }
+  ]
+}

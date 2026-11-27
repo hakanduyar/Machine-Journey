@@ -33,3 +33,21 @@ it('school-hall partial track preserves native clock, corrected heads, and entry
  expect(provenance.manualCorrectionFrames.map((f:{frame:number})=>f.frame)).toEqual([704,705,706,707,708,709,710,711,712,713,714,715,716]);
  expect(provenance.excludedHeldOutClaims).toEqual([708,712]);
 });
+
+it('binds the G340 event partial track to its own bytes and keeps native-time boundaries invisible',()=>{
+ const id='city-butlerville-event-6be3a62539fcd5e7e29c',d=trackingFor(id)!;
+ expect(crypto.createHash('sha256').update(fs.readFileSync(`public/media/${id}/loop.mp4`)).digest('hex')).toBe(d.videoSha256);
+ expect(d.tracks).toHaveLength(1);expect(d.maxGapSeconds).toBe(1.05);
+ expect(sampleHeadTracks(d,357/24)).toEqual([]);expect(sampleHeadTracks(d,589/24)).toEqual([]);
+ expect(sampleHeadTracks(d,358/24)[0].cy).toBeGreaterThan(1);expect(sampleHeadTracks(d,588/24)[0].cx).toBeLessThan(0);
+ expect(sampleHeadTracks(d,0)).toEqual([]);expect(sampleHeadTracks(d,54.49)).toEqual([]);
+ const measured=sampleHeadTracks(d,450/24)[0];expect(measured.cx).toBeCloseTo(265/1280);expect(measured.cy).toBeCloseTo(578.5/720);
+ expect(sampleHeadTracks(d,19.125)).toHaveLength(1);
+});
+
+it('retains signed anatomical centres only when their square overlaps the source viewport',()=>{
+ const edge=fixture([{...k(0),cx:-.01,cy:.5}]);expect(parseHeadTracking(edge)).toBe(edge);
+ const [r]=headSquares(edge,0,{sx:0,sy:0,sw:1,sh:1},960,536);expect(r.x+r.side/2).toBeCloseTo(-9.6);expect(r.x).toBeLessThan(0);
+ expect(()=>parseHeadTracking(fixture([{...k(0),cx:-.2}]))).toThrow();
+ expect(()=>parseHeadTracking(fixture([{...k(0),cy:1.2}]))).toThrow();
+});

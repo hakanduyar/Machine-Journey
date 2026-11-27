@@ -14,10 +14,10 @@ const expectedTotal = 86 + importedRows.length;
 const expectedNY = 14 + importedRows.filter(r=>r.cityId==='new-york').length;
 describe('recordingManifest (legacy and reviewed imported views)', () => {
   it('has all legacy and imported entries with unique feeds, reviewed view ids and original asset keys', () => {
-    expect(RECORDING_MANIFEST).toHaveLength(expectedTotal + 6);
-    expect(new Set(RECORDING_MANIFEST.map((c) => c.feedId)).size).toBe(expectedTotal + 6);
+    expect(RECORDING_MANIFEST).toHaveLength(expectedTotal + 8);
+    expect(new Set(RECORDING_MANIFEST.map((c) => c.feedId)).size).toBe(expectedTotal + 8);
     expect(new Set(RECORDING_MANIFEST.map((c) => c.reviewedView?.viewId)).size).toBe(expectedTotal);
-    expect(new Set(RECORDING_MANIFEST.map((c) => c.originalAssetKey)).size).toBe(expectedTotal + 6);
+    expect(new Set(RECORDING_MANIFEST.map((c) => c.originalAssetKey)).size).toBe(expectedTotal + 8);
     expect(Object.keys(VIEW_OF_FEED)).toHaveLength(expectedTotal);
     // view ids are curated, not derived from the feed id
     for (const c of RECORDING_MANIFEST) expect(c.reviewedView!.viewId).not.toBe(c.feedId);
@@ -47,7 +47,7 @@ describe('recordingManifest (legacy and reviewed imported views)', () => {
   it('uses canonical MEVA camera views and does not invent original hashes for core clips', () => {
     const meva = PHYSICAL_RECORDING_MANIFEST.filter((c) => c.provenance.publisher === 'MEVA');
     expect(meva.map((c) => c.reviewedView!.viewId).sort()).toEqual([
-      'butlerville-meva-g301-dock', 'butlerville-meva-g326', 'butlerville-meva-g328', 'butlerville-meva-g330-gymnasium', 'butlerville-meva-g341',
+      'butlerville-g505-canopy-driveway', 'butlerville-meva-g301-dock', 'butlerville-meva-g326', 'butlerville-meva-g328', 'butlerville-meva-g330-gymnasium', 'butlerville-meva-g341',
       'butlerville-meva-g421-cafe', 'butlerville-meva-g423-school-hall', 'butlerville-meva-g424', 'butlerville-meva-g436-road-junction',
       'butlerville-meva-g505-canopy-roadside', 'butlerville-meva-g639-passage', 'meva-mutc-g299', 'meva-mutc-g329', 'meva-mutc-g331', 'meva-mutc-g340', 'meva-mutc-g419', 'meva-mutc-g420', 'meva-mutc-g508', 'meva-mutc-g638']);
     // full source file URLs/keys (never loop hashes); camera ids come from the source file names
@@ -57,7 +57,7 @@ describe('recordingManifest (legacy and reviewed imported views)', () => {
       expect(c.originalAssetKey).toContain(`.${cam}.`);
       expect(c.originalSha256).toBeUndefined();
     }
-    expect(manifestCandidatesFor('butlerville')).toHaveLength(25);
+    expect(manifestCandidatesFor('butlerville')).toHaveLength(28);
     // original hashes only where the packet declares the SOURCE .avi hash (never a loop hash); G507 (hold) is absent
     const withHash = ['m04', 'm05', 'city-butlerville-school-hall', 'city-butlerville-cafe', 'city-butlerville-stairwell', 'city-butlerville-classroom', 'city-butlerville-courtyard', 'city-butlerville-bus-interior',
       'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell'];
@@ -124,7 +124,7 @@ describe('recordingManifest (legacy and reviewed imported views)', () => {
 
   it('Paris arc views: explicit views/refs, original rendition URL+hash kept apart from loop/poster hashes, old aliases intact', () => {
     const paris = manifestCandidatesFor('paris');
-    expect(paris).toHaveLength(8);
+    expect(paris).toHaveLength(9);
     const want = {
       'city-paris-arc-4025': ['paris-arc-rooftop-wide-day', 'visual-r51-paris-arc-4025', 'https://assets.mixkit.co/videos/4025/4025-720.mp4', 'e4de0ad954122fe33d03d5c7eb17d40fbeb91518169ecd990f405da6627e7521', '65388550010aac6c6bd120f8adb0de80a99309e7d827bb5a00d7c0f9df3a9035'],
       'city-paris-arc-4179': ['paris-arc-ground-oblique-night', 'visual-r51-paris-arc-4179', 'https://assets.mixkit.co/videos/4179/4179-720.mp4', 'ecd42351165e745700a6b2c15324a28f5b95921088e5bfa5e30b5a415dd5ba28', 'bfb23e12f6f11555341849774b05985da6cd629a9cab8e58610c3c5d632eafea'],
@@ -336,4 +336,3 @@ it('data adapter preserves legacy identity and rejects conflicting or missing re
  expect(()=>mergeReviewedViews({a:'view-a'},[{feedId:'b',reviewedViewId:'view-a',reviewRef:'r'}])).toThrow();
  for(const row of importedRows){const c=RECORDING_MANIFEST.find(c=>c.feedId===row.feedId)!;expect(c.reviewedView).toEqual({viewId:row.reviewedViewId,reviewRef:row.reviewRef});expect(c.originalSha256).toBe(row.originalSha256);expect(row.originalSha256).not.toBe(row.loopSha256);expect(row.creditsSha256).toMatch(/^[a-f0-9]{64}$/);}
 });
-
