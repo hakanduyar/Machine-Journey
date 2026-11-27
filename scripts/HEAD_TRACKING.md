@@ -1,6 +1,6 @@
 # Source-bound tracking annotations
 
-Thirteen feeds carry 31 anonymous person tracks over reviewed ranges: m01, m02, m03, m06, m07, parking-walk, school-hall, one G340 event, the G508 corridor view, the G419 stair passage, courtyard, cafe and Paris path. Five further feeds carry one object target each: parked C130, Palmdale DC8, covered-road SUV, G341 SUV and G328 bus. These are authored display annotations, not identity or behavioural classification. Coverage is not complete for every subject or recording.
+Fifteen feeds carry 39 anonymous person tracks over reviewed ranges: m01, m02, m03, m06, m07, parking-walk, school-hall, one G340 event, the G508 corridor view, the G419 stair passage, courtyard, cafe, Paris path, Istanbul street and a second G423 stair passage. Seven further feeds carry one object target each: parked C130, Palmdale DC8, covered-road SUV, G341 SUV, G328 bus, G340 roadside SUV and NYC yellow cab. These are authored display annotations, not identity or behavioural classification. Coverage is not complete for every subject or recording.
 
 The shared DOM/WebGL renderer samples video.currentTime, preserves normalized source coordinates through aspect crop, and hides during seeks until a decoded frame is available. It never extrapolates through wrap or invisible keys. Default head interpolation gap remains 1.05 seconds; explicitly reviewed sparse spans are bounded exceptions. New source-measured vehicle tracks use at most one second between keys. No detector, video upload, extra decoder or per-frame React state update is introduced.
 
@@ -21,3 +21,11 @@ The G419 stair passage adds three reviewed person tracks (102 visible keys), wit
 Declared manual uncertainties are about 5 pixels internally / 8 at partial edges for the stair passage, 3 clear / 4 at the dark doorway for courtyard, and 3 ordinary / 4 through glass / 8 at first partial entry for cafe. These are author estimates, not measured error guarantees. Independent sampled DOM and neural checks covered masks, nulls and history; cafe GL was not separately traversed. No extra detector or decoder is introduced.
 
 Paris path adds six head paths with75 visible native keys and per-person foliage cutouts of up to14 normalized vertices. Four unmasked tracks omit the optional mask property. The source and runtime mask windows are half-open. The first native frame after17seconds is an explicit policy cutoff for the existing loop dissolve, not an independently measured invisible head; its frame hash remains null. Manual uncertainty is declared at4pixels clear and6pixels partial/foliage. Sampled DOM/neural checks passed; the visible media ghosting at17–17.5seconds remains an open quality limitation.
+
+## Additional reviewed passages
+
+Istanbul street adds six selected foreground head tracks (71 visible keys), with a cart occlusion gap and person-specific half-open masks. The G423 event adds two head tracks (79 visible keys), preserving overlap and doorway visibility guards. These are manually reviewed selected subjects, not complete crowd tracking.
+
+The G340 roadside SUV adds one windscreen target with 12 visible keys and signed entry/exit centres. It belongs to a different recording from the existing G340 person annotation. NYC adds one already-visible yellow-cab target with 23 visible keys and a 14-vertex traffic-signal cutout. Its 11-second cutoff is an edit policy, not a measured physical exit. Geometry, masks and timing share the existing DOM/WebGL renderer; no runtime inference or new decoder is introduced.
+
+The Istanbul and NYC final dissolves retain visible ghosting. Their markers are suppressed during excluded edit ranges; this annotation release does not claim to fix the footage. Runtime review sampled normal navigation, decoded frames, cutouts and Back/Redo. Tiny GL targets and unsampled frames limit accuracy claims.

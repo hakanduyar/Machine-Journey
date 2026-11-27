@@ -81,3 +81,9 @@ The completed local candidate derives accepted source files from `f742a26ae969f3
 Tokyo river footage retains The Nature Box attribution, Commons source revision1132580390, original-media URL, CC BY-SA4.0 and edit disclosure. The original x20 timelapse and half-second water/foliage dissolve are stated. Admission credits append the original URL without changing existing attribution or video/poster bytes. Paris head annotations preserve reviewed visibility and14-vertex foliage geometry; the pre-existing final ghosted dissolve remains a separate open media defect.
 
 Private source evidence, prompts, working paths and development history are excluded. Source and sampled private runtime gates passed; final public candidate validation and deployed verification are separate release steps. No newer source or annotation drafts are included.
+
+## Reviewed human and vehicle passages
+
+This successor exports four accepted source-bound annotation files and their focused regression checks from source snapshot `4ed0702c024155b6c1b1e84939c9951aa7ee8d59`. Video, poster, credits and runtime renderer bytes are unchanged. The catalog remains109 recordings /100 distinct views; fifteen human feeds carry39 partial tracks and seven feeds carry one object target each. Full78-per-city coverage and complete tracking remain open.
+
+Istanbul and the G423 event add reviewed selected head passages; the roadside SUV and NYC cab add compact vehicle targets. Signed source coordinates, invisible guards, foreground cutouts and explicit edit-policy cutoffs are preserved. Known existing seam defects remain open; no media repair is claimed. Only allowlisted public annotation data and tests are exported. Private preparation evidence and development history are excluded. Public validation and deployment are separate release gates.

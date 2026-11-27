@@ -110,6 +110,32 @@ it('Paris path keeps six reviewed heads, per-person foliage and dissolve policy 
  expect(guard.sourceFrameSha256).toBeNull();expect(guard.evidenceKind).toBe('POLICY_CUTOFF_NOT_NATIVE_MEASUREMENT');
 });
 
+it('Istanbul selected foreground heads retain cart occlusion and edit-policy nulls',()=>{
+ const id='city-istanbul-street',d=trackingFor(id)!;
+ expect(crypto.createHash('sha256').update(fs.readFileSync(`public/media/${id}/loop.mp4`)).digest('hex')).toBe(d.videoSha256);
+ expect(d.tracks).toHaveLength(6);expect(d.tracks.reduce((n,t)=>n+t.keyframes.filter(k=>k.visible).length,0)).toBe(71);
+ expect(d.tracks.filter(t=>!t.timedOcclusionPolygons)).toHaveLength(5);
+ const bald=d.tracks.find(t=>t.id==='walker-bald-black')!;
+ expect(bald.timedOcclusionPolygons!.map(w=>[w.start,w.end])).toEqual([[0,1],[1,1.25],[2.75,3]]);
+ expect(sampleHeadTracks({...d,tracks:[bald]},1.5)).toEqual([]);
+ expect(sampleHeadTracks(d,10.875)).toEqual([]);
+ const raw=JSON.parse(fs.readFileSync(`public/media/${id}/head-tracks.json`,'utf8'));
+ const guards=raw.tracks.flatMap((t:{sourceFrames:{reason:string;sourceFrameSha256:unknown;evidenceKind:string}[]})=>t.sourceFrames).filter((k:{reason:string})=>k.reason==='FINAL_LOOP_DISSOLVE');
+ expect(guards.length).toBeGreaterThan(0);expect(guards.every((k:{sourceFrameSha256:unknown;evidenceKind:string})=>k.sourceFrameSha256===null&&k.evidenceKind==='POLICY_CUTOFF_NOT_NATIVE_MEASUREMENT')).toBe(true);
+});
+
+it('G423 reviewed March passage keeps overlap null and person-specific half-open masks',()=>{
+ const id='city-butlerville-event-aa4fd544b8e12da53881',d=trackingFor(id)!;
+ expect(crypto.createHash('sha256').update(fs.readFileSync(`public/media/${id}/loop.mp4`)).digest('hex')).toBe(d.videoSha256);
+ expect(d.tracks).toHaveLength(2);expect(d.tracks.reduce((n,t)=>n+t.keyframes.filter(k=>k.visible).length,0)).toBe(79);
+ const light=d.tracks.find(t=>t.id==='person-light')!,dark=d.tracks.find(t=>t.id==='person-dark')!;
+ expect(light.timedOcclusionPolygons!.map(w=>[w.start,w.end])).toEqual([[13.125,13.375],[13.625,13.875],[29.125,29.375]]);
+ expect(dark.timedOcclusionPolygons!.map(w=>[w.start,w.end])).toEqual([[19.75,20.25]]);
+ expect(sampleHeadTracks({...d,tracks:[light]},13.5)).toEqual([]);
+ expect(sampleHeadTracks(d,15)).toHaveLength(2);expect(sampleHeadTracks(d,30)).toEqual([]);
+ expect(d.occlusionPolygons).toBeUndefined();
+});
+
 describe('occlusion polygon vertex bound is exactly 3..14',()=>{
  const ring=(n:number)=>Array.from({length:n},(_,i)=>({x:.5+.3*Math.cos(2*Math.PI*i/n),y:.5+.3*Math.sin(2*Math.PI*i/n)}));
  const global=(n:number):HeadTracking=>({...fixture([k(1),k(2)]),occlusionPolygons:[ring(n)]});
@@ -133,4 +159,22 @@ describe('occlusion polygon vertex bound is exactly 3..14',()=>{
   expect(parseHeadTracking(d).tracks[1].timedOcclusionPolygons).toBeUndefined();
   d.tracks[1].timedOcclusionPolygons=[];expect(()=>parseHeadTracking(d)).toThrow();
  });
+});
+
+it('G340 roadside SUV stays source-bound through signed edges and stops after the windscreen exits',()=>{
+ const id='city-butlerville-roadside',d=trackingFor(id)!;
+ expect(crypto.createHash('sha256').update(fs.readFileSync(`public/media/${id}/loop.mp4`)).digest('hex')).toBe(d.videoSha256);
+ expect(d.tracks).toHaveLength(1);expect(d.tracks[0].marker).toBe('vehicle-square');
+ expect(sampleHeadTracks(d,4.25)).toEqual([]);expect(sampleHeadTracks(d,4.375)[0].cx).toBeLessThan(0);
+ expect(sampleHeadTracks(d,9.125)[0].cx).toBeGreaterThan(1);expect(sampleHeadTracks(d,9.166666666666666)).toEqual([]);
+ expect(sampleHeadTracks(d,6)[0].size*d.sourceHeight).toBe(44);
+ expect(trackingFor('city-butlerville-event-6be3a62539fcd5e7e29c')!.tracks.every(t=>!t.marker)).toBe(true);
+});
+
+it('NYC cab uses its exact source and signal cutout while excluding the final edit dissolve',()=>{
+ const id='city-new-york-4272',d=trackingFor(id)!;
+ expect(crypto.createHash('sha256').update(fs.readFileSync(`public/media/${id}/loop.mp4`)).digest('hex')).toBe(d.videoSha256);
+ expect(d.tracks).toHaveLength(1);expect(d.tracks[0].marker).toBe('vehicle-square');expect(d.occlusionPolygons).toHaveLength(1);expect(d.occlusionPolygons![0]).toHaveLength(14);
+ expect(sampleHeadTracks(d,0)).toHaveLength(1);expect(sampleHeadTracks(d,8)).toHaveLength(1);expect(sampleHeadTracks(d,11)).toEqual([]);expect(sampleHeadTracks(d,11.4)).toEqual([]);
+ const raw=JSON.parse(fs.readFileSync(`public/media/${id}/object-tracks.json`,'utf8'));expect(raw.sourceProvenance.policyCutoff.evidenceKind).toBe('POLICY_CUTOFF_NOT_NATIVE_MEASUREMENT');
 });
