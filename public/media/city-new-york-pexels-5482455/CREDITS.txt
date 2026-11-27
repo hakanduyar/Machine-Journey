@@ -1,0 +1,9 @@
+CREDITS / PROVENANCE - pexels:5482455
+Source page: https://www.pexels.com/video/time-lapse-of-a-plaza-at-night-5482455/
+Publisher/author: Sarowar Hussain (as shown on the Pexels item page)
+License: Pexels License - https://www.pexels.com/license/. Use as a modified in-project clip only; no standalone stock/wallpaper redistribution, no implied endorsement by the creator.
+Exact downloaded media URL: https://videos.pexels.com/video-files/5482455/5482455-hd_2560_1440_30fps.mp4
+City basis (publisher text and/or visible landmarks, as recorded by the preparer): Pexels title 'Time-Lapse of a Plaza at Night', description 'Experience the vibrant lights and bustling energy of Times Square at night' (uploader Sarowar Hussain); TKTS sign and Times Square billboards visible. No surveyed GPS, no exact street claim.
+Changes: excerpt 3s +8s of source, scaled to 1280x720, 24 fps, audio removed, 12-frame (0.5 s) dissolve of tail into head for looping.
+Nature: archived/timelapse stock footage. NOT live, NOT a real-time camera feed, NOT seamless; the loop wrap is a visible dissolve of moving elements.
+Review status (independent, by publisher key): INDEPENDENT_READY

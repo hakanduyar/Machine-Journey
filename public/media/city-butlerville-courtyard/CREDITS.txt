@@ -1,0 +1,12 @@
+School courtyard - MEVA camera G638
+Attribution: MEVA dataset, Kitware Inc. / IARPA.
+Source: https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/11/2018-03-11.11-40-01.11-45-01.school.G638.r13.avi
+Original SHA-256: 31CE804E1792E0CC8E042B4C092A2938CB263C4C84EB2ED15EE359D701A12E4C
+Prepared loop SHA-256: 424AFE615F5FC09B83331163ABD5E0E16FD10FCCAB1F3C692386B6C96E1D5DD7
+License: Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+Official license: https://mevadata.org/resources/MEVA-data-license.txt
+Collection site: Muscatatuck Urban Training Center / Butlerville, Indiana.
+Site evidence: https://arxiv.org/html/2012.00914#S3.SS3
+Changes: Excerpt 100-135s; muted24fps H.264720p aspect-preserving fit; output34.5s; 0.5s N/12 tail-to-head dissolve; derived poster; no reverse playback.
+Archived staged activity, not live surveillance. Exact camera GPS unverified. CC BY4.0 applies to video/poster, not application MIT.

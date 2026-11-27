@@ -1,0 +1,8 @@
+Pexels16881143 — New York courthouse/offramp view
+Ben Garves / Pexels
+Source: https://www.pexels.com/video/steam-rises-from-next-to-a-honda-cr-v-as-a-man-gardens-behind-a-fence-a-pedestrian-passes-by-and-the-new-york-court-building-rises-above-an-offramp-from-the-brooklyn-bridge-16881143/
+Media: https://videos.pexels.com/video-files/16881143/16881143-uhd_2560_1440_60fps.mp4
+Pexels License: https://www.pexels.com/license/
+Original SHA256: b358a9f2cf0b49c9f07b4225d97d1a46f71c7d52b5c9f39e0ab18a2585aba84d
+Changes: source8.5–19.5s; global virtual-tripod translation/rotation stabilization, fixed3percent zoom/crop; muted1280x72024fpsH264;0.5s tail/headdissolve,10.5soutput.
+No exact camera coordinates claimed. Not live footage. Same source/view identity as held predecessor, not an additional camera.

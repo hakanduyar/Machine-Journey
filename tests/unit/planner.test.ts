@@ -55,7 +55,7 @@ describe('seeded route planner', () => {
     }
   });
 
-  it('varies camera holds before a branch (1 to 4) and floating/neural stops (2 to 4)', () => {
+  it('varies camera holds before a branch (1 to 4) and floating/neural stops (3 to 6)', () => {
     const afters = new Set<number>(); const stops = new Set<number>();
     for (const s of SEEDS) {
       let lastAfter = -1;
@@ -65,10 +65,10 @@ describe('seeded route planner', () => {
         if (b.after !== 1 && lastAfter !== 1) expect(b.after).not.toBe(lastAfter); // gaps do not repeat
         lastAfter = b.after; afters.add(b.after);
         if (b.kind === 'globe') expect(b.stops).toBeUndefined();
-        else { expect(b.stops).toBeGreaterThanOrEqual(2); expect(b.stops).toBeLessThanOrEqual(4); stops.add(b.stops!); }
+        else { expect(b.stops).toBeGreaterThanOrEqual(3); expect(b.stops).toBeLessThanOrEqual(6); stops.add(b.stops!); }
       }
     }
-    expect([...afters].sort()).toEqual([1, 2, 3, 4]); expect([...stops].sort()).toEqual([2, 3, 4]);
+    expect([...afters].sort()).toEqual([1, 2, 3, 4]); expect([...stops].sort()).toEqual([3, 4, 5, 6]);
   });
 
   it('drops a mode that failed to load: the due choice is replaced and the mode is never chosen again', () => {
@@ -103,7 +103,7 @@ const yearOf = (c: JourneyController) => Math.floor(ax.indexAt(c.state.worldX));
 function make(planner: RoutePlanner, floatPlan: (f: string | null, s: number, v: number) => ReturnType<typeof planFloatRoute> | 'wait' = planFloatRoute) {
   const c: JourneyController = new JourneyController({
     worldWidth: WORLD, viewportWidth: VW, travelMs: 1000, cities: CITIES, branchSource: planner, floatPlan,
-    neuralPlan: (f, s, v) => planNeuralRoute(f, s, v, HOLDS),
+    neuralPlan: (f, s, v) => planNeuralRoute(f, s, v, HOLDS, FEED_IDS.filter(id => id !== f).slice(0, s - 1)),
     planner: (leg) => {
       const cur = tiles.find((t) => t.id === c.state.selectedId);
       const p = planLeg({ tiles, vw: VW, worldW: WORLD, yearCount: YEARS, leg, prevYear: yearOf(c), currentFeed: cur?.feedIndex ?? null });
@@ -117,7 +117,7 @@ function make(planner: RoutePlanner, floatPlan: (f: string | null, s: number, v:
 }
 
 describe('varied route driving the journey', () => {
-  it('reaches every mode, keeps 2-4 stops, holds indefinitely, refuses bursts without consuming choices, keeps years non-monotonic', () => {
+  it('reaches every mode, keeps 3-6 stops, holds indefinitely, refuses bursts without consuming choices, keeps years non-monotonic', () => {
     for (const seed of [1, 2, 3, 4, 5, 6]) {
       const planner = new RoutePlanner(seed);
       const c = make(planner);
@@ -150,7 +150,7 @@ describe('varied route driving the journey', () => {
       expect(new Set(starts).size).toBe(3); // globe, float and neural all reached
       expect(planner.chosen.length).toBe(starts.length); // every started branch consumed exactly one choice, none extra
       expect(planner.chosen.map((b) => b.kind)).toEqual(starts);
-      for (const n of stops) { expect(n).toBeGreaterThanOrEqual(2); expect(n).toBeLessThanOrEqual(4); }
+      for (const n of stops) { expect(n).toBeGreaterThanOrEqual(3); expect(n).toBeLessThanOrEqual(6); }
       const deltas = years.slice(1).map((y, i) => y - years[i]);
       expect(deltas.some((d) => d > 0)).toBe(true); expect(deltas.some((d) => d < 0)).toBe(true);
       for (let i = 1; i < arrivals.length; i++) {
@@ -189,3 +189,5 @@ describe('varied route driving the journey', () => {
     expect(planner.chosen.length).toBe(1);
   });
 });
+
+

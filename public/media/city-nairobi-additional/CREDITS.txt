@@ -5,4 +5,5 @@ License: Pexels License
 License URL: https://www.pexels.com/license/
 Original SHA256: 2593a38ce4b861b89aceff39ddaa572734186d450a87a013c872a7245d344a48
 Archive: ARCHIVE / TIMELAPSE; not live surveillance.
+Location: 
 Edits: Muted24fps720p max18sec,0.5sec crossfade loop, no reverse playback; corrected frame-count blend. Exact camera GPS unverified.

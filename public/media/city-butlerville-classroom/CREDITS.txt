@@ -1,0 +1,12 @@
+Computer classroom - MEVA camera G508
+Attribution: MEVA dataset, Kitware Inc. / IARPA.
+Source: https://mevadata-public-01.s3.amazonaws.com/drop-5-mevid/2018-05-14.16-30-01.16-35-01.school.G508.r13.avi
+Original SHA-256: 10D0C4A0AB4BFBE96D79952A38D20513B92CE1BD71359A1E9F57294AFC5392CD
+Prepared loop SHA-256: CFEEEF227F3C6D053EACB89245CD3231EF566644B5FB48CB41BD14B67FADCFF4
+License: Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+Official license: https://mevadata.org/resources/MEVA-data-license.txt
+Collection site: Muscatatuck Urban Training Center / Butlerville, Indiana.
+Site evidence: https://arxiv.org/html/2012.00914#S3.SS3
+Changes: Excerpt 220-250s; muted24fps H.264720p aspect-preserving fit; output29.5s; 0.5s N/12 tail-to-head dissolve; derived poster; no reverse playback.
+Archived staged activity, not live surveillance. Exact camera GPS unverified. CC BY4.0 applies to video/poster, not application MIT.

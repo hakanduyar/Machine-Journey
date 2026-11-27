@@ -1,0 +1,10 @@
+city-new-york-pexels-13418064
+Attribution: Video Fullness / Pexels
+https://www.pexels.com/video/time-lapse-of-traffic-and-pedestrians-at-flatiron-district-in-new-york-13418064/
+Pexels License
+https://www.pexels.com/license/
+https://www.pexels.com/terms-of-service/
+Original SHA256: cf09dd4209c1ce3373e93210fb58574b07df55d61b9a93fc2854c14ff3077493
+Prepared loop SHA256: 8e85ad23f6268aa06066a9dfc470f73dc13efb8d5a97c8defae3aaa4cebd07d5
+First18s or shorter original; muted H2641280x72024fps. Body starts0.5s, last0.5s blended into original first0.5s using N/12. No reverse motion.
+Archive footage, not live. Exact camera coordinates unverified.

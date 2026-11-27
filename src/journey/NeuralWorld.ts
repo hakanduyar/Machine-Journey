@@ -1,3 +1,4 @@
+import { GLHeadTracking, type HeadTrackingSurfaces } from './headTrackingSurface';
 import {
   Box3, Color, Mesh, MeshBasicMaterial, Quaternion, Scene, SRGBColorSpace, Vector3, VideoTexture, WebGLRenderer,
   type BufferGeometry, type Material, type Object3D,
@@ -35,6 +36,7 @@ export interface NeuralManifest {
 export interface NeuralAssets { manifest: NeuralManifest; gltf: GLTF }
 
 export interface NeuralWorldOptions {
+  tracking?: HeadTrackingSurfaces;
   host: HTMLElement;
   feedIds: readonly string[];
   /** The persistent decoder pool, indexed like `feedIds`. Read live; never created or paused here. */
@@ -79,13 +81,15 @@ export async function loadNeuralAssets(baseUrl: string): Promise<NeuralAssets> {
 }
 
 interface Override {
-  mesh: Mesh; geometry: BufferGeometry; material: Material | Material[]; own: BufferGeometry; ownMaterial: MeshBasicMaterial; feedIndex: number;
+  overlay?: Mesh<BufferGeometry,MeshBasicMaterial>;
+  anchor:number; mesh: Mesh; geometry: BufferGeometry; material: Material | Material[]; own: BufferGeometry; ownMaterial: MeshBasicMaterial; feedIndex: number;
 }
 
 export class NeuralWorld {
   readonly holds: readonly FocusHold[];
   duration = 0;
   private renderer: WebGLRenderer;
+  private headTracking: GLHeadTracking;
   private scene = new Scene();
   private rig!: SceneRig;
   private synapse!: MachineSynapse;
@@ -118,6 +122,7 @@ export class NeuralWorld {
     r.domElement.setAttribute('aria-hidden', 'true');
     r.domElement.style.visibility = 'hidden';
     this.renderer = r;
+    this.headTracking = new GLHeadTracking(r,opts.tracking,false);
     try {
       this.scene.background = new Color(manifest.backgroundColor);
       this.scene.add(gltf.scene);
@@ -192,7 +197,11 @@ export class NeuralWorld {
     }
     this.frame(f.vw, f.vh);
     this.syncCity();
-    for (const o of this.overrides) this.syncVideo(o.feedIndex);
+    for (const o of this.overrides) {
+      this.syncVideo(o.feedIndex);
+      const heads=this.headTracking.sync(this.opts.feedIds[o.feedIndex],this.opts.videos()[o.feedIndex]);
+      if(o.overlay)o.overlay.visible=!!heads?.ready && !!heads.visible && this.isWarm(o.feedIndex);
+    }
     const t = this.rig.seek(f.time);
     this.lastTime = t;
     this.treatment.update(t);
@@ -207,6 +216,11 @@ export class NeuralWorld {
     if (hidden) hidden.visible = false;
     try {
       this.withWorldPose(f.pose, () => withDolly(cam, f.dolly, DOLLY_DISTANCE, () => {
+        // Keep the source-space head bounds; only compensate thin strokes for focal-pane minification.
+        for(const o of this.overrides){if(!o.overlay)continue;const rect=this.projectScreen(o.anchor),v=this.opts.videos()[o.feedIndex];
+          const heads=this.headTracking.sync(this.opts.feedIds[o.feedIndex],v,rect&&rect.w>0&&v?Math.min(3,v.videoWidth/rect.w):1);
+          if(heads&&o.overlay.material.map!==heads.texture){o.overlay.material.map=heads.texture;o.overlay.material.needsUpdate=true;}
+        }
         if (!this.lost) this.renderer.render(this.scene, cam);
         for (const a of f.project ?? []) { const r = this.projectScreen(a); if (r) this.drawn.set(a, r); }
       }));
@@ -318,6 +332,7 @@ export class NeuralWorld {
     if (!t || !st) return;
     if (this.lost) return; // no upload possible: isWarm stays false, so the DOM video keeps covering the hold
     const frames = frameCount(v);
+    this.headTracking.sync(this.opts.feedIds[feedIndex],v);
     const action = uploadAction(v, st, frames);
     if (action === 'none') return;
     t.needsUpdate = true;
@@ -327,11 +342,11 @@ export class NeuralWorld {
   private lost = false;
   private unwatch: (() => void) | null = null;
   /** Un-warm every screen texture (context return / tab return): re-uploaded on the next frame, before promotion. */
-  rewarm() { for (const [i, st] of this.texState) { invalidate(st); const t = this.videoTex.get(i); if (t) t.needsUpdate = true; } }
+  rewarm() { this.headTracking.invalidate(); for (const [i, st] of this.texState) { invalidate(st); const t = this.videoTex.get(i); if (t) t.needsUpdate = true; } }
 
   /** True once the feed's screen texture holds an uploaded frame (the DOM video may then be hidden). */
   isWarm(feedIndex: number): boolean {
-    return this.texState.get(feedIndex)?.warmed === true;
+    return this.texState.get(feedIndex)?.warmed === true && this.headTracking.isWarm(this.opts.feedIds[feedIndex]);
   }
 
   /**
@@ -358,7 +373,10 @@ export class NeuralWorld {
         map: tex, toneMapped: false, side: (mesh.material as Material).side,
         polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -2,
       });
-      this.overrides.push({ mesh, geometry: mesh.geometry, material: mesh.material, own, ownMaterial, feedIndex: stop.feedIndex });
+      const heads=this.headTracking.sync(this.opts.feedIds[stop.feedIndex],this.opts.videos()[stop.feedIndex]);
+      let overlay: Mesh<BufferGeometry,MeshBasicMaterial>|undefined;
+      if(heads){overlay=new Mesh(own,new MeshBasicMaterial({map:heads.texture,transparent:true,depthWrite:false,toneMapped:false,side:(mesh.material as Material).side,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-3}));overlay.visible=false;mesh.add(overlay);}
+      this.overrides.push({ anchor:stop.anchor, mesh, geometry: mesh.geometry, material: mesh.material, own, ownMaterial, feedIndex: stop.feedIndex, overlay });
       mesh.geometry = own; mesh.material = ownMaterial;
       this.syncVideo(stop.feedIndex); // prewarm now, before the screen is first drawn
     }
@@ -368,6 +386,7 @@ export class NeuralWorld {
   release() {
     for (const o of this.overrides) {
       o.mesh.geometry = o.geometry; o.mesh.material = o.material;
+      if(o.overlay){o.mesh.remove(o.overlay);o.overlay.material.dispose();}
       o.own.dispose(); o.ownMaterial.dispose();
     }
     this.overrides = [];
@@ -377,6 +396,7 @@ export class NeuralWorld {
     if (this.disposed) return;
     this.disposed = true;
     this.release();
+    this.headTracking.dispose();
     this.cityAtlas.dispose(); // authored map back on the clones before they are freed; only our canvas textures are disposed
     this.photo.dispose();
     this.treatment.dispose();

@@ -1,0 +1,2 @@
+# Reviewed credits are byte-hashed assets; preserve original line endings on every platform.
+public/media/**/CREDITS.txt -text

@@ -1,0 +1,12 @@
+Roadside traffic - MEVA camera G340
+Attribution: MEVA dataset, Kitware Inc. / IARPA.
+Source: https://mevadata-public-01.s3.amazonaws.com/drop-5-mevid/2018-05-18.14-30-07.14-35-07.bus.G340.r13.avi
+Original SHA-256: E2F591F2C801B439CDF8E86C5B8C8A164FB034746D5DCD537D15CAE0D9D71F86
+Prepared SHA-256: 772C1E15EE9C0D4659543460A98660B06CD82A193D6C1FB5B8AFAF23C70D7BBF
+License: Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+Official license: https://mevadata.org/resources/MEVA-data-license.txt
+Collection site: Muscatatuck Urban Training Center / Butlerville, Indiana.
+Site evidence: https://arxiv.org/html/2012.00914#S3.SS3
+Changes: Excerpt45-80s; output34.5s; muted24fps H.2641280x720 aspect-preserving fit;0.5s N/12 tail-to-head dissolve; derived poster; no reverse playback.
+Recorded staged activity, not live surveillance. Exact camera GPS unverified. CC BY4.0 covers loop/poster; application MIT does not relicense media.

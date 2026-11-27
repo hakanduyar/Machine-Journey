@@ -1,6 +1,6 @@
 /**
  * Neural bridge route planning (pure). The authored scene has eight screen anchors with hold windows
- * (manifest `anchors`). A visit picks 2..4 of them as camera stops; the camera later seeks the authored clip
+ * (manifest `anchors`). A visit picks 2..6 of them as camera stops; the camera later seeks the authored clip
  * to each hold's midpoint (stationary hold) and travels between them along the authored route.
  */
 export interface NeuralHold { screen: string; holdStart: number; holdEnd: number }
@@ -28,13 +28,19 @@ export function planNeuralRoute(
   /** Finite city catalog: the city's own feed may repeat across stops (never another city's). Default: never reuse a feed. */
   allowRepeat = false,
 ): NeuralPlan | null {
-  const n = Math.max(2, Math.min(4, Math.round(stops)));
+  const n = Math.max(2, Math.min(6, Math.round(stops)));
   const count = Math.min(holds.length, ANCHOR_FEEDS.length);
   if (count < n) return null;
   const natural = fromFeedId ? ANCHOR_FEEDS.indexOf(fromFeedId) : -1;
-  const first = natural >= 0 && natural < count ? natural : (visit * 3 + 1) % count;
+  let first = natural >= 0 && natural < count ? natural : (visit * 3 + 1) % count;
   // One direction per visit: the route is monotonic along the authored timeline, so the camera never travels back
   // through a pane/corridor it already focused. A direction is valid only if it has room for all n-1 further stops.
+  // Explicit city feeds are bound to spatial slots; move the first slot when a long visit needs more runway.
+  // The incoming feed itself stays identical, and subsequent times remain monotonic (no corridor revisit).
+  if (destFeeds && Math.max(first, count - 1 - first) < n - 1) {
+    const starts = Array.from({ length: count }, (_, i) => i).filter(i => Math.max(i, count - 1 - i) >= n - 1);
+    first = starts[(visit + first) % starts.length];
+  }
   const room = (d: number) => (d > 0 ? count - 1 - first : first);
   const valid = [1, -1].filter((d) => room(d) >= n - 1);
   if (valid.length === 0) return null;

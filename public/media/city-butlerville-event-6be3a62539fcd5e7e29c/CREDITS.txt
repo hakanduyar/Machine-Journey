@@ -1,0 +1,10 @@
+MEVA G340 recorded training activity — Butlerville / Muscatatuck Urban Training Center, Indiana.
+Kitware Inc. / IARPA.
+Source: https://mevadata-public-01.s3.amazonaws.com/drop-5-mevid/2018-05-16.19-50-03.19-55-03.bus.G340.r13.avi
+Original SHA256: c2ac487d4a064bc742efc4f5b2a7c6c5585ae3b38b650e2e2e7a1d803717c48c
+License: Creative Commons Attribution4.0 International
+https://creativecommons.org/licenses/by/4.0/
+Official license: https://mevadata.org/resources/MEVA-data-license.txt
+Changes: excerpt85–140s; muted1280x72024fpsH264;0.5s end-to-startN/12dissolve;54.5s output; posterderived.
+Not live footage. Staged recorded training, no personal identity or exactGPS claim.
+Physicalcamera meva:KF1:G340; separate recorded occurrence, not a new camera view.

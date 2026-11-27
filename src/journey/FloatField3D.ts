@@ -1,3 +1,4 @@
+import { GLHeadTracking, type HeadTrackingSurfaces } from './headTrackingSurface';
 import {
   CanvasTexture, Color, EdgesGeometry, FogExp2, Group, InstancedMesh, LineBasicMaterial, LineSegments, Mesh, MeshBasicMaterial,
   Object3D, PerspectiveCamera, PlaneGeometry, Scene, SRGBColorSpace, Texture, VideoTexture, WebGLRenderer,
@@ -45,6 +46,7 @@ export interface FloatFrameInput {
 export interface FloatRender extends FloatPose { overlay: number }
 
 export interface FloatFieldOptions {
+  tracking?: HeadTrackingSurfaces;
   host: HTMLElement;
   feedIds: readonly string[];
   /** The persistent decoder pool, indexed like `feedIds`. Read live; never created or paused here. */
@@ -180,8 +182,9 @@ export class FloatField3D {
   private opts: FloatFieldOptions;
   private posterTex: Texture[];
   private videoTex = new Map<number, VideoEntry>();
+  private headTracking: GLHeadTracking;
   private disposables: { dispose(): void }[] = [];
-  private panes: { group: Group; material: MeshBasicMaterial; feedIndex: number }[] = [];
+  private panes: { group: Group; material: MeshBasicMaterial; geometry: PlaneGeometry; overlay?: Mesh<PlaneGeometry,MeshBasicMaterial>; feedIndex: number }[] = [];
   private defaultFeed: number[] = [];
   private panels: { slot: number; mesh: Mesh; spec: number; cv: HTMLCanvasElement | null; tex: CanvasTexture | null; key: string; layoutKey: string; at: number }[] = [];
   /** The three fictional portraits (one 1536 x 1024 sheet, three columns); requested only when a portrait card first shows. */
@@ -203,6 +206,7 @@ export class FloatField3D {
     r.domElement.style.visibility = 'hidden';
     opts.host.appendChild(r.domElement);
     this.renderer = r;
+    this.headTracking = new GLHeadTracking(r,opts.tracking,true);
     this.unwatch = watchContext(r, () => { this.lost = true; this.rewarm(); }, () => { this.lost = false; this.rewarm(); });
     this.scene.background = new Color('#05090c');
     this.scene.fog = new FogExp2('#05090c', 0.0015);
@@ -225,7 +229,7 @@ export class FloatField3D {
       border.position.z = 0.015; group.add(border);
       this.scene.add(group);
       this.disposables.push(geo, mat, border.geometry, border.material as LineBasicMaterial);
-      this.panes.push({ group, material: mat, feedIndex });
+      this.panes.push({ group, material: mat, geometry: geo, feedIndex });
       this.defaultFeed.push(feedIndex);
     });
 
@@ -343,14 +347,15 @@ export class FloatField3D {
       e.tex.needsUpdate = true;
       markUploaded(e.st, action, v, frames, action === 'warm' ? uploadNow(this.renderer, e.tex) : true);
     }
-    return e.st.warmed;
+    this.headTracking.sync(this.opts.feedIds[feedIndex],v);
+    return e.st.warmed && this.headTracking.isWarm(this.opts.feedIds[feedIndex]);
   }
 
   /** Context lost: every texture is stale and drawing pauses. Restored: textures re-warm (under the DOM pane) before promotion. */
   private lost = false;
   private unwatch: (() => void) | null = null;
   /** Mark every video texture un-warmed (context return, tab return): the next hold frame re-uploads before promoting. */
-  rewarm() { for (const e of this.videoTex.values()) { invalidate(e.st); e.tex.needsUpdate = true; } }
+  rewarm() { this.headTracking.invalidate(); for (const e of this.videoTex.values()) { invalidate(e.st); e.tex.needsUpdate = true; } }
 
   /** Draws one frame; returns the camera pose and the slot the DOM video must still cover. */
   render(f: FloatFrameInput): FloatRender {
@@ -385,6 +390,13 @@ export class FloatField3D {
       const entry = this.videoTex.get(pane.feedIndex);
       const map = warm && entry ? entry.tex : this.posterTex[pane.feedIndex] ?? null;
       if (pane.material.map !== map) { pane.material.map = map; pane.material.needsUpdate = true; }
+      const heads=this.headTracking.sync(this.opts.feedIds[pane.feedIndex],this.opts.videos()[pane.feedIndex],1);
+      if(heads && !pane.overlay){
+        const material=new MeshBasicMaterial({map:heads.texture,transparent:true,depthWrite:false,toneMapped:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
+        pane.overlay=new Mesh(pane.geometry,material);pane.overlay.position.z=.002;pane.group.add(pane.overlay);this.disposables.push(material);
+      }
+      if(pane.overlay && heads && pane.overlay.material.map!==heads.texture){pane.overlay.material.map=heads.texture;pane.overlay.material.needsUpdate=true;}
+      if(pane.overlay) pane.overlay.visible=!!heads?.ready && !!heads.visible && !!entry && map===entry.tex;
     });
     const medD = holdDistance('medium', aspect);
     const land = aspect >= 1; const clockT = f.time ?? 0;
@@ -428,6 +440,7 @@ export class FloatField3D {
 
   /** Frees GPU/CPU resources owned by the field. Never touches the shared <video> elements. */
   dispose() {
+    this.headTracking.dispose();
     for (const m of this.batches) { this.scene.remove(m); m.dispose(); }
     for (const d of this.disposables) d.dispose();
     for (const d of this.backdrop) d.dispose();

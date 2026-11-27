@@ -1,0 +1,11 @@
+Video: Sarowar Hussain / Pexels
+Source: https://www.pexels.com/video/time-lapse-footage-of-one-world-trade-center-4970648/
+Original media: https://videos.pexels.com/video-files/4970648/4970648-uhd_2560_1440_30fps.mp4
+License: Pexels License
+https://www.pexels.com/license/
+Location: Pexels title 'Time Lapse Footage of One World Trade Center', description 'Stunning view of NYC skyline featuring One World Trade Center on a sunny day' (uploader Sarowar Hussain). One WTC and Lower Manhattan clearly visible across water from a tree-lined waterfront promenade (looks like Governors Island); exact camera position not independently geolocated.
+Original SHA256: 429286ef856cb9bb9fde6522895f3e7d6dcf5ddcea6da8f4d663ac20ffbef6ea
+Loop SHA256: aafb39f1fa9750202b3060a147752aa1e6cf77fe8e4134ac8ff18b15bd5e941d
+Poster SHA256: 2927816cbfff9629633952c9aed09dd3466f4c23fdafd47de5bf82c47de45c3c
+Changes and limits: Archived timelapse, not live: 6s fixed observational excerpt starting at source 0.2s, muted720p24fps; perceptible0.5s water/cloud/distant pedestrian dissolve, not certified seamless. Exact camera coordinates unverified.
+Project media only; no standalone stock-library redistribution or implied endorsement. Not official CCTV or live footage.

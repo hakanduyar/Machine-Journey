@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { JourneyController, isHoldStage, yearAxis, type Branch } from '../../src/journey/controller';
 import { FEEDS, feedPosterUrl, feedVideoUrl } from '../../src/journey/feeds';
 import { FeedDeck, RECENT_WINDOW } from '../../src/journey/feedDeck';
+import { cityOfFeed } from '../../src/journey/cityContext';
 import { planFloatRoute } from '../../src/journey/floatField';
 import { CITIES, cityById } from '../../src/journey/globe';
 import { generateMosaic } from '../../src/journey/layout';
@@ -42,9 +43,10 @@ describe('verified source places (truth over novelty)', () => {
     expect(c.feedId).toBe('parked-c130'); expect(c.feedIds).toEqual(['parked-c130', 'city-savannah-additional']);
     expect(c.verified!.url).toContain('dvidshub.net/video/554984');
   });
-  it('Butlerville (Muscatatuck, Indiana) opens only the four MEVA Muscatatuck feeds, with the Census locality point; Palmdale the DC-8 plus its one approved additional clip', () => {
+  it('Butlerville (Muscatatuck, Indiana) opens only its nineteen MEVA Muscatatuck feeds, with the Census locality point; Palmdale the DC-8 plus its one approved additional clip', () => {
     const b = cityById('butlerville')!;
-    expect(b.feedIds).toEqual(['m01', 'm02', 'm06', 'parking-walk']);
+    expect(b.feedIds).toEqual(['m01', 'm02', 'm06', 'parking-walk', 'm03', 'm07', 'covered-road', 'm04', 'm05', 'city-butlerville-school-hall', 'city-butlerville-cafe', 'city-butlerville-stairwell', 'city-butlerville-classroom', 'city-butlerville-courtyard', 'city-butlerville-bus-interior',
+      'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell']);
     expect([b.lon, b.lat]).toEqual([-85.51, 39.03]);
     expect(b.verified!.note).toMatch(/not Indianapolis/);
     expect(b.verified!.note).toMatch(/camera position is not verified/);
@@ -53,7 +55,9 @@ describe('verified source places (truth over novelty)', () => {
   });
   it('feeds with weaker or unknown location are never claimed by a verified place; every verified place carries its source', () => {
     const claimed = new Set(CITIES.filter((c) => c.verified).flatMap((c) => c.feedIds ?? [c.feedId]));
-    for (const id of ['m03', 'm04', 'm07', 'covered-road', 'm05', 'docked-cargo']) expect(claimed.has(id)).toBe(false);
+    // docked-cargo has no verified place. (m03/m07/covered-road/m04/m05 were admitted to Butlerville in R51.)
+    expect(claimed.has('docked-cargo')).toBe(false);
+    for (const id of ['m03', 'm07', 'covered-road', 'm04', 'm05']) expect(cityOfFeed(id, CITIES)?.id).toBe('butlerville');
     for (const c of CITIES.filter((x) => x.verified)) { expect(c.verified!.url).toMatch(/^https:/); expect(c.verified!.coordSource.length).toBeGreaterThan(10); }
   });
 });

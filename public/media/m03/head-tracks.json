@@ -1,0 +1,164 @@
+{
+  "policyReviewRef": "R55 independently sampled person alignment; 3689766b460e6afa4045d9d7d0a8fbd6452896040f3ba9a2e419f56ae4175b02",
+  "coverage": "Only independently supported tracks and time ranges; not complete person coverage.",
+  "excludedTracks": [
+    {
+      "sourceTrackIndex": 1,
+      "entityKind": "vehicle",
+      "reason": "Object track excluded from head renderer"
+    }
+  ],
+  "schemaVersion": 1,
+  "feedId": "m03",
+  "videoSha256": "26d7ce54f3bed7825a0e1e5c6aac21eff17a072180bda301dacc8257d50b9248",
+  "annotationSha256": "a00bafbf5aa4d69fd2ac788f2926a71866acb15b50141faf76a9d467363d1b60",
+  "sourceMediaUrl": "https://mevadata-public-01.s3.amazonaws.com/drop-5-mevid/2018-05-16.18-20-00.18-25-00.hospital.G301.r13.avi",
+  "method": "Existing authored head keyframes; visibility preserved. No automated detection or real-world identity classification.",
+  "geometryReference": "Existing Machine neutral person reticle: off-white dashed square and corner ticks;1.36scale and0.94extent.",
+  "sourceWidth": 960,
+  "sourceHeight": 540,
+  "duration": 30,
+  "maxGapSeconds": 1.05,
+  "reviewScope": "Sampled full-clip motion audit, not per-frame or pixel-perfect validation",
+  "tracks": [
+    {
+      "id": "person-01",
+      "sourceTrackIndex": 0,
+      "reviewedSpans": [
+        {
+          "start": 20,
+          "end": 25.7,
+          "reviewRef": "R55 independently sampled person alignment; 3689766b460e6afa4045d9d7d0a8fbd6452896040f3ba9a2e419f56ae4175b02"
+        }
+      ],
+      "keyframes": [
+        {
+          "t": 14.48,
+          "cx": 0.9864583333333333,
+          "cy": 0.6037037037037037,
+          "size": 0.04261333333333333,
+          "visible": false
+        },
+        {
+          "t": 14.5,
+          "cx": 0.9864583333333333,
+          "cy": 0.6037037037037037,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 15,
+          "cx": 0.971875,
+          "cy": 0.6037037037037037,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 15.5,
+          "cx": 0.925,
+          "cy": 0.6111111111111112,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 16.5,
+          "cx": 0.8375,
+          "cy": 0.6185185185185186,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 17.5,
+          "cx": 0.7489583333333334,
+          "cy": 0.6240740740740741,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 18.5,
+          "cx": 0.6572916666666667,
+          "cy": 0.6333333333333334,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 19.5,
+          "cx": 0.5666666666666667,
+          "cy": 0.638888888888889,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 20,
+          "cx": 0.5177083333333333,
+          "cy": 0.6425925925925926,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 20.5,
+          "cx": 0.47395833333333337,
+          "cy": 0.6462962962962964,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 21.5,
+          "cx": 0.37812500000000004,
+          "cy": 0.6481481481481483,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 22.5,
+          "cx": 0.28437500000000004,
+          "cy": 0.6518518518518519,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 23.5,
+          "cx": 0.18958333333333333,
+          "cy": 0.6462962962962964,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 24.5,
+          "cx": 0.109375,
+          "cy": 0.6425925925925926,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 25,
+          "cx": 0.059375,
+          "cy": 0.6518518518518519,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 25.5,
+          "cx": 0.028124999999999997,
+          "cy": 0.6407407407407408,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 25.8,
+          "cx": 0.009375,
+          "cy": 0.6407407407407408,
+          "size": 0.04261333333333333,
+          "visible": true
+        },
+        {
+          "t": 25.82,
+          "cx": 0.009375,
+          "cy": 0.6407407407407408,
+          "size": 0.04261333333333333,
+          "visible": false
+        }
+      ]
+    }
+  ]
+}

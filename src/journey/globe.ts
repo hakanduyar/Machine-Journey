@@ -76,7 +76,7 @@ const BASE_CITIES: readonly City[] = [
     },
   },
   {
-    id: 'butlerville', name: 'Butlerville', country: 'USA', lon: -85.51, lat: 39.03, feedId: 'm01', feedIds: ['m01', 'm02', 'm06', 'parking-walk'],
+    id: 'butlerville', name: 'Butlerville', country: 'USA', lon: -85.51, lat: 39.03, feedId: 'm01', feedIds: ['m01', 'm02', 'm06', 'parking-walk', 'm03', 'm07', 'covered-road', 'm04', 'm05'], // first four = original primary pool; the rest admitted in R51 (distinct MEVA cameras G301/G639/G505/G436/G330); G423/G421 follow from the extra manifest
     verified: {
       label: 'MUSCATATUCK TRAINING CENTER · BUTLERVILLE, INDIANA', source: 'MEVA collection', url: 'https://www.in.gov/indiana-national-guard/muscatatuck-training-center/contact-mutc/',
       coordSource: 'US Census TIGERweb 2020 CDP centroid (Butlerville, Indiana; locality overview, not site GPS)',

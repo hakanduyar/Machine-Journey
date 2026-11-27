@@ -9,7 +9,7 @@ import { mulberry32 } from './layout';
  *    number of choices (any 4 consecutive choices contain all available kinds);
  *  - otherwise kinds are drawn with weights that favour the ones not seen for longest;
  *  - the number of camera holds before a branch (2..4, sometimes 1 so a floating visit's fullscreen pane leads straight
- *    into the neural scene) and the number of stops of a visit (2..4) vary and avoid repeating the previous value.
+ *    into the neural scene) and the number of stops of a visit (3..6, with six less frequent) vary and avoid repeating the previous value.
  * `current()` is stable until `advance()`: a due branch that is still loading is retried with the same choice.
  * The production seed is random per session; `?seed=` (see `seedFromSearch`) makes a session reproducible for review.
  */
@@ -118,7 +118,7 @@ export class RoutePlanner implements BranchSource {
     const after = straight ? 1 : this.pickFrom([2, 3, 4], this.lastAfter);
     this.lastAfter = after;
     if (kind === 'globe') return { kind, after };
-    const stops = this.pickFrom([2, 3, 4], this.lastStops.get(kind) ?? 0);
+    const stops = this.pickFrom([3, 3, 4, 4, 5, 5, 6], this.lastStops.get(kind) ?? 0);
     this.lastStops.set(kind, stops);
     return { kind, after, stops };
   }

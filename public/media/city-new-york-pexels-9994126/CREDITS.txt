@@ -1,0 +1,11 @@
+Video: Tatiana Kut / Pexels
+Source: https://www.pexels.com/video/video-footage-of-city-of-new-york-at-sunset-to-night-9994126/
+Original media: https://videos.pexels.com/video-files/9994126/9994126-hd_1282_720_30fps.mp4
+License: Pexels License
+https://www.pexels.com/license/
+Location: Pexels title 'Video Footage of City of New York at Sunset to Night', description 'Timelapse of New York City's skyline transitioning from sunset to night' (uploader Tatiana Kut). High vantage over the Hudson/harbor with Jersey City skyline and Liberty-area islands to the west, apartment towers foreground; exact camera position not independently geolocated.
+Original SHA256: d7e8f9e5f0a2367fe6cd09ff08baf8a94e94024855bc2d4bfaac2ec5db954ed1
+Loop SHA256: fc7d180899afbcf9649952a1b550d1f1a1f37b6840dcc5c897b437fa01719460
+Poster SHA256: 6b1bd2639643854896a68b366f7a33371eb78d348a15614b3ad8885f73d96db6
+Changes and limits: Archived timelapse, not live: 7s fixed observational excerpt starting at source 0.5s, muted720p24fps; perceptible0.5s water/cloud/distant pedestrian dissolve, not certified seamless. Exact camera coordinates unverified.
+Project media only; no standalone stock-library redistribution or implied endorsement. Not official CCTV or live footage.

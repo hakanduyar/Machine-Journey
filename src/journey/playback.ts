@@ -9,8 +9,8 @@ import type { Stage } from './controller';
  *  - globe turning (requested city leg) ......... only the target city's feed plays: it is warmed before it is shown
  *  - floating field / neural scene and their in / move / out legs: only the focused feed and the leg's other end decode
  *    (max 3, see `routeActive`); every other feed stays paused on its last good frame, which the distant planes keep showing
- *  - everything else (visible mosaic, the globe bridges whose regional field shows every tile) keeps the full pool
- *    playing, so appearance and distribution do not change and no visible cue is paused part-way.
+ *  - everything else (visible mosaic, the globe bridges) decodes only the `live` viewport budget when given (the rest show their
+ *    static poster / last frame); without `live` (legacy callers) it keeps the full pool playing.
  */
 export interface PlaybackInput {
   stage: Stage;
@@ -32,6 +32,11 @@ export interface PlaybackInput {
   pool?: readonly number[];
   /** Floating / neural stages only: feed indices wanted (see `routeActive`), capped at MAX_ACTIVE_FEEDS. Absent: whole pool. */
   active?: readonly number[];
+  /**
+   * Mosaic / navigation stages: the feeds the viewport budget allows to decode (8 desktop / 4 narrow, incoming target included,
+   * see `selectViewportFeeds`). When given it replaces "the whole pool" for every stage that would otherwise play it.
+   */
+  live?: readonly number[];
 }
 
 /** Most feeds the floating field / neural scene (and their bridges) may keep decoding at once. */
@@ -71,7 +76,10 @@ export function desiredPlayback(i: PlaybackInput): boolean[] {
   const core = i.coreCount ?? i.feedCount;
   const only = (idx: number) => Array.from({ length: i.feedCount }, (_, k) => k === idx);
   // "The whole pool" is the CORE pool plus only the city clips currently in use: the other city clips never decode.
-  const all = () => Array.from({ length: i.feedCount }, (_, k) => (i.pool ? i.pool.includes(k) : k < core) || (i.extra?.includes(k) ?? false));
+  // With `live` (the viewport budget, see viewportFeeds.ts) the fallback is EXACTLY that bounded set: never the whole pool.
+  const all = () => (i.live
+    ? Array.from({ length: i.feedCount }, (_, k) => i.live!.includes(k))
+    : Array.from({ length: i.feedCount }, (_, k) => (i.pool ? i.pool.includes(k) : k < core) || (i.extra?.includes(k) ?? false)));
   if (i.active && ROUTE_STAGES.has(i.stage)) {
     const set = [...new Set(i.active.filter((x) => x >= 0 && x < i.feedCount))].slice(0, MAX_ACTIVE_FEEDS);
     if (set.length) return Array.from({ length: i.feedCount }, (_, k) => set.includes(k)); // unknown route: never pause what might be visible

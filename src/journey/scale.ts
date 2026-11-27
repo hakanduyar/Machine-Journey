@@ -32,6 +32,28 @@ export const legEase = (t: number) => {
   return 0.35 * c + 0.65 * c * c * (3 - 2 * c);
 };
 
+/** Local half pacing: preserve global T>=.5 exactly; traverse local spatial ease faster towards the pane.
+ * Clock is an analytic integral in spatial legEase units, so reversing dt retraces the exact same curve.
+ * Desired local spatial velocity rises from midpoint1.325 to pane3.3125, cancelling the old terminal ease-out.
+ */
+const LOCAL_RATE = 1.325;
+const LOCAL_GAIN = Math.sqrt(1.5);
+export const LOCAL_CLOCK_END = Math.atan(LOCAL_GAIN) / (2 * LOCAL_GAIN * LOCAL_RATE);
+export function globeLegClock(T: number): number {
+  const t = clamp(T, 0, 1);
+  if (t >= 0.5) return LOCAL_CLOCK_END + t - 0.5;
+  return (Math.atan(LOCAL_GAIN) - Math.atan(LOCAL_GAIN * (1 - 2 * legEase(t)))) / (2 * LOCAL_GAIN * LOCAL_RATE);
+}
+export function globeLegTime(clock: number): number {
+  const c = clamp(clock, 0, LOCAL_CLOCK_END + 0.5);
+  if (c >= LOCAL_CLOCK_END) return 0.5 + c - LOCAL_CLOCK_END;
+  const target = (1 - Math.tan(Math.atan(LOCAL_GAIN) - c * 2 * LOCAL_GAIN * LOCAL_RATE) / LOCAL_GAIN) / 2;
+  let lo = 0; let hi = 0.5;
+  for (let i = 0; i < 40; i++) { const mid = (lo + hi) / 2; if (legEase(mid) < target) lo = mid; else hi = mid; }
+  return c === 0 ? 0 : (lo + hi) / 2;
+}
+export const advanceGlobeLeg = (T: number, delta: number) => globeLegTime(globeLegClock(T) + delta);
+
 const smooth01 = (x: number) => { const t = clamp(x, 0, 1); return t * t * (3 - 2 * t); };
 export const smoothstep = (a: number, b: number, x: number) => smooth01((x - a) / (b - a));
 

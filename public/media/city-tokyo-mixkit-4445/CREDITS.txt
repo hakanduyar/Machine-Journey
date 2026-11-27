@@ -1,0 +1,12 @@
+Video: Mixkit - top view of Tokyo cargo port (4445)
+Source: https://mixkit.co/free-stock-video/top-view-of-tokyo-cargo-port-4445/
+Media original: https://assets.mixkit.co/videos/4445/4445-720.mp4
+License: Mixkit Stock Video Free License
+https://mixkit.co/license/modal/videoFree/
+https://mixkit.co/terms/
+Publisher describes Tokyo; no verified camera GPS. ARCHIVE/TIMELAPSE, not live CCTV.
+Original SHA256: ee0787660a713d0a9d219ca637aa08c910214441c27077b3cf942bd7ad6ff69d
+Loop SHA256: e3ad08271d1a0ede838446f9ebddd89517fb51943a2c41852b18b92b1f8bedab
+Changes: Source0-6s; muted720p24fps H264; same0.5s dissolve recipe, no crop/reversal/stabilization
+Quality: ONE permitted recut: source0-6s, output5.5s. Train absent at both boundary intervals, verified source contact at0.5s cadence and actual8-frame seam. Distant yard-vehicle/cloud dissolve remains. No repeated blend tuning.
+Project use only; no standalone stock-library redistribution.

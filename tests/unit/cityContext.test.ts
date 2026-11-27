@@ -10,7 +10,9 @@ import { planFloatRoute } from '../../src/journey/floatField';
 import { planNeuralRoute, type NeuralHold } from '../../src/journey/neuralRoute';
 
 const IDS = ALL_FEEDS.map((f) => f.id);
-const BUTLER = ['m01', 'm02', 'm06', 'parking-walk'];
+const BUTLER = ['m01', 'm02', 'm06', 'parking-walk', 'm03', 'm07', 'covered-road', 'm04', 'm05', 'city-butlerville-school-hall', 'city-butlerville-cafe', 'city-butlerville-stairwell', 'city-butlerville-classroom', 'city-butlerville-courtyard', 'city-butlerville-bus-interior',
+  'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell'];
+const BUTLER_PRIMARY = BUTLER.slice(0, 4);
 const catalog = (city: string) => catalogIndices(cityFeedIds(cityById(city)), IDS);
 
 // ---- city-scoped layouts, the way Journey builds them: one stable mosaic per city, tiles bound to the city's finite catalog ----
@@ -55,8 +57,8 @@ const toHold = (c: JourneyController) => { for (let i = 0; i < 6000 && !isHoldSt
 const fwd = (c: JourneyController) => { expect(c.dispatch({ type: 'intent' })).toBe(true); toHold(c); };
 const back = (c: JourneyController) => { expect(c.dispatch({ type: 'back' })).toBe(true); toHold(c); };
 
-describe('initial ownership: Butlerville (its four real feeds)', () => {
-  it('opens in Butlerville and its mosaic is bound only to its four feeds', () => {
+describe('initial ownership: Butlerville (its nineteen real feeds)', () => {
+  it('opens in Butlerville and its mosaic is bound only to its nineteen feeds', () => {
     const { c } = make();
     expect(c.activeCity).toBe('butlerville');
     expect(cityFeedIds(cityById(DEFAULT_CITY_ID))).toEqual(BUTLER);
@@ -64,25 +66,25 @@ describe('initial ownership: Butlerville (its four real feeds)', () => {
     for (const f of feeds) expect(BUTLER).toContain(f);
     expect(feeds.size).toBeGreaterThan(1);
   });
-  it('startup sources: only Butlerville\'s four; no other city / unowned clip is part of the opening pool', () => {
+  it('startup sources: only Butlerville\'s nineteen; no other city / unowned clip is part of the opening pool', () => {
     const startup = new Set(cityFeedIds(cityById(DEFAULT_CITY_ID)));
     expect([...startup]).toEqual(BUTLER);
     for (const id of IDS) if (!startup.has(id)) expect(cityOfFeed(id, CITIES)?.id).not.toBe('butlerville');
     const mosaicPlay = desiredPlayback({ stage: 'mosaic', selectedFeed: -1, targetFeed: -1, feedCount: IDS.length, pool: catalog('butlerville') });
-    expect(IDS.filter((_, i) => mosaicPlay[i])).toEqual(BUTLER);
+    expect(IDS.filter((_, i) => mosaicPlay[i])).toEqual(IDS.filter((id) => BUTLER.includes(id))); // catalog index order
   });
   it('a stock city owns one clip: every tile of its mosaic is that source (honest reuse, no foreign feed)', () => {
     for (const t of layoutOf('cairo')) expect(IDS[t.feedIndex]).toBe('city-cairo'); // Cairo still owns exactly one clip
     expect(layoutOf('cairo').map((t) => t.id)).toEqual(layoutOf('butlerville').map((t) => t.id)); // stable tile ids across cities
   });
-  it('a multi-clip city (Paris owns 5) binds its tiles only to its own five and its deck cycles only them', () => {
+  it('a multi-clip city (Paris owns 8) binds its tiles only to its own eight and its deck cycles only them', () => {
     const own = cityFeedIds(cityById('paris'));
-    expect(own.length).toBe(5); expect(own[0]).toBe('city-paris');
+    expect(own.length).toBe(8); expect(own[0]).toBe('city-paris');
     const used = new Set(layoutOf('paris').map((t) => IDS[t.feedIndex]));
     for (const f of used) expect(own).toContain(f);
     expect(used.size).toBeGreaterThan(1);
     const d = new CityDecks(CITIES, 1); d.useCity('paris');
-    expect([...d.eligible()].sort()).toEqual([...own].sort()); // all five unseen: all eligible, none foreign
+    expect([...d.eligible()].sort()).toEqual([...own].sort()); // all eight unseen: all eligible, none foreign
     expect(d.commit('city-paris')).toBe(true); expect(d.eligible().includes('city-paris')).toBe(false);
   });
 });
@@ -90,8 +92,8 @@ describe('initial ownership: Butlerville (its four real feeds)', () => {
 describe('all modes select locally for a 4-source and a 1-source catalog', () => {
   const holds: NeuralHold[] = Array.from({ length: 8 }, (_, i) => ({ screen: `s${i}`, holdStart: i * 10, holdEnd: i * 10 + 4 }));
   it('Butlerville: 4 stops show 4 distinct own feeds in float and neural', () => {
-    const n = stopsFor(4, 4); expect(n).toBe(4);
-    const later = stopFeeds(BUTLER, 'm01', n - 1, ['m02', 'm06', 'parking-walk']);
+    const n = stopsFor(4, BUTLER.length); expect(n).toBe(4);
+    const later = stopFeeds(BUTLER, 'm01', n - 1, BUTLER_PRIMARY.slice(1));
     const f = planFloatRoute('m01', n, 0, later, true)!;
     expect(f.feeds.length).toBe(4); expect(new Set(f.feeds).size).toBe(4); for (const x of f.feeds) expect(BUTLER).toContain(x);
     const nr = planNeuralRoute('m01', n, 0, holds, later, true)!;
@@ -215,7 +217,7 @@ describe('city context through the controller', () => {
 
 describe('capped playback for the active city', () => {
   const n = IDS.length;
-  it('route stages keep the cap of three even with a four-feed pool; the globe hold plays nothing', () => {
+  it('route stages keep the cap of three even with a nineteen-feed pool; the globe hold plays nothing', () => {
     const pool = catalog('butlerville');
     for (const stage of ['floating', 'floatMove', 'neural', 'neuralMove'] as const) {
       const d = desiredPlayback({ stage, selectedFeed: -1, targetFeed: -1, feedCount: n, pool, active: pool });
@@ -230,8 +232,8 @@ describe('capped playback for the active city', () => {
     const ent = desiredPlayback({ stage: 'entering', selectedFeed: -1, targetFeed: cairo, feedCount: n, pool: catalog('cairo'), extra: [cairo] });
     expect(IDS.filter((_, i) => ent[i])).toEqual(['city-cairo']);
   });
-  it('entering a five-clip city decodes the ready target plus a small near set of its OWN feeds, never more than three; a mosaic hold plays the city pool', () => {
-    const pool = catalog('paris'); expect(pool.length).toBe(5);
+  it('entering an eight-clip city decodes the ready target plus a small near set of its OWN feeds, never more than three; a mosaic hold plays the city pool', () => {
+    const pool = catalog('paris'); expect(pool.length).toBe(8);
     const target = pool[2];
     const ent = desiredPlayback({ stage: 'entering', selectedFeed: -1, targetFeed: target, feedCount: n, pool, extra: [target] });
     const on = IDS.filter((_, i) => ent[i]);

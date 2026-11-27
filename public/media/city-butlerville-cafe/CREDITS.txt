@@ -1,0 +1,13 @@
+Cafe - MEVA camera G421
+Attribution: MEVA dataset, Kitware Inc. / IARPA.
+Source: https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/14/2018-03-11.14-20-01.14-25-01.school.G421.r13.avi
+Original SHA-256: 00E2114E41B1A10559D4359A86030FAEE22EE48752B328AA2466A5D2584BA0F3
+Prepared loop SHA-256: 3703232A45C8F1ED9F481AD672ED562056DFFE41DD4A2151C0F16C58961ABBC1
+License: Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+Official license: https://mevadata.org/resources/MEVA-data-license.txt
+Collection site: Muscatatuck Urban Training Center / Butlerville, Indiana.
+Site evidence: https://arxiv.org/html/2012.00914#S3.SS3
+Changes: Excerpt 15-60s; output duration 44.5s; mute; 24fps H.264 1280x720 aspect-preserving fit; 0.5s N/12 tail-to-head dissolve; poster derived. No reverse playback.
+Archived staged activity, not live surveillance. Exact camera GPS unverified.
+CC BY 4.0 covers derived loop/poster; application MIT does not relicense this media.

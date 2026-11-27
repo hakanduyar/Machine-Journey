@@ -1,0 +1,12 @@
+School stairwell - MEVA camera G419
+Attribution: MEVA dataset, Kitware Inc. / IARPA.
+Source: https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/11/2018-03-07.10-55-01.11-00-01.school.G419.r13.avi
+Original SHA-256: B47D7C6E71FE0646493DFBDC18FCBF2FEFA5C14269F0FF7D4F16F86A7B313308
+Prepared loop SHA-256: C301D9949AFA502565975A5127BFF7CABCB20982374815BFBD0C69A04B29BD8B
+License: Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+Official license: https://mevadata.org/resources/MEVA-data-license.txt
+Collection site: Muscatatuck Urban Training Center / Butlerville, Indiana.
+Site evidence: https://arxiv.org/html/2012.00914#S3.SS3
+Changes: Excerpt 230-257s; muted24fps H.264720p aspect-preserving fit; output26.5s; 0.5s N/12 tail-to-head dissolve; derived poster; no reverse playback.
+Archived staged activity, not live surveillance. Exact camera GPS unverified. CC BY4.0 applies to video/poster, not application MIT.

@@ -1,0 +1,10 @@
+city-new-york-pexels-14306101
+Attribution: Sarowar Hussain / Pexels
+https://www.pexels.com/video/new-york-time-lapse-footage-14306101/
+Pexels License
+https://www.pexels.com/license/
+https://www.pexels.com/terms-of-service/
+Original SHA256: e3453333b877e7f2ee2cf7f9875fd5711097207ab885b138ac70238912e11bb8
+Prepared loop SHA256: 78c29df1d1f7418669d63ea3b32dc036b14836ea39daa54bf74f23fa3b06f5cc
+First18s or shorter original; muted H2641280x72024fps. Body starts0.5s, last0.5s blended into original first0.5s using N/12. No reverse motion.
+Archive footage, not live. Exact camera coordinates unverified.

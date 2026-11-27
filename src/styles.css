@@ -193,3 +193,6 @@ button { font: inherit; color: inherit; }
 .hint-sub { font-size: 10px; font-weight: 500; letter-spacing: 0.16em; opacity: 0.85; }
 @media (pointer: coarse) { .hint-fine { display: none; } .hint-touch { display: inline; } }
 .journey:focus { outline: none; }
+
+/* One source-bound human tracking pilot; follows the existing cropped DOM pane. */
+.pane .head-track-overlay { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }

@@ -1,0 +1,356 @@
+{
+  "derivedCorrections": {
+    "evidenceSha256": "24576f2a2fda54674b1b45594b237854be53964fcf55ae32f892681ba76cf179",
+    "reviewRef": "R55 measured source-frame corrections",
+    "measurement": "Manual source-frame head bounds; approximately 2–3 pixels uncertainty.",
+    "keys": [
+      {
+        "sourceTrackIndex": 2,
+        "t": 11.4,
+        "cx": 0.46770833333333334,
+        "cy": 0.412962962962963,
+        "w": 0.022916666666666665,
+        "h": 0.05555555555555555,
+        "frameSha256": "209f66676a517f328b3cceeb5f00cc1ed41b6d1f27c1c667466a84200fcfb676"
+      },
+      {
+        "sourceTrackIndex": 2,
+        "t": 11.5,
+        "cx": 0.46041666666666664,
+        "cy": 0.41574074074074074,
+        "w": 0.01875,
+        "h": 0.046296296296296294,
+        "frameSha256": "bbd4cded2a78d756df20d70f3a51637487c6df00c27e4efbd6744e1df014b3ec"
+      }
+    ]
+  },
+  "policyReviewRef": "R55 independently sampled person alignment; 3689766b460e6afa4045d9d7d0a8fbd6452896040f3ba9a2e419f56ae4175b02",
+  "coverage": "Only independently supported tracks and time ranges; not complete person coverage.",
+  "excludedTracks": [],
+  "schemaVersion": 1,
+  "feedId": "m07",
+  "videoSha256": "f4ec720f3da77f451832f799eee31678522f3c941a2b913063849faa135c419e",
+  "annotationSha256": "0d290b4d441f8be1e674ad4738669e473884f4d709fef7f01d123c580fb35938",
+  "sourceMediaUrl": "https://mevadata-public-01.s3.amazonaws.com/drop-5-mevid/2018-05-16.14-25-01.14-30-01.school.G639.r13.avi",
+  "method": "Existing authored head keyframes; visibility preserved. No automated detection or real-world identity classification.",
+  "geometryReference": "Existing Machine neutral person reticle: off-white dashed square and corner ticks;1.36scale and0.94extent.",
+  "sourceWidth": 960,
+  "sourceHeight": 540,
+  "duration": 35,
+  "maxGapSeconds": 1.05,
+  "reviewScope": "Sampled full-clip motion audit, not per-frame or pixel-perfect validation",
+  "tracks": [
+    {
+      "id": "person-01",
+      "sourceTrackIndex": 0,
+      "reviewedSpans": [
+        {
+          "start": 9.3,
+          "end": 20.1,
+          "reviewRef": "R55 independently sampled person alignment; 3689766b460e6afa4045d9d7d0a8fbd6452896040f3ba9a2e419f56ae4175b02"
+        }
+      ],
+      "keyframes": [
+        {
+          "t": 7.880000000000001,
+          "cx": 0.4583333333333333,
+          "cy": 0.3592592592592592,
+          "size": 0.0662874074074074,
+          "visible": false
+        },
+        {
+          "t": 7.9,
+          "cx": 0.4583333333333333,
+          "cy": 0.3592592592592592,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 8.5,
+          "cx": 0.5208333333333333,
+          "cy": 0.34259259259259256,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 9.5,
+          "cx": 0.5833333333333333,
+          "cy": 0.3222222222222222,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 10.5,
+          "cx": 0.6010416666666666,
+          "cy": 0.33888888888888885,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 11.5,
+          "cx": 0.6104166666666666,
+          "cy": 0.3574074074074074,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 12.5,
+          "cx": 0.6166666666666666,
+          "cy": 0.3648148148148148,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 13.5,
+          "cx": 0.6197916666666666,
+          "cy": 0.37037037037037035,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 14.5,
+          "cx": 0.6187499999999999,
+          "cy": 0.37037037037037035,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 15.5,
+          "cx": 0.6208333333333332,
+          "cy": 0.3685185185185185,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 16.5,
+          "cx": 0.6197916666666666,
+          "cy": 0.3685185185185185,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 17.5,
+          "cx": 0.590625,
+          "cy": 0.34629629629629627,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 18.5,
+          "cx": 0.5614583333333333,
+          "cy": 0.3574074074074074,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 19.5,
+          "cx": 0.49375,
+          "cy": 0.3648148148148148,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 20.1,
+          "cx": 0.4552083333333333,
+          "cy": 0.3722222222222222,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 20.12,
+          "cx": 0.4552083333333333,
+          "cy": 0.3722222222222222,
+          "size": 0.0662874074074074,
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "person-02",
+      "sourceTrackIndex": 1,
+      "reviewedSpans": [
+        {
+          "start": 9.3,
+          "end": 20.8,
+          "reviewRef": "R55 independently sampled person alignment; 3689766b460e6afa4045d9d7d0a8fbd6452896040f3ba9a2e419f56ae4175b02"
+        }
+      ],
+      "keyframes": [
+        {
+          "t": 9.18,
+          "cx": 0.45729166666666665,
+          "cy": 0.4037037037037037,
+          "size": 0.0662874074074074,
+          "visible": false
+        },
+        {
+          "t": 9.2,
+          "cx": 0.45729166666666665,
+          "cy": 0.4037037037037037,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 9.5,
+          "cx": 0.475,
+          "cy": 0.39629629629629626,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 10.5,
+          "cx": 0.5666666666666667,
+          "cy": 0.39814814814814814,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 11.5,
+          "cx": 0.6208333333333332,
+          "cy": 0.4148148148148148,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 12.5,
+          "cx": 0.6302083333333333,
+          "cy": 0.42407407407407405,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 13.5,
+          "cx": 0.6302083333333333,
+          "cy": 0.42407407407407405,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 14.5,
+          "cx": 0.6302083333333333,
+          "cy": 0.42407407407407405,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 15.5,
+          "cx": 0.63125,
+          "cy": 0.42407407407407405,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 16.5,
+          "cx": 0.63125,
+          "cy": 0.42592592592592593,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 17.5,
+          "cx": 0.6229166666666666,
+          "cy": 0.4351851851851852,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 18.5,
+          "cx": 0.6166666666666666,
+          "cy": 0.437037037037037,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 19.5,
+          "cx": 0.5656249999999999,
+          "cy": 0.4425925925925926,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 20.5,
+          "cx": 0.4979166666666667,
+          "cy": 0.4444444444444444,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 21.1,
+          "cx": 0.4552083333333333,
+          "cy": 0.45185185185185184,
+          "size": 0.0662874074074074,
+          "visible": true
+        },
+        {
+          "t": 21.12,
+          "cx": 0.4552083333333333,
+          "cy": 0.45185185185185184,
+          "size": 0.0662874074074074,
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "person-03",
+      "sourceTrackIndex": 2,
+      "reviewedSpans": [
+        {
+          "start": 9.3,
+          "end": 11.5,
+          "reviewRef": "R55 independently sampled person alignment; 3689766b460e6afa4045d9d7d0a8fbd6452896040f3ba9a2e419f56ae4175b02"
+        }
+      ],
+      "keyframes": [
+        {
+          "t": 9.08,
+          "cx": 0.45625,
+          "cy": 0.4444444444444445,
+          "size": 0.06392,
+          "visible": false
+        },
+        {
+          "t": 9.1,
+          "cx": 0.45625,
+          "cy": 0.4444444444444445,
+          "size": 0.06392,
+          "visible": true
+        },
+        {
+          "t": 9.5,
+          "cx": 0.49374999999999997,
+          "cy": 0.44074074074074077,
+          "size": 0.06392,
+          "visible": true
+        },
+        {
+          "t": 10.5,
+          "cx": 0.5187499999999999,
+          "cy": 0.41851851851851857,
+          "size": 0.06392,
+          "visible": true
+        },
+        {
+          "t": 11.4,
+          "cx": 0.46770833333333334,
+          "cy": 0.412962962962963,
+          "size": 0.07102222222222222,
+          "visible": true
+        },
+        {
+          "t": 11.5,
+          "cx": 0.46041666666666664,
+          "cy": 0.41574074074074074,
+          "size": 0.05918518518518518,
+          "visible": true
+        },
+        {
+          "t": 11.52,
+          "cx": 0.4510416666666666,
+          "cy": 0.4518518518518519,
+          "size": 0.06392,
+          "visible": false
+        }
+      ]
+    }
+  ]
+}
