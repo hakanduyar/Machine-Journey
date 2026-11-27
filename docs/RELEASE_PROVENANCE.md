@@ -50,3 +50,12 @@ The earlier public-only pacing and city-pool test corrections are reconciled in 
 The new G639 event retains a disclosed minor distant vehicle/background-person fade at its loop boundary; it is not described as seamless or continuous. The related G326 visit candidate and all other held footage are excluded. No annotation is copied from an earlier recording merely because the physical camera is the same.
 
 The curated source includes test-only successor 8903377, which updates the Butlerville capacity fixture to the accepted 25 recordings. Runtime behavior remains pinned to f193b1a.
+
+
+## Reviewed view and object-target update
+
+This curated update derives runtime, media, annotations and tests from accepted source snapshot `19b8de26ecaa10402b10add76076fdb4dba8d109`. Public commits contain selected release files rather than development history and use the contributor's GitHub noreply identity. The catalog contains 97 distinct reviewed views and 105 recordings, including eight additional events at existing Butlerville views. A view count does not claim an equal number of physical camera devices.
+
+The release adds Paris Saint-Eustache footage, two independently reviewed Butlerville events and a separately reviewed G505 canopy composition. Eight person feeds contain 18 tracks over bounded reviewed ranges; five object feeds have one target each. Native-time signed edge centres and fixed foreground masks preserve target geometry through partial visibility. Source hashes, original credits and measurement provenance remain bound to the accepted files. No unapproved clips or experimental display styles are included.
+
+Catalog fixture expectations were updated to the exact admitted inventory without removing ownership, alias, timing or capacity checks. The 78-recordings-per-city target remains unmet and issue6 stays open. Independent normal-navigation and served-byte checks distinguish selected-route evidence from isolated source playback; no exhaustive frame or camera coverage is claimed.

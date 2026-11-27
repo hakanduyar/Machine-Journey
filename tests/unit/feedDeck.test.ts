@@ -43,10 +43,10 @@ describe('verified source places (truth over novelty)', () => {
     expect(c.feedId).toBe('parked-c130'); expect(c.feedIds).toEqual(['parked-c130', 'city-savannah-additional']);
     expect(c.verified!.url).toContain('dvidshub.net/video/554984');
   });
-  it('Butlerville (Muscatatuck, Indiana) opens only its twenty-five MEVA Muscatatuck feeds, with the Census locality point; Palmdale the DC-8 plus its one approved additional clip', () => {
+  it('Butlerville (Muscatatuck, Indiana) opens only its twenty-eight MEVA Muscatatuck feeds, with the Census locality point; Palmdale the DC-8 plus its one approved additional clip', () => {
     const b = cityById('butlerville')!;
     expect(b.feedIds).toEqual(['m01', 'm02', 'm06', 'parking-walk', 'm03', 'm07', 'covered-road', 'm04', 'm05', 'city-butlerville-school-hall', 'city-butlerville-cafe', 'city-butlerville-stairwell', 'city-butlerville-classroom', 'city-butlerville-courtyard', 'city-butlerville-bus-interior',
-      'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell', 'city-butlerville-event-6be3a62539fcd5e7e29c', 'city-butlerville-event-5b53880db45458d170a8', 'city-butlerville-event-aa4fd544b8e12da53881', 'city-butlerville-event-42b9a7d07894762477da', 'city-butlerville-event-788995c15491e2f58728', 'city-butlerville-event-0cb69d3407458efbd9cb']);
+      'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell', 'city-butlerville-meva-e00f38fcfeed15f3', 'city-butlerville-event-6be3a62539fcd5e7e29c', 'city-butlerville-event-5b53880db45458d170a8', 'city-butlerville-event-aa4fd544b8e12da53881', 'city-butlerville-event-42b9a7d07894762477da', 'city-butlerville-event-788995c15491e2f58728', 'city-butlerville-event-0cb69d3407458efbd9cb', 'city-butlerville-event-7d31316b3ce1c2c82ffc', 'city-butlerville-event-0be6b9181c39c2a7d918']);
     expect([b.lon, b.lat]).toEqual([-85.51, 39.03]);
     expect(b.verified!.note).toMatch(/not Indianapolis/);
     expect(b.verified!.note).toMatch(/camera position is not verified/);

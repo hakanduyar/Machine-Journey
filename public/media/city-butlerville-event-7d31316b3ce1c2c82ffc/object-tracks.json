@@ -1,0 +1,885 @@
+{
+  "schemaVersion": 1,
+  "feedId": "city-butlerville-event-7d31316b3ce1c2c82ffc",
+  "videoSha256": "3e9ab95a47bdf85a415d61515cb0599ed0393a60448da5a61d84846fddb8c6e6",
+  "annotationSha256": "94e469a6de21519b0b619cd73236e6471391a77a41b981da916e31ddac8dcd02",
+  "sourceMediaUrl": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-12/11/2018-03-12.10-55-00.11-00-00.hospital.G341.r13.avi",
+  "sourceWidth": 1280,
+  "sourceHeight": 720,
+  "duration": 59.5,
+  "maxGapSeconds": 1,
+  "method": "Offline native source-frame measurements of one fixed vehicle target; no inference or identity classification.",
+  "reviewScope": "Complete observed chosen target passage; vehicle extremities may precede/follow the central target. No full-vehicle detector or person/identity inference.",
+  "targetPolicy": "Compact central cabin/roof region, not whole-vehicle bounds, bumper, or recentered visible fragment. Signed centre at right/bottom edge is an estimate from adjacent actual frames.",
+  "occlusionPolygons": [],
+  "tracks": [
+    {
+      "id": "object-01",
+      "marker": "vehicle-square",
+      "keyframes": [
+        {
+          "t": 0,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 19,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 19.25,
+          "cx": 0.9296875,
+          "cy": 1.0138888888888888,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 19.5,
+          "cx": 0.921875,
+          "cy": 0.9861111111111112,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 19.75,
+          "cx": 0.91875,
+          "cy": 0.9583333333333334,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 20,
+          "cx": 0.915625,
+          "cy": 0.9361111111111111,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 21,
+          "cx": 0.88125,
+          "cy": 0.8472222222222222,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 22,
+          "cx": 0.85,
+          "cy": 0.7611111111111111,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 23,
+          "cx": 0.81875,
+          "cy": 0.6972222222222222,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 24,
+          "cx": 0.7734375,
+          "cy": 0.6388888888888888,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 25,
+          "cx": 0.7,
+          "cy": 0.5944444444444444,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 26,
+          "cx": 0.634375,
+          "cy": 0.5805555555555556,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 27,
+          "cx": 0.6078125,
+          "cy": 0.5805555555555556,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 28,
+          "cx": 0.60625,
+          "cy": 0.5805555555555556,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 29,
+          "cx": 0.60625,
+          "cy": 0.5805555555555556,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 30,
+          "cx": 0.6140625,
+          "cy": 0.5833333333333334,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 31,
+          "cx": 0.640625,
+          "cy": 0.5972222222222222,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 32,
+          "cx": 0.6625,
+          "cy": 0.5972222222222222,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 33,
+          "cx": 0.684375,
+          "cy": 0.5972222222222222,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 34,
+          "cx": 0.70625,
+          "cy": 0.5972222222222222,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 35,
+          "cx": 0.73125,
+          "cy": 0.6027777777777777,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 36,
+          "cx": 0.7484375,
+          "cy": 0.6027777777777777,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 37,
+          "cx": 0.771875,
+          "cy": 0.6027777777777777,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 38,
+          "cx": 0.7953125,
+          "cy": 0.6027777777777777,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 39,
+          "cx": 0.815625,
+          "cy": 0.6027777777777777,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 40,
+          "cx": 0.8328125,
+          "cy": 0.6027777777777777,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 41,
+          "cx": 0.853125,
+          "cy": 0.5944444444444444,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 42,
+          "cx": 0.875,
+          "cy": 0.5944444444444444,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 43,
+          "cx": 0.8984375,
+          "cy": 0.5916666666666667,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 44,
+          "cx": 0.9203125,
+          "cy": 0.5944444444444444,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 45,
+          "cx": 0.9375,
+          "cy": 0.5888888888888889,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 46,
+          "cx": 0.9515625,
+          "cy": 0.5888888888888889,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 47,
+          "cx": 0.9625,
+          "cy": 0.5861111111111111,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 48,
+          "cx": 0.9734375,
+          "cy": 0.5833333333333334,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 49,
+          "cx": 0.98125,
+          "cy": 0.5805555555555556,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 50,
+          "cx": 0.9875,
+          "cy": 0.5805555555555556,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 51,
+          "cx": 0.9953125,
+          "cy": 0.5777777777777777,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 51.5,
+          "cx": 1,
+          "cy": 0.5777777777777777,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 52,
+          "cx": 1.00625,
+          "cy": 0.5777777777777777,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 52.5,
+          "cx": 1.0109375,
+          "cy": 0.5777777777777777,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 53,
+          "cx": 1.015625,
+          "cy": 0.5777777777777777,
+          "size": 0.06111111111111111,
+          "visible": true
+        },
+        {
+          "t": 53.25,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 59.5,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        }
+      ],
+      "sourceFrames": [
+        {
+          "t": 0,
+          "frame": 0,
+          "pts": 0,
+          "sourceFrameSha256": null,
+          "basis": "TARGET_OUT_OF_FRAME",
+          "target": null,
+          "visible": false
+        },
+        {
+          "t": 19,
+          "frame": 456,
+          "pts": 233472,
+          "sourceFrameSha256": null,
+          "basis": "TARGET_OUT_OF_FRAME",
+          "target": null,
+          "visible": false
+        },
+        {
+          "t": 19.25,
+          "frame": 462,
+          "pts": 236544,
+          "sourceFrameSha256": "9ab97c605b8d1227f36abfa626f4f22f6d45da7b2f73a6245ed662654a4b8c89",
+          "basis": "MANUALLY_ESTIMATED_PARTIAL_CENTRAL_TARGET_FROM_VISIBLE_CONTOUR_AND_ADJACENT_FULL_FRAME",
+          "target": {
+            "x": 1190,
+            "y": 730,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 19.5,
+          "frame": 468,
+          "pts": 239616,
+          "sourceFrameSha256": "6b2e19093f64b610a04258a78775acc08e7719195df9af67b8364498de92691c",
+          "basis": "MANUALLY_ESTIMATED_PARTIAL_CENTRAL_TARGET_FROM_VISIBLE_CONTOUR_AND_ADJACENT_FULL_FRAME",
+          "target": {
+            "x": 1180,
+            "y": 710,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 19.75,
+          "frame": 474,
+          "pts": 242688,
+          "sourceFrameSha256": "32471deca09e79f28fa5b004416204b58ce8e733946713938892a76c9174affa",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1176,
+            "y": 690,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 20,
+          "frame": 480,
+          "pts": 245760,
+          "sourceFrameSha256": "559a1edc28a255e0c707bcc4014a512a8b18bdc4af3adb89fa69e6b1fa8531ea",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1172,
+            "y": 674,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 21,
+          "frame": 504,
+          "pts": 258048,
+          "sourceFrameSha256": "c0119a6f37e79a38f0482910d35365af8b07753eaaf35ec5fc37ab230cd56c28",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1128,
+            "y": 610,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 22,
+          "frame": 528,
+          "pts": 270336,
+          "sourceFrameSha256": "54bcd2771a9312b9158b4179d1f100c76e95923a41585489e5d39c70fb8ab49c",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1088,
+            "y": 548,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 23,
+          "frame": 552,
+          "pts": 282624,
+          "sourceFrameSha256": "356027e99461eb67f5ed5cf4dbf2756dfcc15b996e3c3b471bf15a42852fd4a2",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1048,
+            "y": 502,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 24,
+          "frame": 576,
+          "pts": 294912,
+          "sourceFrameSha256": "4e110ac45e0781bf2d28be80b6df5b97b1792c35ea79fea321709a9601ff80dd",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 990,
+            "y": 460,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 25,
+          "frame": 600,
+          "pts": 307200,
+          "sourceFrameSha256": "d4370c2ddf1a688a618ce4a93a67b376528903c8cf9c8e9f388b582b34bb4f05",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 896,
+            "y": 428,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 26,
+          "frame": 624,
+          "pts": 319488,
+          "sourceFrameSha256": "b94b35b4bbf22ad065d80230f4f6d6bca514c37d978cee7ad5799bdddbed134b",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 812,
+            "y": 418,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 27,
+          "frame": 648,
+          "pts": 331776,
+          "sourceFrameSha256": "2b5dbe61a9e35ed053253ef054c1c6b812f1afe71e936ea40016fc09d49dfd69",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 778,
+            "y": 418,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 28,
+          "frame": 672,
+          "pts": 344064,
+          "sourceFrameSha256": "97b3b6c4a0d6b9e291101c1993f239030635e9b61246b533168d06fe23efbc76",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 776,
+            "y": 418,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 29,
+          "frame": 696,
+          "pts": 356352,
+          "sourceFrameSha256": "781d57071f5a8bf112421e0e1995b9597c0f015d741cebadd2f8f5561eb9181b",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 776,
+            "y": 418,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 30,
+          "frame": 720,
+          "pts": 368640,
+          "sourceFrameSha256": "8d91c11e0fb50521aadf4ca560c63c5eb008da17441e4b0b552c50174a3b1304",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 786,
+            "y": 420,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 31,
+          "frame": 744,
+          "pts": 380928,
+          "sourceFrameSha256": "493b8ca69fd3160b992b84d93129986f112a66ac13f9ba20028b3ee9046ec4a5",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 820,
+            "y": 430,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 32,
+          "frame": 768,
+          "pts": 393216,
+          "sourceFrameSha256": "829d8c8b8e9d3c95554ef44f284110fd965d450246168eed2ce3df9c3e38bb69",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 848,
+            "y": 430,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 33,
+          "frame": 792,
+          "pts": 405504,
+          "sourceFrameSha256": "c8d7ea6a902b860a2605a40f0620f631e78cb0aa823f5559f9cf2f9230c82cd7",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 876,
+            "y": 430,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 34,
+          "frame": 816,
+          "pts": 417792,
+          "sourceFrameSha256": "af37368d9c908e931d29788aeb7487f21e1d7a5634139508f17836edad35cff8",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 904,
+            "y": 430,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 35,
+          "frame": 840,
+          "pts": 430080,
+          "sourceFrameSha256": "d8ca68af0f744bc1476f75aa10a1787283d46bbc1ed63674d43bd7972bca66d7",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 936,
+            "y": 434,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 36,
+          "frame": 864,
+          "pts": 442368,
+          "sourceFrameSha256": "a3f19d79465586c5a28d954e9880599192ba086b6424f2edb6c97ccc6e6444e1",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 958,
+            "y": 434,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 37,
+          "frame": 888,
+          "pts": 454656,
+          "sourceFrameSha256": "42e699e38d3ec5a8483d830a7728da759787bdf841942aea3f5b5f1651fbe6d4",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 988,
+            "y": 434,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 38,
+          "frame": 912,
+          "pts": 466944,
+          "sourceFrameSha256": "9298427ada9b1381acb221e85c3ff9a455ceaa7b390c1328be5671375ea3337e",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1018,
+            "y": 434,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 39,
+          "frame": 936,
+          "pts": 479232,
+          "sourceFrameSha256": "2588962a620862df5484b7a5459e974a5b437ba8598ce67640c71b519d17b091",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1044,
+            "y": 434,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 40,
+          "frame": 960,
+          "pts": 491520,
+          "sourceFrameSha256": "46da88e95b91fe1f17d849fdff79ee07a0693424714e67d42afa3035eaabbc70",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1066,
+            "y": 434,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 41,
+          "frame": 984,
+          "pts": 503808,
+          "sourceFrameSha256": "ede11cda94ee5730d0036c6fbe7bc102969a57c01e897cef7c51a6f5f7d15635",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1092,
+            "y": 428,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 42,
+          "frame": 1008,
+          "pts": 516096,
+          "sourceFrameSha256": "52cd88478face70c77ec6a1a6b91311aebc32c3a036789b8b2c4376ac7e3d7a2",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1120,
+            "y": 428,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 43,
+          "frame": 1032,
+          "pts": 528384,
+          "sourceFrameSha256": "721aca93d05906ca3ac437e4f07addd85db33992f6d7cfc7a045887b63d84093",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1150,
+            "y": 426,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 44,
+          "frame": 1056,
+          "pts": 540672,
+          "sourceFrameSha256": "0b5d0eaa2c9a82abeea789fc605ee11ba32ae295ea1c567f4278a9fb37fb809a",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1178,
+            "y": 428,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 45,
+          "frame": 1080,
+          "pts": 552960,
+          "sourceFrameSha256": "6febf6cf4ddbd896768e8d7bbeab1fbaa510c02bf217ed87de7d5fff8d2471e7",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1200,
+            "y": 424,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 46,
+          "frame": 1104,
+          "pts": 565248,
+          "sourceFrameSha256": "452f4c8bdb4c0c6ed4a99496f08548665d9579cbab113a7f4fb575c3ccd46cc0",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1218,
+            "y": 424,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 47,
+          "frame": 1128,
+          "pts": 577536,
+          "sourceFrameSha256": "7478b8671498305bee0969fab5fc5061cfcffd0b33b9cd9a51a2792a1fad2894",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1232,
+            "y": 422,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 48,
+          "frame": 1152,
+          "pts": 589824,
+          "sourceFrameSha256": "5fdd382313f532eaae928301b3988e11e7d3e7197e32edf3e64cdf629c532963",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1246,
+            "y": 420,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 49,
+          "frame": 1176,
+          "pts": 602112,
+          "sourceFrameSha256": "8b2bbbf35f082b02717a7f4388a8e3c9a1e14b83c420c5f9848f4ed2e94c84b3",
+          "basis": "MANUALLY_MEASURED_CENTRAL_CABIN_TARGET",
+          "target": {
+            "x": 1256,
+            "y": 418,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 50,
+          "frame": 1200,
+          "pts": 614400,
+          "sourceFrameSha256": "96f82c683c3a1c291e4471f7a30e75cb228c8b03f6dd575b96ba254acaea661b",
+          "basis": "MANUALLY_ESTIMATED_PARTIAL_CENTRAL_TARGET_FROM_VISIBLE_CONTOUR_AND_ADJACENT_FULL_FRAME",
+          "target": {
+            "x": 1264,
+            "y": 418,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 51,
+          "frame": 1224,
+          "pts": 626688,
+          "sourceFrameSha256": "252c945321e85e39ff930497f5f40fcdcd2936584c484af51eb146eb45e0061f",
+          "basis": "MANUALLY_ESTIMATED_PARTIAL_CENTRAL_TARGET_FROM_VISIBLE_CONTOUR_AND_ADJACENT_FULL_FRAME",
+          "target": {
+            "x": 1274,
+            "y": 416,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 51.5,
+          "frame": 1236,
+          "pts": 632832,
+          "sourceFrameSha256": "fb7addc9fd0b16b95a4edee872fe3252824a1dcc11650925dfa3b0d4125d94d4",
+          "basis": "MANUALLY_ESTIMATED_PARTIAL_CENTRAL_TARGET_FROM_VISIBLE_CONTOUR_AND_ADJACENT_FULL_FRAME",
+          "target": {
+            "x": 1280,
+            "y": 416,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 52,
+          "frame": 1248,
+          "pts": 638976,
+          "sourceFrameSha256": "5cea2eb1d87ff6e307e012356db086114668e9542094ae8df0dca063e6a1a7f9",
+          "basis": "MANUALLY_ESTIMATED_PARTIAL_CENTRAL_TARGET_FROM_VISIBLE_CONTOUR_AND_ADJACENT_FULL_FRAME",
+          "target": {
+            "x": 1288,
+            "y": 416,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 52.5,
+          "frame": 1260,
+          "pts": 645120,
+          "sourceFrameSha256": "6a45f2372e150c85bd655a2504c33240d7c6a4821d0b83fa04013c0a99e13c91",
+          "basis": "MANUALLY_ESTIMATED_PARTIAL_CENTRAL_TARGET_FROM_VISIBLE_CONTOUR_AND_ADJACENT_FULL_FRAME",
+          "target": {
+            "x": 1294,
+            "y": 416,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 53,
+          "frame": 1272,
+          "pts": 651264,
+          "sourceFrameSha256": "0795ddc80c4f388503448d7fe132ee785106a7e1035180a92cd34df266bbd6b0",
+          "basis": "MANUALLY_ESTIMATED_PARTIAL_CENTRAL_TARGET_FROM_VISIBLE_CONTOUR_AND_ADJACENT_FULL_FRAME",
+          "target": {
+            "x": 1300,
+            "y": 416,
+            "side": 44
+          },
+          "visible": true
+        },
+        {
+          "t": 53.25,
+          "frame": 1278,
+          "pts": 654336,
+          "sourceFrameSha256": null,
+          "basis": "CENTRAL_TARGET_OUT_OF_FRAME_VEHICLE_FRONT_STILL_VISIBLE",
+          "target": null,
+          "visible": false
+        },
+        {
+          "t": 59.5,
+          "frame": 1428,
+          "pts": 731136,
+          "sourceFrameSha256": null,
+          "basis": "TARGET_OUT_OF_FRAME",
+          "target": null,
+          "visible": false
+        }
+      ]
+    }
+  ],
+  "sourceProvenance": {
+    "independentReviewSha256": "574829b7a1c679159557a56656f63df985c70f50c1bbe42083a9c7c020a91872",
+    "packetSha256": "05de7f749d5e01f6a0ad2bc4448aa2b8b5abce6e09bfd7c27f43df3788fce6c4",
+    "nativeTimebase": "1/12288",
+    "manualUncertaintyPixels": {
+      "interior": 6,
+      "partialEdge": 10
+    },
+    "occlusionEvidence": [],
+    "limitations": [
+      "Manual6px interior/10px edge uncertainty; not statistical accuracy.",
+      "One-second interior key spacing needs independent actual interpolation review, especially SUV turn.",
+      "Null time boundaries are bounded by inspected native frames, not detector confidence.",
+      "No production changes or runtime acceptance."
+    ]
+  }
+}
