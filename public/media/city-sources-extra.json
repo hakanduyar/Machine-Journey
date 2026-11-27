@@ -1343,5 +1343,29 @@
     },
     "loopNote": "Archived footage, not live. Source-author x20 timelapse, not live CCTV. Muted resized excerpt with half-second water/foliage boundary dissolve; not certified seamless. Derivative distributed under CC BY-SA 4.0.",
     "admissionManifestSha256": "9c8d00228ca277e3ee5ca864dab2cbb72110f9bb32c47e51d0d6f774f52aeda7"
+  },
+  {
+    "cityId": "dubai",
+    "city": "dubai",
+    "feedId": "city-dubai-pexels-7169446",
+    "source": "https://www.pexels.com/video/dubai-marina-at-night-7169446/",
+    "credit": "Tima Miroshnichenko via Pexels",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "archiveLabel": "ARCHIVE / CITY VIEW",
+    "locationClaim": "Dubai Marina, United Arab Emirates, publisher-identified",
+    "provenanceLevel": "STOCK_PUBLISHER_LOCATION",
+    "bundleProvenanceLevel": "publisher-city-claim",
+    "exactCameraCoordinatesVerified": false,
+    "originalAssetKey": "pexels-7169446/7169446-uhd_2560_1440_25fps.mp4",
+    "originalAssetUrl": "https://videos.pexels.com/video-files/7169446/7169446-uhd_2560_1440_25fps.mp4",
+    "originalSha256": "93b4a8e814550467d884495971df744e3240a84206c52c224377883776972fd2",
+    "loopSha256": "8ac61f87a3ef3c0f48994f23f992ac6a16d566c5b32ce3627bd14187d356ed98",
+    "posterSha256": "1628388a27c3a93140d82353396b5193a880d917393a9c0054f5b91f7d40573d",
+    "creditsSha256": "1635eb118072f475b70639d3e5d113f65270483041eeb868fecdf12284909db9",
+    "reviewedViewId": "dubai-marina-waterfront-7169446",
+    "reviewRef": "R124 independent corrected media review",
+    "loopNote": "Archived footage, not live. Stabilized waterfront skyline. Muted 18.64-second archived loop with a 0.48-second blend; slight residual vertical wobble and blend softness. Distinct from highway and sports-court skyline viewpoints.",
+    "admissionManifestSha256": "eaa6c58ddaf65b9399a53fd50a3ace55e04e2cd95f0620c682ecc024301602f7"
   }
 ]

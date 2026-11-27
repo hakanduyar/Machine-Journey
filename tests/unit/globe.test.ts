@@ -44,11 +44,11 @@ const trace = (c: JourneyController) => {
 };
 
 describe('globe branch leg sequence', () => {
-  it('fresh arrivals cover all24 cities before repeat; Back/Redo does not spend the next destination', () => {
+  it('fresh arrivals cover all active cities before repeat; Back/Redo does not spend the next destination', () => {
     const run = (replay: boolean) => {
       const c=make([1]),arrivals:string[]=[];
       leg(c);
-      for(let i=0;i<48;i++) {
+      for(let i=0;i<CITIES.length*2;i++) {
         leg(c); expect(c.state.stage).toBe('globe');
         leg(c); expect(c.state.stage).toBe('selected');
         arrivals.push(c.state.sceneCityId!);
@@ -61,8 +61,8 @@ describe('globe branch leg sequence', () => {
       return arrivals;
     };
     const a=run(false);expect(run(true)).toEqual(a);
-    for(const start of [0,24])expect([...a.slice(start,start+24)].sort()).toEqual(CITIES.map(c=>c.id).sort());
-    expect(a[24]).not.toBe(a[23]);
+    for(const start of [0,CITIES.length])expect([...a.slice(start,start+CITIES.length)].sort()).toEqual(CITIES.map(c=>c.id).sort());
+    expect(a[CITIES.length]).not.toBe(a[CITIES.length-1]);
   });
 
   it('camera holds, then one intent contracts into the mosaic and pulls back to a globe hold', () => {

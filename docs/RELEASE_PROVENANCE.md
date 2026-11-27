@@ -99,3 +99,11 @@ The event importer gains a schema4 path in which a reviewed used interval (sourc
 This successor exports bounded source-bound head-track annotations for the G420 event (single walker through the handrail descent, scoped rail masks) and the Butlerville classroom (two people), plus the shared head-highlight code and a narrow-portrait (<=520 px) framing change. On narrow portrait screens the selected view fits the whole source camera without side cropping and the HUD caption stays clear of the clock; desktop and tablet-landscape layouts are unchanged. Derived from source snapshot `7ee3d624a085c495d778b558bce811d91b2b6985`.
 
 Tracking coverage is now 17 human feeds carrying 42 partial tracks, and seven feeds carrying one object target each. The catalog is unchanged at 110 recordings / 100 distinct views / 10 distinct events. Known limits remain: thin balusters can mask the head and the first frames of the G420 passage are partial, the existing video seam ghost remains open, and no physical-phone testing is claimed. Full 78-per-city coverage and complete whole-video tracking remain open. Private evidence and development history are excluded.
+
+## Twelve-city scope and Dubai Marina view
+
+The active journey now covers New York, Butlerville, Paris, Tokyo, Sydney, Mexico City, Moscow, Dubai, Istanbul, Los Angeles, Savannah and Palmdale. The target is **12 × 78 = 936 recordings**. Active inventory is **91 recordings / 81 distinct views / 10 authorized events**; the complete retained archive has **111 recordings / 101 distinct views / 10 events**. Views do not count physical camera devices.
+
+The update adds the reviewed Dubai Marina waterfront excerpt and restricts destinations, city pools, globe hubs and routes to the twelve selected cities. Other cities and their original media, credits and provenance remain archived for reversibility. Back and forward history retain their existing behavior. The per-city admission requirements are unchanged and remain unmet.
+
+The curated source snapshots are 181e983 (Dubai media), 76308cf (inventory baseline) and afa28367614cdb43d8fa1d6530df3f2bc24057f3 (active scope). Only selected source, media and related tests are included; public release documentation and workflows are preserved.

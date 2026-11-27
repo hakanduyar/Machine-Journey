@@ -58,3 +58,7 @@ See [asset provenance](public/assets/machine/ASSETS.md) and [release provenance]
 `npm run build:pages` prepares a static build for the repository subpath. See [manual demo release](docs/DEMO_RELEASE.md) for deployment setup and verification.
 
 Known loop-quality limitations remain in the Paris-path, Istanbul-street and NYC yellow-cab excerpts, including visible final ghosted dissolves. Additional existing Paris-street, Mumbai, Nairobi, New York base, Moscow-avenue and Lagos derivatives have independently confirmed seam defects. Tracking annotations do not repair these videos; edit-policy cutoffs suppress markers during uncertain transitions without claiming that a subject physically exited.
+
+## Active collection
+
+The journey has 12 active cities and a target of 936 recordings (78 per city). The active collection contains 91 recordings, 81 distinct views and 10 authorized events. The full retained archive contains 111 recordings and 101 views, including those same 10 events. Archived cities are excluded from active navigation; their media and provenance are preserved. See [release provenance](docs/RELEASE_PROVENANCE.md#twelve-city-scope-and-dubai-marina-view) for the selected cities and scope.

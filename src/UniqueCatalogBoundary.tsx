@@ -4,13 +4,13 @@ import { Journey } from './Journey';
 import { UniqueCatalogReport } from './UniqueCatalogReport';
 import { CITIES } from './journey/globe';
 import { ALL_FEEDS } from './journey/feeds';
-import { RECORDING_MANIFEST } from './journey/recordingManifest';
+import { ACTIVE_RECORDING_MANIFEST } from './journey/recordingManifest';
 import {
   evaluateUniqueCatalog, growRequest, lifecycleView, recordAdmission, requiredSlotsFor, startLifecycle, type GateInput,
 } from './journey/uniqueCatalogGate';
 
 type Source = Pick<GateInput, 'cities' | 'candidates' | 'feedIds'>;
-const REAL_SOURCE: Source = { cities: CITIES, candidates: RECORDING_MANIFEST, feedIds: ALL_FEEDS.map((f) => f.id) };
+const REAL_SOURCE: Source = { cities: CITIES, candidates: ACTIVE_RECORDING_MANIFEST, feedIds: ALL_FEEDS.map((f) => f.id) };
 
 /**
  * Candidate-only (`?catalog=unique`) boundary. The requested capacity is the non-decreasing session maximum of the viewport's

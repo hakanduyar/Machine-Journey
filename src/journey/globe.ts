@@ -7,7 +7,7 @@ import { extraFeedIds } from './cityFeeds';
  *  - `LAND` / `WATER` are hand-authored, heavily simplified outlines (lon, lat in degrees),
  *    not survey data and not taken from any licensed dataset.
  *  - `CITIES` are globe destinations. Each opens ONLY its own local clip: the entries carrying `verified`
- *    (Savannah, Butlerville, Palmdale) open the officially documented source feeds of that place; each of the other 21
+ *    (Savannah, Butlerville, Palmdale) open the officially documented source feeds of that place; each of the other nine active cities
  *    opens its own stock-archive clip (`city-<id>`, see cityFeeds.ts / public/media/city-sources.json) whose place is named
  *    by the stock publisher / contributor, visually screened and NOT an official or GPS-verified camera location.
  *    A globe marker is a locality overview point, never a camera position.
@@ -100,16 +100,20 @@ const BASE_CITIES: readonly City[] = [
  * for verified places too (their official feeds stay first, with their official provenance); cities without extras are exactly
  * as authored above.
  */
-export const CITIES: readonly City[] = BASE_CITIES.map((c) => {
+export const ALL_CITIES: readonly City[] = BASE_CITIES.map((c) => {
   const extra = extraFeedIds(c.id);
   // The primary (and a verified place's official feeds) stay first and unchanged; approved additional clips of the SAME city follow.
   return extra.length ? { ...c, feedIds: [...(c.feedIds ?? [c.feedId]), ...extra] } : c;
 });
 
+/** Approved active scope; full registry and assets remain archived for reversibility. */
+export const ACTIVE_CITY_IDS: readonly string[] = ['new-york', 'butlerville', 'paris', 'tokyo', 'sydney', 'mexico-city', 'moscow', 'dubai', 'istanbul', 'los-angeles', 'savannah', 'palmdale'];
+export const CITIES: readonly City[] = ALL_CITIES.filter(c => ACTIVE_CITY_IDS.includes(c.id));
+
 export const cityById = (id: string) => CITIES.find((c) => c.id === id) ?? null;
 
 /** Regional hubs: the cities whose links form the trunk of every visit's route bundles. */
-export const HUBS: readonly string[] = ['new-york', 'paris', 'dubai', 'singapore', 'tokyo', 'sao-paulo', 'johannesburg', 'los-angeles'];
+export const HUBS: readonly string[] = ['new-york', 'paris', 'dubai', 'singapore', 'tokyo', 'sao-paulo', 'johannesburg', 'los-angeles'].filter(id => ACTIVE_CITY_IDS.includes(id));
 
 export type Arc = readonly [string, string];
 
@@ -148,12 +152,14 @@ export function routeArcs(anchorId: string, key: number, seed = 0): Arc[] {
 export const routeSig = (arcs: readonly Arc[]) => arcs.map((a) => `${a[0]}>${a[1]}`).join('|');
 
 /** Decorative great-circle links between city ids. */
-export const ARCS: readonly (readonly [string, string])[] = [
+const ARCHIVED_ARCS: readonly Arc[] = [
   ['paris', 'new-york'], ['paris', 'cairo'], ['paris', 'reykjavik'], ['paris', 'mumbai'],
   ['new-york', 'los-angeles'], ['new-york', 'sao-paulo'], ['los-angeles', 'tokyo'],
   ['tokyo', 'sydney'], ['cairo', 'nairobi'], ['mumbai', 'tokyo'],
   ['reykjavik', 'new-york'], ['cairo', 'mumbai'], ['nairobi', 'sao-paulo'], ['los-angeles', 'sydney'],
 ];
+
+export const ARCS: readonly Arc[] = ARCHIVED_ARCS.filter(([a, b]) => ACTIVE_CITY_IDS.includes(a) && ACTIVE_CITY_IDS.includes(b));
 
 type Poly = readonly (readonly [number, number])[];
 
