@@ -1,0 +1,7 @@
+MEVA / Kitware Inc. / IARPA
+Source: https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/16/2018-03-11.16-20-01.16-25-01.admin.G326.r13.avi
+Collection: https://mevadata.org/
+License: CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/
+Location: Muscatatuck Urban Training Center, Butlerville, Indiana (collection provenance; exact camera coordinates unverified).
+Derivative: source seconds 12–38; 1280x720, 24 fps, muted, 0.5-second N/12 end-to-start dissolve. Archive recording; no live-camera claim.
+Original SHA256: 4e95e8a1fe0e52a9ae133624c2900e32f6fa56946a6a1726167993fdbef23f75

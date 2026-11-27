@@ -35,3 +35,18 @@ Media, credit files and annotation JSON are exported as accepted committed bytes
 Independent runtime evidence distinguishes direct served-media playback from normal navigation: the new court clip was hash-checked and played through a wrap; a normal New York arrival selected the existing base clip, then Back restored the preceding city state. No claim is made that every new feed was selected through a complete normal route. Manual Pages deployment and public verification remain separate gates.
 
 The public test harness updates six stale expectations without changing runtime code: the city-reach assertion includes the explicit event pool; two initial-ownership assertions and the verified-source assertion include the admitted G340 event; inbound duration uses the accepted local-half clock endpoint; outbound duration is bounded by that endpoint and the existing maximum late-global speedup with a three-tick handoff allowance. All prior monotonicity, endpoint and source-ownership assertions remain. This four-file test projection is recorded separately from the exact source export for reconciliation with the development repository.
+
+
+## Additional reviewed events and school-hall annotations
+
+This local release candidate derives its runtime and media from accepted source snapshot `f193b1a79805d5aa9b6bee67ac0f6142413d0993`, including the separately committed test reconciliation `7624d9a43391789fd80bb732b9f5851649f10a2e`. Preparation began on November 27, 2026. The export preserves committed source and media bytes without importing development history. Public documentation and build commands remain separate release adaptations.
+
+Five newly reviewed Butlerville events retain their original physical-camera identities. The catalog now has 95 physical views and 101 recordings, including six distinct-event recordings. The new school-hall annotation adds one partial person track: seven feeds and 17 partial tracks total. Source hashes, native timestamps, visibility gaps and 13 manual-correction provenance are preserved; unannotated recordings remain untracked.
+
+Independent runtime review verified all fifteen new media/credit assets, five normal event arrivals and exact Back/Redo. School-hall annotations received separate source-frame, semantic and normal DOM/floating/neural review. These bounded checks do not certify whole-video tracking or 78 unique recordings per city.
+
+The earlier public-only pacing and city-pool test corrections are reconciled in the accepted source successor, including the current 25-recording Butlerville pool. No runtime algorithm is reproduced inside those tests; monotonicity, endpoint and ownership assertions remain. The baseline-aware batch adapter uses the reviewed accepted-events evidence and explicit public metadata fields; unknown private fields are excluded before catalog writes. Publication and actual public usage remain separate gates.
+
+The new G639 event retains a disclosed minor distant vehicle/background-person fade at its loop boundary; it is not described as seamless or continuous. The related G326 visit candidate and all other held footage are excluded. No annotation is copied from an earlier recording merely because the physical camera is the same.
+
+The curated source includes test-only successor 8903377, which updates the Butlerville capacity fixture to the accepted 25 recordings. Runtime behavior remains pinned to f193b1a.

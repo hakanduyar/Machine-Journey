@@ -14,10 +14,10 @@ const expectedTotal = 86 + importedRows.length;
 const expectedNY = 14 + importedRows.filter(r=>r.cityId==='new-york').length;
 describe('recordingManifest (legacy and reviewed imported views)', () => {
   it('has all legacy and imported entries with unique feeds, reviewed view ids and original asset keys', () => {
-    expect(RECORDING_MANIFEST).toHaveLength(expectedTotal + 1);
-    expect(new Set(RECORDING_MANIFEST.map((c) => c.feedId)).size).toBe(expectedTotal + 1);
+    expect(RECORDING_MANIFEST).toHaveLength(expectedTotal + 6);
+    expect(new Set(RECORDING_MANIFEST.map((c) => c.feedId)).size).toBe(expectedTotal + 6);
     expect(new Set(RECORDING_MANIFEST.map((c) => c.reviewedView?.viewId)).size).toBe(expectedTotal);
-    expect(new Set(RECORDING_MANIFEST.map((c) => c.originalAssetKey)).size).toBe(expectedTotal + 1);
+    expect(new Set(RECORDING_MANIFEST.map((c) => c.originalAssetKey)).size).toBe(expectedTotal + 6);
     expect(Object.keys(VIEW_OF_FEED)).toHaveLength(expectedTotal);
     // view ids are curated, not derived from the feed id
     for (const c of RECORDING_MANIFEST) expect(c.reviewedView!.viewId).not.toBe(c.feedId);
@@ -57,7 +57,7 @@ describe('recordingManifest (legacy and reviewed imported views)', () => {
       expect(c.originalAssetKey).toContain(`.${cam}.`);
       expect(c.originalSha256).toBeUndefined();
     }
-    expect(manifestCandidatesFor('butlerville')).toHaveLength(20);
+    expect(manifestCandidatesFor('butlerville')).toHaveLength(25);
     // original hashes only where the packet declares the SOURCE .avi hash (never a loop hash); G507 (hold) is absent
     const withHash = ['m04', 'm05', 'city-butlerville-school-hall', 'city-butlerville-cafe', 'city-butlerville-stairwell', 'city-butlerville-classroom', 'city-butlerville-courtyard', 'city-butlerville-bus-interior',
       'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell'];
@@ -336,3 +336,4 @@ it('data adapter preserves legacy identity and rejects conflicting or missing re
  expect(()=>mergeReviewedViews({a:'view-a'},[{feedId:'b',reviewedViewId:'view-a',reviewRef:'r'}])).toThrow();
  for(const row of importedRows){const c=RECORDING_MANIFEST.find(c=>c.feedId===row.feedId)!;expect(c.reviewedView).toEqual({viewId:row.reviewedViewId,reviewRef:row.reviewRef});expect(c.originalSha256).toBe(row.originalSha256);expect(row.originalSha256).not.toBe(row.loopSha256);expect(row.creditsSha256).toMatch(/^[a-f0-9]{64}$/);}
 });
+
