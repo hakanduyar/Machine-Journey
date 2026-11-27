@@ -1,0 +1,30 @@
+[
+  {
+    "status": "PINNED_DISTINCT_OCCURRENCE_APPROVED",
+    "semanticReviewSha256": "f1d219b13869f401516205a04e00ae0ef14bed2dd9df79357945630ba91fa459",
+    "policyReviewSha256": "c6db7896a2c991b8dcd0f0f93452b2c947ce7b50bf50449316a042c89df9a9ec",
+    "acceptedBaselineSha256": "67d44829661e0643ec6d225e01ea94d0de3cc1ea49591442f2b3650c3afb1a78",
+    "cityId": "butlerville",
+    "physicalCameraId": "meva-mutc-g419",
+    "originalRecordingId": "2018-03-15.14-55-00.15-00-00.school.G419.r13.avi",
+    "originalUrl": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-15/15/2018-03-15.14-55-00.15-00-00.school.G419.r13.avi",
+    "originalSha256": "ed2a6ac9ddd2a51a3f9e7ff489f3ef2b2ed21e297dd9af141a642e65f9614128",
+    "feedId": "city-butlerville-event-44b798b1828557f48ec7",
+    "eventId": "2018-03-15.14-55-00.15-00-00.school.G419.r13.avi:150-166:stair-ascent",
+    "equivalenceKey": "2018-03-15.14-55-00.15-00-00.school.G419.r13.avi#frames:4500-4979@30",
+    "fps": 30,
+    "firstFrame": 4500,
+    "lastFrame": 4979,
+    "loopSha256": "8f46c9ba0e462e88ea95660a3d0dcf6b5bead325eb537344b3df6a0148669703",
+    "posterSha256": "dd61b4cad334e7de7e1c000a1f5e522f49b450174420454bebd7ec00215cfbca",
+    "creditsSha256": "597a39f2d83901c47de349f2a8f804a632473883d74d45ea4e42c2f6acb5a011",
+    "accepted": [
+      {
+        "feedId": "city-butlerville-event-42b9a7d07894762477da",
+        "eventId": "2018-03-15.14-55-00.15-00-00.school.G419.r13.avi:100-125:stair-descent",
+        "firstFrame": 3000,
+        "lastFrame": 3749
+      }
+    ]
+  }
+]

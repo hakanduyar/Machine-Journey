@@ -1,0 +1,6 @@
+MEVA / Kitware Inc. / IARPA
+Official source: https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-15/15/2018-03-15.14-55-00.15-00-00.school.G419.r13.avi
+License: CC BY 4.0
+License reference: https://mevadata.org/resources/MEVA-data-license.txt
+Official KF1 MUTC site: Butlerville, Indiana; exact camera coordinates not independently verified.
+Archived recording, not live. Source interval150.000–166.000seconds; source frames4500–4979 at30fps. Full uncropped image scaled1920x1072 to1280x720, muted, natural hard wrap; no dissolve/interpolation. Distinct later stair ascent in the same original as separately accepted100–125sdescent. No new physical camera claim or identity inference.

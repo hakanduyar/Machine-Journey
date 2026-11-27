@@ -61,4 +61,4 @@ Known loop-quality limitations remain in the Paris-path, Istanbul-street and NYC
 
 ## Active collection
 
-The journey has 12 active cities and a target of 936 recordings (78 per city). The active collection contains 91 recordings, 81 distinct views and 10 authorized events. The full retained archive contains 111 recordings and 101 views, including those same 10 events. Archived cities are excluded from active navigation; their media and provenance are preserved. See [release provenance](docs/RELEASE_PROVENANCE.md#twelve-city-scope-and-dubai-marina-view) for the selected cities and scope.
+The journey has 12 active cities and a target of 936 recordings (78 per city). The active collection contains 92 recordings, 81 distinct views and 11 authorized events. The full retained archive contains 112 recordings and 101 views, including those same 11 events. Archived cities are excluded from active navigation; their media and provenance are preserved. See [release provenance](docs/RELEASE_PROVENANCE.md#reviewed-g419-distinct-occurrence) for the latest scope.
