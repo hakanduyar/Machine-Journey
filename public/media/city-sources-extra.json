@@ -442,7 +442,7 @@
     "loopSha256": "3DE79124E45BF0C638B2B2F0EA085FD840803F8F300EDDD66D1B64209B1ED37F",
     "reviewedViewId": "butlerville-meva-g423-school-hall",
     "reviewRef": "visual-r51-butlerville-g423",
-    "loopNote": "Archived staged activity, not live. The 0.5 s loop dissolve may be perceptible; not certified seamless. No tracking file."
+    "loopNote": "Archived staged activity, not live. The 0.5 s loop dissolve may be perceptible; not certified seamless. Two reviewed partial head passages; visibility and per-person occlusion masks are source-bound."
   },
   {
     "cityId": "butlerville",
@@ -461,7 +461,7 @@
     "loopSha256": "3703232A45C8F1ED9F481AD672ED562056DFFE41DD4A2151C0F16C58961ABBC1",
     "reviewedViewId": "butlerville-meva-g421-cafe",
     "reviewRef": "visual-r51-butlerville-g421",
-    "loopNote": "Archived staged activity, not live. The 0.5 s loop dissolve may be perceptible; not certified seamless. No tracking file."
+    "loopNote": "Archived staged activity, not live. The 0.5 s loop dissolve may be perceptible; not certified seamless. One reviewed partial head passage with explicit doorway occlusion and signed entry."
   },
   {
     "cityId": "new-york",
