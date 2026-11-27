@@ -1,0 +1,2274 @@
+{
+  "schemaVersion": 1,
+  "feedId": "city-butlerville-event-aa4fd544b8e12da53881",
+  "videoSha256": "48204dd6a45432ddaf22e2895527d5ecc348ff5fe58160833c32175618f38dbc",
+  "annotationSha256": "50190faab5c258d5e95a48234e743001ddd5a9d17de457a79630e121f3c0a0ad",
+  "sourceMediaUrl": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-13/15/2018-03-13.15-50-00.15-55-00.school.G423.r13.avi",
+  "sourceWidth": 1280,
+  "sourceHeight": 720,
+  "duration": 34.5,
+  "maxGapSeconds": 0.51,
+  "method": "Two observed head passages, manually measured; no identity inference.",
+  "reviewScope": "Declared manual uncertainty2pixels; bounded sampled review, not every-frame accuracy. Short authored person-overlap and doorway masks are local approximations, not moving segmentation.",
+  "tracks": [
+    {
+      "id": "person-dark",
+      "timedOcclusionPolygons": [
+        {
+          "start": 19.75,
+          "end": 20.25,
+          "polygons": [
+            [
+              {
+                "x": 0,
+                "y": 0
+              },
+              {
+                "x": 0.4359375,
+                "y": 0
+              },
+              {
+                "x": 0.4359375,
+                "y": 1
+              },
+              {
+                "x": 0,
+                "y": 1
+              }
+            ]
+          ]
+        }
+      ],
+      "keyframes": [
+        {
+          "t": 0,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 5.5,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 5.75,
+          "cx": 0.5359375,
+          "cy": 0.3236111111111111,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 6,
+          "cx": 0.5296875,
+          "cy": 0.3236111111111111,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 6.5,
+          "cx": 0.51640625,
+          "cy": 0.325,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 7,
+          "cx": 0.50234375,
+          "cy": 0.325,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 7.5,
+          "cx": 0.49765625,
+          "cy": 0.3277777777777778,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 8,
+          "cx": 0.49296875,
+          "cy": 0.33194444444444443,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 8.5,
+          "cx": 0.49453125,
+          "cy": 0.33194444444444443,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 9,
+          "cx": 0.4953125,
+          "cy": 0.33194444444444443,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 9.5,
+          "cx": 0.49609375,
+          "cy": 0.3347222222222222,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 10,
+          "cx": 0.49609375,
+          "cy": 0.33194444444444443,
+          "size": 0.019444444444444445,
+          "visible": true
+        },
+        {
+          "t": 10.5,
+          "cx": 0.49453125,
+          "cy": 0.3347222222222222,
+          "size": 0.019444444444444445,
+          "visible": true
+        },
+        {
+          "t": 11,
+          "cx": 0.4953125,
+          "cy": 0.3388888888888889,
+          "size": 0.019444444444444445,
+          "visible": true
+        },
+        {
+          "t": 11.5,
+          "cx": 0.49609375,
+          "cy": 0.34305555555555556,
+          "size": 0.019444444444444445,
+          "visible": true
+        },
+        {
+          "t": 12,
+          "cx": 0.4953125,
+          "cy": 0.3402777777777778,
+          "size": 0.020833333333333332,
+          "visible": true
+        },
+        {
+          "t": 12.5,
+          "cx": 0.50078125,
+          "cy": 0.34305555555555556,
+          "size": 0.020833333333333332,
+          "visible": true
+        },
+        {
+          "t": 13,
+          "cx": 0.5015625,
+          "cy": 0.34444444444444444,
+          "size": 0.020833333333333332,
+          "visible": true
+        },
+        {
+          "t": 13.5,
+          "cx": 0.50390625,
+          "cy": 0.3486111111111111,
+          "size": 0.022222222222222223,
+          "visible": true
+        },
+        {
+          "t": 14,
+          "cx": 0.50390625,
+          "cy": 0.3541666666666667,
+          "size": 0.022222222222222223,
+          "visible": true
+        },
+        {
+          "t": 14.5,
+          "cx": 0.50703125,
+          "cy": 0.35833333333333334,
+          "size": 0.02361111111111111,
+          "visible": true
+        },
+        {
+          "t": 15,
+          "cx": 0.50859375,
+          "cy": 0.3611111111111111,
+          "size": 0.02361111111111111,
+          "visible": true
+        },
+        {
+          "t": 15.5,
+          "cx": 0.509375,
+          "cy": 0.36527777777777776,
+          "size": 0.025,
+          "visible": true
+        },
+        {
+          "t": 16,
+          "cx": 0.50546875,
+          "cy": 0.37083333333333335,
+          "size": 0.025,
+          "visible": true
+        },
+        {
+          "t": 16.5,
+          "cx": 0.50390625,
+          "cy": 0.3763888888888889,
+          "size": 0.025,
+          "visible": true
+        },
+        {
+          "t": 17,
+          "cx": 0.50078125,
+          "cy": 0.3819444444444444,
+          "size": 0.02638888888888889,
+          "visible": true
+        },
+        {
+          "t": 17.5,
+          "cx": 0.50234375,
+          "cy": 0.3861111111111111,
+          "size": 0.027777777777777776,
+          "visible": true
+        },
+        {
+          "t": 18,
+          "cx": 0.5015625,
+          "cy": 0.39166666666666666,
+          "size": 0.027777777777777776,
+          "visible": true
+        },
+        {
+          "t": 18.5,
+          "cx": 0.4953125,
+          "cy": 0.3972222222222222,
+          "size": 0.029166666666666667,
+          "visible": true
+        },
+        {
+          "t": 19,
+          "cx": 0.4859375,
+          "cy": 0.40694444444444444,
+          "size": 0.030555555555555555,
+          "visible": true
+        },
+        {
+          "t": 19.5,
+          "cx": 0.46796875,
+          "cy": 0.4097222222222222,
+          "size": 0.03194444444444444,
+          "visible": true
+        },
+        {
+          "t": 20,
+          "cx": 0.43984375,
+          "cy": 0.4097222222222222,
+          "size": 0.03333333333333333,
+          "visible": true
+        },
+        {
+          "t": 20.25,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 34.5,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        }
+      ],
+      "sourceFrames": [
+        {
+          "t": 0,
+          "frame": 0,
+          "pts": 0,
+          "sourceFrameSha256": "16f1792d72e14e0a86ddcc437384f9db48e673773ecc079d489430821ab33b58",
+          "visible": false,
+          "target": null,
+          "method": "OBSERVED_HEAD_ABSENT_OR_OCCLUDED",
+          "reason": "BEFORE_ENTRY_OR_AFTER_DOOR_EXIT",
+          "uncertaintyPixels": null,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 5.5,
+          "frame": 132,
+          "pts": 67584,
+          "sourceFrameSha256": "2e49dbe976d7019c98df272aa67bf26e58e727ee7b2fbc0ff20ebc22e84be33d",
+          "visible": false,
+          "target": null,
+          "method": "OBSERVED_HEAD_ABSENT_OR_OCCLUDED",
+          "reason": "BEFORE_ENTRY_OR_AFTER_DOOR_EXIT",
+          "uncertaintyPixels": null,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 5.75,
+          "frame": 138,
+          "pts": 70656,
+          "sourceFrameSha256": "f955b39d975699d988a43baf0c39519a16eb284cf3ce05480a29df569d3f5f28",
+          "visible": true,
+          "target": {
+            "cx": 0.5359375,
+            "cy": 0.3236111111111111,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 6,
+          "frame": 144,
+          "pts": 73728,
+          "sourceFrameSha256": "59e30cc8272326d46d011674a6285c963344713a249e12239ae7c10d14c55e35",
+          "visible": true,
+          "target": {
+            "cx": 0.5296875,
+            "cy": 0.3236111111111111,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 6.5,
+          "frame": 156,
+          "pts": 79872,
+          "sourceFrameSha256": "9582152227cd6c4255ecda5242d02a7b685030f92ebc99f86bd55eb65d50e865",
+          "visible": true,
+          "target": {
+            "cx": 0.51640625,
+            "cy": 0.325,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 7,
+          "frame": 168,
+          "pts": 86016,
+          "sourceFrameSha256": "d426b427dc05d8fce58758989a5c649030fd2a40f46f76440593d50a21129ccd",
+          "visible": true,
+          "target": {
+            "cx": 0.50234375,
+            "cy": 0.325,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 7.5,
+          "frame": 180,
+          "pts": 92160,
+          "sourceFrameSha256": "f283f1fec0b9a204a82d44ab02ee04ea3023d764ecbe4f85a5bcabbce9d9cd19",
+          "visible": true,
+          "target": {
+            "cx": 0.49765625,
+            "cy": 0.3277777777777778,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 8,
+          "frame": 192,
+          "pts": 98304,
+          "sourceFrameSha256": "34dd63e0f6084db8e7f308a0477515bee8201a71c8984af5190ccc7ca5398c35",
+          "visible": true,
+          "target": {
+            "cx": 0.49296875,
+            "cy": 0.33194444444444443,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 8.5,
+          "frame": 204,
+          "pts": 104448,
+          "sourceFrameSha256": "4eef69e6264fdd92d1db866139cde468420146d3ff33448b098d51517d62a46b",
+          "visible": true,
+          "target": {
+            "cx": 0.49453125,
+            "cy": 0.33194444444444443,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 9,
+          "frame": 216,
+          "pts": 110592,
+          "sourceFrameSha256": "1aff4deff49a766de20a812e90ecd3006c7bdd1b3024b27503360b3798d85163",
+          "visible": true,
+          "target": {
+            "cx": 0.4953125,
+            "cy": 0.33194444444444443,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 9.5,
+          "frame": 228,
+          "pts": 116736,
+          "sourceFrameSha256": "19bbdcd631ca39ec1ff8b2627a01030cedafd5fdec5bf2720ab1b4427cddeecf",
+          "visible": true,
+          "target": {
+            "cx": 0.49609375,
+            "cy": 0.3347222222222222,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 10,
+          "frame": 240,
+          "pts": 122880,
+          "sourceFrameSha256": "bf3442157e43252e83433aa690bdd1216faf3e91046b46e9dbf7f62c6ef71d4f",
+          "visible": true,
+          "target": {
+            "cx": 0.49609375,
+            "cy": 0.33194444444444443,
+            "size": 0.019444444444444445
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 10.5,
+          "frame": 252,
+          "pts": 129024,
+          "sourceFrameSha256": "4a91eae9568947118acc39a65c356964c4943f4a9c3c06a530fe212fca51af14",
+          "visible": true,
+          "target": {
+            "cx": 0.49453125,
+            "cy": 0.3347222222222222,
+            "size": 0.019444444444444445
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 11,
+          "frame": 264,
+          "pts": 135168,
+          "sourceFrameSha256": "18dc51007c24ca4119745410f6ab6a655291f56f1d3ac8e5a47b21836fd2c3c1",
+          "visible": true,
+          "target": {
+            "cx": 0.4953125,
+            "cy": 0.3388888888888889,
+            "size": 0.019444444444444445
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 11.5,
+          "frame": 276,
+          "pts": 141312,
+          "sourceFrameSha256": "930e22d3d1bb3457123103deaa8cf2ca5ce82bf6f053a8615eeb3727548a814c",
+          "visible": true,
+          "target": {
+            "cx": 0.49609375,
+            "cy": 0.34305555555555556,
+            "size": 0.019444444444444445
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 12,
+          "frame": 288,
+          "pts": 147456,
+          "sourceFrameSha256": "193906dc35db5b2aed58f7d26c269f85182f80f02de0ba430dc400968dd6364d",
+          "visible": true,
+          "target": {
+            "cx": 0.4953125,
+            "cy": 0.3402777777777778,
+            "size": 0.020833333333333332
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 12.5,
+          "frame": 300,
+          "pts": 153600,
+          "sourceFrameSha256": "5e6ec779108756dbda86bfa289727396a907a47a67ab3edd929c2b6860b602fa",
+          "visible": true,
+          "target": {
+            "cx": 0.50078125,
+            "cy": 0.34305555555555556,
+            "size": 0.020833333333333332
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 13,
+          "frame": 312,
+          "pts": 159744,
+          "sourceFrameSha256": "21defb815500c68910297a56f87978019a6b154d759993671a252800ef5376e4",
+          "visible": true,
+          "target": {
+            "cx": 0.5015625,
+            "cy": 0.34444444444444444,
+            "size": 0.020833333333333332
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 13.5,
+          "frame": 324,
+          "pts": 165888,
+          "sourceFrameSha256": "a0f1b73055f32b9ceeee92fb65c5f4e3cc64bd189cc26c40081fc31c0cf54e43",
+          "visible": true,
+          "target": {
+            "cx": 0.50390625,
+            "cy": 0.3486111111111111,
+            "size": 0.022222222222222223
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 14,
+          "frame": 336,
+          "pts": 172032,
+          "sourceFrameSha256": "75a174e150b6224e5c0a5026066c84e3a67b7e2c6a8640e5af3eeddb3315b293",
+          "visible": true,
+          "target": {
+            "cx": 0.50390625,
+            "cy": 0.3541666666666667,
+            "size": 0.022222222222222223
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 14.5,
+          "frame": 348,
+          "pts": 178176,
+          "sourceFrameSha256": "1d6fbfb25955ce64351c7c7be7e088007ccfb289848ae0df3dc19c8e40f53e21",
+          "visible": true,
+          "target": {
+            "cx": 0.50703125,
+            "cy": 0.35833333333333334,
+            "size": 0.02361111111111111
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 15,
+          "frame": 360,
+          "pts": 184320,
+          "sourceFrameSha256": "e9280aefe10b2d34e5942a6b295a3120254a51ee650f344226988b478df99cb1",
+          "visible": true,
+          "target": {
+            "cx": 0.50859375,
+            "cy": 0.3611111111111111,
+            "size": 0.02361111111111111
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 15.5,
+          "frame": 372,
+          "pts": 190464,
+          "sourceFrameSha256": "c5e6747ad0314475d41d8c9d407836ea99af3aa71126c72c57c2b00dddf8a4e8",
+          "visible": true,
+          "target": {
+            "cx": 0.509375,
+            "cy": 0.36527777777777776,
+            "size": 0.025
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 16,
+          "frame": 384,
+          "pts": 196608,
+          "sourceFrameSha256": "1efd8c7049f153e00454b7b2a36431d86e38a8753bad35801cc780eaaeeea970",
+          "visible": true,
+          "target": {
+            "cx": 0.50546875,
+            "cy": 0.37083333333333335,
+            "size": 0.025
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 16.5,
+          "frame": 396,
+          "pts": 202752,
+          "sourceFrameSha256": "67e9a51cbe6dbfe982fe50c890aa2150dce25f56d5ea87927c1c32176659405f",
+          "visible": true,
+          "target": {
+            "cx": 0.50390625,
+            "cy": 0.3763888888888889,
+            "size": 0.025
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 17,
+          "frame": 408,
+          "pts": 208896,
+          "sourceFrameSha256": "e7cb533c6e0c01457ad7e90efbd82a4f15b36e8de9755170400ad56f7db84903",
+          "visible": true,
+          "target": {
+            "cx": 0.50078125,
+            "cy": 0.3819444444444444,
+            "size": 0.02638888888888889
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 17.5,
+          "frame": 420,
+          "pts": 215040,
+          "sourceFrameSha256": "3a416fe4db7a235da3a80b4cf3c0fa3dfa01a4aee86cf21a463db3c50e73bbc3",
+          "visible": true,
+          "target": {
+            "cx": 0.50234375,
+            "cy": 0.3861111111111111,
+            "size": 0.027777777777777776
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 18,
+          "frame": 432,
+          "pts": 221184,
+          "sourceFrameSha256": "66da4727a7578581d5737071ac6249cd535904ab9da4a6f8faaf3513520317c8",
+          "visible": true,
+          "target": {
+            "cx": 0.5015625,
+            "cy": 0.39166666666666666,
+            "size": 0.027777777777777776
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 18.5,
+          "frame": 444,
+          "pts": 227328,
+          "sourceFrameSha256": "e6d1c68b610aa318c5de56aa2f543d5f0fafad9fa3e924553d135e6f73bd689e",
+          "visible": true,
+          "target": {
+            "cx": 0.4953125,
+            "cy": 0.3972222222222222,
+            "size": 0.029166666666666667
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 19,
+          "frame": 456,
+          "pts": 233472,
+          "sourceFrameSha256": "311b2c05392a1314e02bd156c455e2b00cbe27bc55a7c7df694f084b8e55afac",
+          "visible": true,
+          "target": {
+            "cx": 0.4859375,
+            "cy": 0.40694444444444444,
+            "size": 0.030555555555555555
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 19.5,
+          "frame": 468,
+          "pts": 239616,
+          "sourceFrameSha256": "35c77ee9f0cc577280fb95b49f0cb492c5895d609c03b2c95889e5ec070de111",
+          "visible": true,
+          "target": {
+            "cx": 0.46796875,
+            "cy": 0.4097222222222222,
+            "size": 0.03194444444444444
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 20,
+          "frame": 480,
+          "pts": 245760,
+          "sourceFrameSha256": "a8367ac27a166e8f40f8654761608ac3fdd91624499fb4a88cbdec5e0459167e",
+          "visible": true,
+          "target": {
+            "cx": 0.43984375,
+            "cy": 0.4097222222222222,
+            "size": 0.03333333333333333
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 20.25,
+          "frame": 486,
+          "pts": 248832,
+          "sourceFrameSha256": "ddacfebcef63405318e2f749464a36a2db81293cce80182ce59e59fb24b7526e",
+          "visible": false,
+          "target": null,
+          "method": "OBSERVED_HEAD_ABSENT_OR_OCCLUDED",
+          "reason": "BEFORE_ENTRY_OR_AFTER_DOOR_EXIT",
+          "uncertaintyPixels": null,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 34.5,
+          "frame": 828,
+          "pts": 423936,
+          "sourceFrameSha256": null,
+          "visible": false,
+          "target": null,
+          "method": "OBSERVED_HEAD_ABSENT_OR_OCCLUDED",
+          "reason": "BEFORE_ENTRY_OR_AFTER_DOOR_EXIT",
+          "uncertaintyPixels": null,
+          "confidence": null,
+          "partial": false
+        }
+      ]
+    },
+    {
+      "id": "person-light",
+      "timedOcclusionPolygons": [
+        {
+          "start": 13.125,
+          "end": 13.375,
+          "polygons": [
+            [
+              {
+                "x": 0.4984375,
+                "y": 0.3333333333333333
+              },
+              {
+                "x": 0.50703125,
+                "y": 0.3333333333333333
+              },
+              {
+                "x": 0.5109375,
+                "y": 0.3416666666666667
+              },
+              {
+                "x": 0.51015625,
+                "y": 0.37222222222222223
+              },
+              {
+                "x": 0.4984375,
+                "y": 0.37222222222222223
+              }
+            ]
+          ]
+        },
+        {
+          "start": 13.625,
+          "end": 13.875,
+          "polygons": [
+            [
+              {
+                "x": 0.5015625,
+                "y": 0.33611111111111114
+              },
+              {
+                "x": 0.51015625,
+                "y": 0.33611111111111114
+              },
+              {
+                "x": 0.51484375,
+                "y": 0.3527777777777778
+              },
+              {
+                "x": 0.51328125,
+                "y": 0.3819444444444444
+              },
+              {
+                "x": 0.5,
+                "y": 0.3819444444444444
+              }
+            ]
+          ]
+        },
+        {
+          "start": 29.125,
+          "end": 29.375,
+          "polygons": [
+            [
+              {
+                "x": 0.5421875,
+                "y": 0.2847222222222222
+              },
+              {
+                "x": 0.55078125,
+                "y": 0.2847222222222222
+              },
+              {
+                "x": 0.55078125,
+                "y": 0.4027777777777778
+              },
+              {
+                "x": 0.5421875,
+                "y": 0.4027777777777778
+              }
+            ]
+          ]
+        }
+      ],
+      "keyframes": [
+        {
+          "t": 0,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 6,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 6.25,
+          "cx": 0.5375,
+          "cy": 0.32916666666666666,
+          "size": 0.015277777777777777,
+          "visible": true
+        },
+        {
+          "t": 6.5,
+          "cx": 0.53515625,
+          "cy": 0.33055555555555555,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 7,
+          "cx": 0.5296875,
+          "cy": 0.3333333333333333,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 7.5,
+          "cx": 0.5234375,
+          "cy": 0.3333333333333333,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 8,
+          "cx": 0.5234375,
+          "cy": 0.33611111111111114,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 8.5,
+          "cx": 0.52109375,
+          "cy": 0.33611111111111114,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 9,
+          "cx": 0.52109375,
+          "cy": 0.3375,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 9.5,
+          "cx": 0.51953125,
+          "cy": 0.3375,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 10,
+          "cx": 0.521875,
+          "cy": 0.33611111111111114,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 10.5,
+          "cx": 0.52265625,
+          "cy": 0.3388888888888889,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 11,
+          "cx": 0.521875,
+          "cy": 0.3416666666666667,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 11.5,
+          "cx": 0.51953125,
+          "cy": 0.34305555555555556,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 12,
+          "cx": 0.51796875,
+          "cy": 0.34305555555555556,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 12.5,
+          "cx": 0.5140625,
+          "cy": 0.34444444444444444,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 13,
+          "cx": 0.51171875,
+          "cy": 0.3472222222222222,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 13.25,
+          "cx": 0.5109375,
+          "cy": 0.3472222222222222,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 13.5,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 13.75,
+          "cx": 0.49765625,
+          "cy": 0.3486111111111111,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 14,
+          "cx": 0.49609375,
+          "cy": 0.35,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 14.5,
+          "cx": 0.48984375,
+          "cy": 0.3527777777777778,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 15,
+          "cx": 0.4875,
+          "cy": 0.3541666666666667,
+          "size": 0.019444444444444445,
+          "visible": true
+        },
+        {
+          "t": 15.5,
+          "cx": 0.48671875,
+          "cy": 0.35694444444444445,
+          "size": 0.019444444444444445,
+          "visible": true
+        },
+        {
+          "t": 16,
+          "cx": 0.48125,
+          "cy": 0.35694444444444445,
+          "size": 0.020833333333333332,
+          "visible": true
+        },
+        {
+          "t": 16.5,
+          "cx": 0.4796875,
+          "cy": 0.35694444444444445,
+          "size": 0.020833333333333332,
+          "visible": true
+        },
+        {
+          "t": 17,
+          "cx": 0.48046875,
+          "cy": 0.35833333333333334,
+          "size": 0.020833333333333332,
+          "visible": true
+        },
+        {
+          "t": 17.5,
+          "cx": 0.48359375,
+          "cy": 0.3611111111111111,
+          "size": 0.020833333333333332,
+          "visible": true
+        },
+        {
+          "t": 18,
+          "cx": 0.48125,
+          "cy": 0.3597222222222222,
+          "size": 0.020833333333333332,
+          "visible": true
+        },
+        {
+          "t": 18.5,
+          "cx": 0.48359375,
+          "cy": 0.3611111111111111,
+          "size": 0.020833333333333332,
+          "visible": true
+        },
+        {
+          "t": 19,
+          "cx": 0.4875,
+          "cy": 0.3541666666666667,
+          "size": 0.019444444444444445,
+          "visible": true
+        },
+        {
+          "t": 19.5,
+          "cx": 0.49296875,
+          "cy": 0.3541666666666667,
+          "size": 0.019444444444444445,
+          "visible": true
+        },
+        {
+          "t": 20,
+          "cx": 0.4984375,
+          "cy": 0.35138888888888886,
+          "size": 0.019444444444444445,
+          "visible": true
+        },
+        {
+          "t": 20.5,
+          "cx": 0.49921875,
+          "cy": 0.3486111111111111,
+          "size": 0.019444444444444445,
+          "visible": true
+        },
+        {
+          "t": 21,
+          "cx": 0.50234375,
+          "cy": 0.3458333333333333,
+          "size": 0.019444444444444445,
+          "visible": true
+        },
+        {
+          "t": 21.5,
+          "cx": 0.50234375,
+          "cy": 0.34444444444444444,
+          "size": 0.019444444444444445,
+          "visible": true
+        },
+        {
+          "t": 22,
+          "cx": 0.50546875,
+          "cy": 0.3416666666666667,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 22.5,
+          "cx": 0.50546875,
+          "cy": 0.3416666666666667,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 23,
+          "cx": 0.50859375,
+          "cy": 0.3402777777777778,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 23.5,
+          "cx": 0.51171875,
+          "cy": 0.3388888888888889,
+          "size": 0.018055555555555554,
+          "visible": true
+        },
+        {
+          "t": 24,
+          "cx": 0.51796875,
+          "cy": 0.3388888888888889,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 24.5,
+          "cx": 0.52109375,
+          "cy": 0.3375,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 25,
+          "cx": 0.5234375,
+          "cy": 0.3375,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 25.5,
+          "cx": 0.5265625,
+          "cy": 0.33611111111111114,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 26,
+          "cx": 0.52578125,
+          "cy": 0.3333333333333333,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 26.5,
+          "cx": 0.528125,
+          "cy": 0.33194444444444443,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 27,
+          "cx": 0.52578125,
+          "cy": 0.33055555555555555,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 27.5,
+          "cx": 0.528125,
+          "cy": 0.32916666666666666,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 28,
+          "cx": 0.528125,
+          "cy": 0.32916666666666666,
+          "size": 0.016666666666666666,
+          "visible": true
+        },
+        {
+          "t": 28.5,
+          "cx": 0.53203125,
+          "cy": 0.3277777777777778,
+          "size": 0.015277777777777777,
+          "visible": true
+        },
+        {
+          "t": 29,
+          "cx": 0.5359375,
+          "cy": 0.3263888888888889,
+          "size": 0.015277777777777777,
+          "visible": true
+        },
+        {
+          "t": 29.25,
+          "cx": 0.53828125,
+          "cy": 0.3277777777777778,
+          "size": 0.015277777777777777,
+          "visible": true
+        },
+        {
+          "t": 29.375,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 29.5,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        },
+        {
+          "t": 34.5,
+          "cx": 0.5,
+          "cy": 0.5,
+          "size": 0.01,
+          "visible": false
+        }
+      ],
+      "sourceFrames": [
+        {
+          "t": 0,
+          "frame": 0,
+          "pts": 0,
+          "sourceFrameSha256": "16f1792d72e14e0a86ddcc437384f9db48e673773ecc079d489430821ab33b58",
+          "visible": false,
+          "target": null,
+          "method": "OBSERVED_HEAD_ABSENT_OR_OCCLUDED",
+          "reason": "BEFORE_ENTRY_OR_AFTER_DOOR_EXIT",
+          "uncertaintyPixels": null,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 6,
+          "frame": 144,
+          "pts": 73728,
+          "sourceFrameSha256": "59e30cc8272326d46d011674a6285c963344713a249e12239ae7c10d14c55e35",
+          "visible": false,
+          "target": null,
+          "method": "OBSERVED_HEAD_ABSENT_OR_OCCLUDED",
+          "reason": "BEFORE_ENTRY_OR_AFTER_DOOR_EXIT",
+          "uncertaintyPixels": null,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 6.25,
+          "frame": 150,
+          "pts": 76800,
+          "sourceFrameSha256": "5057518eb9b7d757ecbec2ef1216495eb40b1b99871d54bd241ecc4e56b97713",
+          "visible": true,
+          "target": {
+            "cx": 0.5375,
+            "cy": 0.32916666666666666,
+            "size": 0.015277777777777777
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 6.5,
+          "frame": 156,
+          "pts": 79872,
+          "sourceFrameSha256": "9582152227cd6c4255ecda5242d02a7b685030f92ebc99f86bd55eb65d50e865",
+          "visible": true,
+          "target": {
+            "cx": 0.53515625,
+            "cy": 0.33055555555555555,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 7,
+          "frame": 168,
+          "pts": 86016,
+          "sourceFrameSha256": "d426b427dc05d8fce58758989a5c649030fd2a40f46f76440593d50a21129ccd",
+          "visible": true,
+          "target": {
+            "cx": 0.5296875,
+            "cy": 0.3333333333333333,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 7.5,
+          "frame": 180,
+          "pts": 92160,
+          "sourceFrameSha256": "f283f1fec0b9a204a82d44ab02ee04ea3023d764ecbe4f85a5bcabbce9d9cd19",
+          "visible": true,
+          "target": {
+            "cx": 0.5234375,
+            "cy": 0.3333333333333333,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 8,
+          "frame": 192,
+          "pts": 98304,
+          "sourceFrameSha256": "34dd63e0f6084db8e7f308a0477515bee8201a71c8984af5190ccc7ca5398c35",
+          "visible": true,
+          "target": {
+            "cx": 0.5234375,
+            "cy": 0.33611111111111114,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 8.5,
+          "frame": 204,
+          "pts": 104448,
+          "sourceFrameSha256": "4eef69e6264fdd92d1db866139cde468420146d3ff33448b098d51517d62a46b",
+          "visible": true,
+          "target": {
+            "cx": 0.52109375,
+            "cy": 0.33611111111111114,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 9,
+          "frame": 216,
+          "pts": 110592,
+          "sourceFrameSha256": "1aff4deff49a766de20a812e90ecd3006c7bdd1b3024b27503360b3798d85163",
+          "visible": true,
+          "target": {
+            "cx": 0.52109375,
+            "cy": 0.3375,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 9.5,
+          "frame": 228,
+          "pts": 116736,
+          "sourceFrameSha256": "19bbdcd631ca39ec1ff8b2627a01030cedafd5fdec5bf2720ab1b4427cddeecf",
+          "visible": true,
+          "target": {
+            "cx": 0.51953125,
+            "cy": 0.3375,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 10,
+          "frame": 240,
+          "pts": 122880,
+          "sourceFrameSha256": "bf3442157e43252e83433aa690bdd1216faf3e91046b46e9dbf7f62c6ef71d4f",
+          "visible": true,
+          "target": {
+            "cx": 0.521875,
+            "cy": 0.33611111111111114,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 10.5,
+          "frame": 252,
+          "pts": 129024,
+          "sourceFrameSha256": "4a91eae9568947118acc39a65c356964c4943f4a9c3c06a530fe212fca51af14",
+          "visible": true,
+          "target": {
+            "cx": 0.52265625,
+            "cy": 0.3388888888888889,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 11,
+          "frame": 264,
+          "pts": 135168,
+          "sourceFrameSha256": "18dc51007c24ca4119745410f6ab6a655291f56f1d3ac8e5a47b21836fd2c3c1",
+          "visible": true,
+          "target": {
+            "cx": 0.521875,
+            "cy": 0.3416666666666667,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 11.5,
+          "frame": 276,
+          "pts": 141312,
+          "sourceFrameSha256": "930e22d3d1bb3457123103deaa8cf2ca5ce82bf6f053a8615eeb3727548a814c",
+          "visible": true,
+          "target": {
+            "cx": 0.51953125,
+            "cy": 0.34305555555555556,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 12,
+          "frame": 288,
+          "pts": 147456,
+          "sourceFrameSha256": "193906dc35db5b2aed58f7d26c269f85182f80f02de0ba430dc400968dd6364d",
+          "visible": true,
+          "target": {
+            "cx": 0.51796875,
+            "cy": 0.34305555555555556,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 12.5,
+          "frame": 300,
+          "pts": 153600,
+          "sourceFrameSha256": "5e6ec779108756dbda86bfa289727396a907a47a67ab3edd929c2b6860b602fa",
+          "visible": true,
+          "target": {
+            "cx": 0.5140625,
+            "cy": 0.34444444444444444,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 13,
+          "frame": 312,
+          "pts": 159744,
+          "sourceFrameSha256": "21defb815500c68910297a56f87978019a6b154d759993671a252800ef5376e4",
+          "visible": true,
+          "target": {
+            "cx": 0.51171875,
+            "cy": 0.3472222222222222,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 13.25,
+          "frame": 318,
+          "pts": 162816,
+          "sourceFrameSha256": "945ac0c949ead08a84522f2c4c9355b77c0d332c48a6c7ac96f804e4a6612363",
+          "visible": true,
+          "target": {
+            "cx": 0.5109375,
+            "cy": 0.3472222222222222,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_PARTIAL_HEAD_ESTIMATE",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 13.5,
+          "frame": 324,
+          "pts": 165888,
+          "sourceFrameSha256": "a0f1b73055f32b9ceeee92fb65c5f4e3cc64bd189cc26c40081fc31c0cf54e43",
+          "visible": false,
+          "target": null,
+          "method": "OBSERVED_HEAD_ABSENT_OR_OCCLUDED",
+          "reason": "OTHER_PERSON_HEAD_OCCLUSION",
+          "uncertaintyPixels": null,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 13.75,
+          "frame": 330,
+          "pts": 168960,
+          "sourceFrameSha256": "2de3eb5c5dd5b0c431556b859dc74f7812439b13d6b1cdae04c1549ba562ffc4",
+          "visible": true,
+          "target": {
+            "cx": 0.49765625,
+            "cy": 0.3486111111111111,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_PARTIAL_HEAD_ESTIMATE",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 14,
+          "frame": 336,
+          "pts": 172032,
+          "sourceFrameSha256": "75a174e150b6224e5c0a5026066c84e3a67b7e2c6a8640e5af3eeddb3315b293",
+          "visible": true,
+          "target": {
+            "cx": 0.49609375,
+            "cy": 0.35,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 14.5,
+          "frame": 348,
+          "pts": 178176,
+          "sourceFrameSha256": "1d6fbfb25955ce64351c7c7be7e088007ccfb289848ae0df3dc19c8e40f53e21",
+          "visible": true,
+          "target": {
+            "cx": 0.48984375,
+            "cy": 0.3527777777777778,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 15,
+          "frame": 360,
+          "pts": 184320,
+          "sourceFrameSha256": "e9280aefe10b2d34e5942a6b295a3120254a51ee650f344226988b478df99cb1",
+          "visible": true,
+          "target": {
+            "cx": 0.4875,
+            "cy": 0.3541666666666667,
+            "size": 0.019444444444444445
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 15.5,
+          "frame": 372,
+          "pts": 190464,
+          "sourceFrameSha256": "c5e6747ad0314475d41d8c9d407836ea99af3aa71126c72c57c2b00dddf8a4e8",
+          "visible": true,
+          "target": {
+            "cx": 0.48671875,
+            "cy": 0.35694444444444445,
+            "size": 0.019444444444444445
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 16,
+          "frame": 384,
+          "pts": 196608,
+          "sourceFrameSha256": "1efd8c7049f153e00454b7b2a36431d86e38a8753bad35801cc780eaaeeea970",
+          "visible": true,
+          "target": {
+            "cx": 0.48125,
+            "cy": 0.35694444444444445,
+            "size": 0.020833333333333332
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 16.5,
+          "frame": 396,
+          "pts": 202752,
+          "sourceFrameSha256": "67e9a51cbe6dbfe982fe50c890aa2150dce25f56d5ea87927c1c32176659405f",
+          "visible": true,
+          "target": {
+            "cx": 0.4796875,
+            "cy": 0.35694444444444445,
+            "size": 0.020833333333333332
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 17,
+          "frame": 408,
+          "pts": 208896,
+          "sourceFrameSha256": "e7cb533c6e0c01457ad7e90efbd82a4f15b36e8de9755170400ad56f7db84903",
+          "visible": true,
+          "target": {
+            "cx": 0.48046875,
+            "cy": 0.35833333333333334,
+            "size": 0.020833333333333332
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 17.5,
+          "frame": 420,
+          "pts": 215040,
+          "sourceFrameSha256": "3a416fe4db7a235da3a80b4cf3c0fa3dfa01a4aee86cf21a463db3c50e73bbc3",
+          "visible": true,
+          "target": {
+            "cx": 0.48359375,
+            "cy": 0.3611111111111111,
+            "size": 0.020833333333333332
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 18,
+          "frame": 432,
+          "pts": 221184,
+          "sourceFrameSha256": "66da4727a7578581d5737071ac6249cd535904ab9da4a6f8faaf3513520317c8",
+          "visible": true,
+          "target": {
+            "cx": 0.48125,
+            "cy": 0.3597222222222222,
+            "size": 0.020833333333333332
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 18.5,
+          "frame": 444,
+          "pts": 227328,
+          "sourceFrameSha256": "e6d1c68b610aa318c5de56aa2f543d5f0fafad9fa3e924553d135e6f73bd689e",
+          "visible": true,
+          "target": {
+            "cx": 0.48359375,
+            "cy": 0.3611111111111111,
+            "size": 0.020833333333333332
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 19,
+          "frame": 456,
+          "pts": 233472,
+          "sourceFrameSha256": "311b2c05392a1314e02bd156c455e2b00cbe27bc55a7c7df694f084b8e55afac",
+          "visible": true,
+          "target": {
+            "cx": 0.4875,
+            "cy": 0.3541666666666667,
+            "size": 0.019444444444444445
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 19.5,
+          "frame": 468,
+          "pts": 239616,
+          "sourceFrameSha256": "35c77ee9f0cc577280fb95b49f0cb492c5895d609c03b2c95889e5ec070de111",
+          "visible": true,
+          "target": {
+            "cx": 0.49296875,
+            "cy": 0.3541666666666667,
+            "size": 0.019444444444444445
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 20,
+          "frame": 480,
+          "pts": 245760,
+          "sourceFrameSha256": "a8367ac27a166e8f40f8654761608ac3fdd91624499fb4a88cbdec5e0459167e",
+          "visible": true,
+          "target": {
+            "cx": 0.4984375,
+            "cy": 0.35138888888888886,
+            "size": 0.019444444444444445
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 20.5,
+          "frame": 492,
+          "pts": 251904,
+          "sourceFrameSha256": "504fff12f3be87e049a67c5114df7e2117c5514be144094f3ccc61e0af056f84",
+          "visible": true,
+          "target": {
+            "cx": 0.49921875,
+            "cy": 0.3486111111111111,
+            "size": 0.019444444444444445
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 21,
+          "frame": 504,
+          "pts": 258048,
+          "sourceFrameSha256": "44a97812cafa752d50bca50fd45d10b3a4ecc7c97fd4f4f6ed5ccdc177d3b5da",
+          "visible": true,
+          "target": {
+            "cx": 0.50234375,
+            "cy": 0.3458333333333333,
+            "size": 0.019444444444444445
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 21.5,
+          "frame": 516,
+          "pts": 264192,
+          "sourceFrameSha256": "6556ede76e5e7e3e1fa3ec013c7ec35a563185200f689e88b8da9a37cbd58129",
+          "visible": true,
+          "target": {
+            "cx": 0.50234375,
+            "cy": 0.34444444444444444,
+            "size": 0.019444444444444445
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 22,
+          "frame": 528,
+          "pts": 270336,
+          "sourceFrameSha256": "55cf23552023ac6174b1aa72448630af326d3886298392b61a1ee98af4a2fec6",
+          "visible": true,
+          "target": {
+            "cx": 0.50546875,
+            "cy": 0.3416666666666667,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 22.5,
+          "frame": 540,
+          "pts": 276480,
+          "sourceFrameSha256": "705846a6d1c902affe81c4fbef01be6e83c764c7d87bc82dc24e6537c768a318",
+          "visible": true,
+          "target": {
+            "cx": 0.50546875,
+            "cy": 0.3416666666666667,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 23,
+          "frame": 552,
+          "pts": 282624,
+          "sourceFrameSha256": "b8201c861d0ca35949614ba0d22c29485f571f181e81ad881404faf5251e9a5d",
+          "visible": true,
+          "target": {
+            "cx": 0.50859375,
+            "cy": 0.3402777777777778,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 23.5,
+          "frame": 564,
+          "pts": 288768,
+          "sourceFrameSha256": "fdaf1be58f7a7ed63a965ec9680ae423063e8dd4e890dc0ad6c25d0c706335f2",
+          "visible": true,
+          "target": {
+            "cx": 0.51171875,
+            "cy": 0.3388888888888889,
+            "size": 0.018055555555555554
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 24,
+          "frame": 576,
+          "pts": 294912,
+          "sourceFrameSha256": "9a5554481a837d66416bec7e7b91599a35246d5111e8ceba06b2f491998d0899",
+          "visible": true,
+          "target": {
+            "cx": 0.51796875,
+            "cy": 0.3388888888888889,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 24.5,
+          "frame": 588,
+          "pts": 301056,
+          "sourceFrameSha256": "e1358b550356bce10e563b8c94ef63440bce449bfa58206113f5a28df679cbab",
+          "visible": true,
+          "target": {
+            "cx": 0.52109375,
+            "cy": 0.3375,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 25,
+          "frame": 600,
+          "pts": 307200,
+          "sourceFrameSha256": "2aa5d2adc8fac55ab105a467be9e70c13995328617948f3245c30576cfdfce59",
+          "visible": true,
+          "target": {
+            "cx": 0.5234375,
+            "cy": 0.3375,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 25.5,
+          "frame": 612,
+          "pts": 313344,
+          "sourceFrameSha256": "9b0856390855d3fdd467df34f16d3424c659413cbfe9048a4cc706eb06d03099",
+          "visible": true,
+          "target": {
+            "cx": 0.5265625,
+            "cy": 0.33611111111111114,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 26,
+          "frame": 624,
+          "pts": 319488,
+          "sourceFrameSha256": "a98055aa00744619bda549718e6810dc6b2dbdbcfcc135a541f8505d17879ecf",
+          "visible": true,
+          "target": {
+            "cx": 0.52578125,
+            "cy": 0.3333333333333333,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 26.5,
+          "frame": 636,
+          "pts": 325632,
+          "sourceFrameSha256": "3cbe825b96a727691e8964af593d327c78e66a08ba72659b62f8177a7389f967",
+          "visible": true,
+          "target": {
+            "cx": 0.528125,
+            "cy": 0.33194444444444443,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 27,
+          "frame": 648,
+          "pts": 331776,
+          "sourceFrameSha256": "731803cfab34518aabe0d73d6f5b9f334d2bd097107a9013571831cbf05d9cdd",
+          "visible": true,
+          "target": {
+            "cx": 0.52578125,
+            "cy": 0.33055555555555555,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 27.5,
+          "frame": 660,
+          "pts": 337920,
+          "sourceFrameSha256": "481c572e9bbb929f499ede051180d3a2f18908a578599cac3c512cae02db03e9",
+          "visible": true,
+          "target": {
+            "cx": 0.528125,
+            "cy": 0.32916666666666666,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 28,
+          "frame": 672,
+          "pts": 344064,
+          "sourceFrameSha256": "aa916c561fd43f0183833c54804374bbe8d516deaa295a0536f54f64e33a16a7",
+          "visible": true,
+          "target": {
+            "cx": 0.528125,
+            "cy": 0.32916666666666666,
+            "size": 0.016666666666666666
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 28.5,
+          "frame": 684,
+          "pts": 350208,
+          "sourceFrameSha256": "ac58f04b1d5564becc2c46d23b33dd9f1ad30e095411de7ffed9d62c8ebeab1a",
+          "visible": true,
+          "target": {
+            "cx": 0.53203125,
+            "cy": 0.3277777777777778,
+            "size": 0.015277777777777777
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 29,
+          "frame": 696,
+          "pts": 356352,
+          "sourceFrameSha256": "1dc03e39975e3b430aa68060dd246311b036195384ddc5c7f9518b4fb164d4a9",
+          "visible": true,
+          "target": {
+            "cx": 0.5359375,
+            "cy": 0.3263888888888889,
+            "size": 0.015277777777777777
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 29.25,
+          "frame": 702,
+          "pts": 359424,
+          "sourceFrameSha256": "c2f59ed4b89b12c1c49f91b29114fc01c51ead5c93d2302ac272603c3debbe19",
+          "visible": true,
+          "target": {
+            "cx": 0.53828125,
+            "cy": 0.3277777777777778,
+            "size": 0.015277777777777777
+          },
+          "method": "MANUAL_NATIVE_HEAD_MEASUREMENT",
+          "reason": null,
+          "uncertaintyPixels": 2,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 29.375,
+          "frame": 705,
+          "pts": 360960,
+          "sourceFrameSha256": "2e8e484ea9ee2165a0029cb599589f414e3480c6f61b7df3fa0b748849f13d89",
+          "visible": false,
+          "target": null,
+          "method": "OBSERVED_HEAD_ABSENT_OR_OCCLUDED",
+          "reason": "BEFORE_ENTRY_OR_AFTER_DOOR_EXIT",
+          "uncertaintyPixels": null,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 29.5,
+          "frame": 708,
+          "pts": 362496,
+          "sourceFrameSha256": "0faeef1de31d290e7d5f0ecdf93db5822dcf17412a0d805363107f01ea8fcbb4",
+          "visible": false,
+          "target": null,
+          "method": "OBSERVED_HEAD_ABSENT_OR_OCCLUDED",
+          "reason": "BEFORE_ENTRY_OR_AFTER_DOOR_EXIT",
+          "uncertaintyPixels": null,
+          "confidence": null,
+          "partial": false
+        },
+        {
+          "t": 34.5,
+          "frame": 828,
+          "pts": 423936,
+          "sourceFrameSha256": null,
+          "visible": false,
+          "target": null,
+          "method": "OBSERVED_HEAD_ABSENT_OR_OCCLUDED",
+          "reason": "BEFORE_ENTRY_OR_AFTER_DOOR_EXIT",
+          "uncertaintyPixels": null,
+          "confidence": null,
+          "partial": false
+        }
+      ]
+    }
+  ],
+  "sourceProvenance": {
+    "independentReviewSha256": "c657fc0abfca49b3e3df28ecb34c904b2d051c7503224aa78a7c58d3c52efbb7",
+    "sourcePacketSha256": "0d75c551d482997f2c7c423c3d2b50f826e412a168ace3ae3b31ecd7c3e2df14",
+    "nativeFps": 24,
+    "timeBaseDenominator": 12288,
+    "maskEndpointConvention": "Source and runtime both start-inclusive/end-exclusive; ends unchanged.",
+    "maskApplicability": [
+      {
+        "trackId": "person-light",
+        "start": 13.125,
+        "endExclusive": 13.375,
+        "polygonIds": [
+          "dark-head-right-overlap"
+        ]
+      },
+      {
+        "trackId": "person-light",
+        "start": 13.625,
+        "endExclusive": 13.875,
+        "polygonIds": [
+          "dark-head-left-overlap"
+        ]
+      },
+      {
+        "trackId": "person-dark",
+        "start": 19.75,
+        "endExclusive": 20.25,
+        "polygonIds": [
+          "near-left-wall"
+        ]
+      },
+      {
+        "trackId": "person-light",
+        "start": 29.125,
+        "endExclusive": 29.375,
+        "polygonIds": [
+          "far-door-right"
+        ]
+      }
+    ]
+  }
+}
