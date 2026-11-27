@@ -18,3 +18,18 @@ it('reviewed sparse interpolation is whitelisted and never overrides false endpo
 it('measured corrections have the source-frame head center at their exact time',()=>{const a=sampleHeadTracks(trackingFor('m07')!,11.4)[2];expect(a.cx).toBeCloseTo(449/960);expect(a.cy).toBeCloseTo(223/540);const b=sampleHeadTracks(trackingFor('parking-walk')!,37.5)[1];expect(b.cx).toBeCloseTo(945/960);expect(b.cy).toBeCloseTo(141.5/540);});
 
 
+
+it('school-hall partial track preserves native clock, corrected heads, and entry/exit abstention',()=>{
+ const d=trackingFor('city-butlerville-school-hall')!;
+ expect(crypto.createHash('sha256').update(fs.readFileSync('public/media/city-butlerville-school-hall/loop.mp4')).digest('hex')).toBe(d.videoSha256);
+ expect(d.annotationSha256).toBe('d251c2cbe92532e62b99a3855d7bc6205445c4f07b3bcffda5746f8b754e0794');
+ expect(d.tracks).toHaveLength(1);expect(d.tracks[0].keyframes.filter(k=>k.visible)).toHaveLength(541);
+ for(const time of [0,169/24,175/24,717/24,722/24,34.49])expect(sampleHeadTracks(d,time)).toEqual([]);
+ const first=sampleHeadTracks(d,176/24)[0];expect(first.cx).toBeCloseTo(603/1280);expect(first.cy).toBeCloseTo(228/720);
+ const corrected=sampleHeadTracks(d,704/24)[0];expect(corrected.cx).toBeCloseTo(593/1280);expect(corrected.cy).toBeCloseTo(302/720);
+ expect(sampleHeadTracks(d,716/24)[0].cy).toBeCloseTo(304.5/720);
+ expect(sampleHeadTracks(d,716.5/24)).toEqual([]);
+ const provenance=JSON.parse(fs.readFileSync('public/media/city-butlerville-school-hall/head-tracks.json','utf8')).sourceProvenance;
+ expect(provenance.manualCorrectionFrames.map((f:{frame:number})=>f.frame)).toEqual([704,705,706,707,708,709,710,711,712,713,714,715,716]);
+ expect(provenance.excludedHeldOutClaims).toEqual([708,712]);
+});

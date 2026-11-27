@@ -1,0 +1,6 @@
+MEVA / Kitware Inc. / IARPA
+https://mevadata.org/
+Original: https://mevadata-public-01.s3.amazonaws.com/drop-5-mevid/2018-05-18.12-25-01.12-30-01.school.G639.r13.avi
+License: CC BY 4.0 https://creativecommons.org/licenses/by/4.0/
+Muscatatuck Urban Training Center, Butlerville; exact camera GPS unverified.
+Derived silent720p24fps excerpt 110–145s, half-second boundary dissolve. Same physical camera; different original recording/event candidate, independent review required.
