@@ -107,3 +107,13 @@ The active journey now covers New York, Butlerville, Paris, Tokyo, Sydney, Mexic
 The update adds the reviewed Dubai Marina waterfront excerpt and restricts destinations, city pools, globe hubs and routes to the twelve selected cities. Other cities and their original media, credits and provenance remain archived for reversibility. Back and forward history retain their existing behavior. The per-city admission requirements are unchanged and remain unmet.
 
 The curated source snapshots are 181e983 (Dubai media), 76308cf (inventory baseline) and afa28367614cdb43d8fa1d6530df3f2bc24057f3 (active scope). Only selected source, media and related tests are included; public release documentation and workflows are preserved.
+
+## Reviewed G419 distinct occurrence
+
+This curated update derives from accepted source snapshot `70b9bc5502fbf11c8a0f7633591823619ce399dd`, including the explicitly reviewed occurrence policy and its validation correction. It adds one 16-second G419 stair-ascent event from the same original recording as an existing descent. Source intervals 150–166 seconds and 100–125 seconds are separated by 25 seconds; independent visual review confirmed different complete occurrences. The new excerpt uses a natural cut with empty boundaries, no crossfade or generated frames.
+
+The original recording identity and physical view remain unchanged. An additive, explicitly registered admission path binds semantic review, source and derivative hashes, native frames, accepted baseline and all relevant interval comparisons. Legacy unreviewed duplicate rejection stays closed. A crop, re-encode or renamed interval cannot establish a different event. Runtime validates the reviewed collision group before allocating separate event tiles.
+
+Active inventory is now **92 recordings / 81 distinct views / 11 authorized events**; retained archive inventory is **112 recordings / 101 distinct views / 11 events**. Butlerville has 32 recordings from 21 distinct views. The 936-recording target remains unmet. This update adds no person annotations or tracking-coverage claims.
+
+The source loop received independent playback/wrap review, followed by a narrow-viewport runtime playback check. These are bounded checks, not physical-device certification or complete-route coverage. Only allowlisted code, tests, accepted event assets and public documentation are exported; development history, private annotation pilots and preparation evidence are excluded. Public commits use the contributor's GitHub noreply identity and actual preparation dates. Publication remains a separate release step.

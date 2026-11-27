@@ -166,11 +166,12 @@ export const PHYSICAL_RECORDING_MANIFEST: readonly RecordingCandidate[] = [
 /** Source-backed candidates owned by one city (explicit ownership filter; never another city's). */
 export const manifestCandidatesFor = (cityId: string): RecordingCandidate[] => RECORDING_MANIFEST.filter((c) => c.cityId === cityId);
 
-interface EventRow extends Row { physicalCameraId: string; eventId: string; eventEquivalenceKey: string; authorization: { decisionSha256: string }; reviewRef: string }
+interface EventRow extends Row { physicalCameraId: string; eventId: string; eventEquivalenceKey: string; authorization: { decisionSha256: string }; reviewRef: string; sameOriginalReview?: unknown; trim: {startSec:number;endSec:number}; loopSha256:string;posterSha256:string;creditsSha256:string }
 const eventCandidate = (r: EventRow): RecordingCandidate => ({
  cityId: r.cityId, feedId: r.feedId,
  reviewedView: { viewId: r.physicalCameraId, reviewRef: r.reviewRef },
- reviewedEvent: { eventId: r.eventId, equivalenceKey: r.eventEquivalenceKey, decisionSha256: r.authorization.decisionSha256, reviewRef: r.reviewRef },
+ reviewedEvent: { eventId: r.eventId, equivalenceKey: r.eventEquivalenceKey, decisionSha256: r.authorization.decisionSha256, reviewRef: r.reviewRef, ...(r.sameOriginalReview?{sameOriginalReview:r.sameOriginalReview}:{}) },
+ sourceInterval:r.trim, eventAssets:{loopSha256:r.loopSha256,posterSha256:r.posterSha256,creditsSha256:r.creditsSha256},
  originalAssetKey: r.originalAssetKey!, originalAssetUrl: r.originalAssetUrl, originalSha256: r.originalSha256,
  provenance: { publisher: 'MEVA', sourceUrl: r.source },
 });

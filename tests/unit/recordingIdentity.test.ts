@@ -1,7 +1,31 @@
 import { describe, expect, it } from 'vitest';
-import { allocateCityRecordings, type RecordingCandidate } from '../../src/journey/recordingIdentity';
+import { allocateCityRecordings, REVIEWED_OCCURRENCES, BUTLERVILLE_EVENT_DECISION, type RecordingCandidate } from '../../src/journey/recordingIdentity';
 
 const H = (c: string) => c.repeat(64);
+
+function occurrenceCandidates():RecordingCandidate[]{
+ const p=structuredClone(REVIEWED_OCCURRENCES[0]);
+ const prior:RecordingCandidate={cityId:p.cityId,feedId:p.accepted[0].feedId,reviewedView:{viewId:p.physicalCameraId,reviewRef:'accepted'},originalAssetKey:'meva/'+p.originalRecordingId,originalAssetUrl:p.originalUrl,originalSha256:p.originalSha256,sourceInterval:{startSec:100,endSec:125},reviewedEvent:{eventId:p.accepted[0].eventId,equivalenceKey:p.originalRecordingId,decisionSha256:BUTLERVILLE_EVENT_DECISION,reviewRef:'accepted'},provenance:{publisher:'MEVA',sourceUrl:'https://mevadata.org/'}};
+ const next:RecordingCandidate={...prior,feedId:p.feedId,sourceInterval:{startSec:150,endSec:166},eventAssets:{loopSha256:p.loopSha256,posterSha256:p.posterSha256,creditsSha256:p.creditsSha256},reviewedEvent:{eventId:p.eventId,equivalenceKey:p.equivalenceKey,decisionSha256:BUTLERVILLE_EVENT_DECISION,reviewRef:'independent-root',sameOriginalReview:p}};
+ const physical={...prior,feedId:'physical',reviewedEvent:undefined,originalAssetKey:'meva/earlier',originalAssetUrl:'https://example.org/earlier',originalSha256:H('1')};return[physical,prior,next];
+}
+it('registered occurrence allocates separate event tiles while retaining one physical view',()=>{const r=allocateCityRecordings('butlerville',3,occurrenceCandidates());expect(r.status).toBe('ready');if(r.status==='invalid')return;expect(new Set(r.recordings.map(x=>x.viewId)).size).toBe(1);expect(r.recordings.filter(x=>x.eventId)).toHaveLength(2);});
+it('runtime same-original opt-in rejects missing/tampered proof, source, trim and derivative binding',()=>{
+ const changes:Array<(c:RecordingCandidate)=>void>=[c=>delete c.reviewedEvent!.sameOriginalReview,c=>c.reviewedEvent!.sameOriginalReview={},c=>c.sourceInterval!.startSec=125,c=>c.originalSha256=H('2'),c=>c.originalAssetUrl='https://example.org/alias',c=>c.reviewedView!.viewId='other',c=>c.eventAssets!.loopSha256=H('2'),c=>c.reviewedEvent!.equivalenceKey='renamed',c=>c.reviewedEvent!.eventId='renamed'];
+ for(const change of changes){const cs=occurrenceCandidates();change(cs[2]);expect(allocateCityRecordings('butlerville',3,cs).status).toBe('invalid');}
+});
+it('runtime validates every alias-group member and exact accepted timing',()=>{
+ const cs=occurrenceCandidates();cs.push({...cs[1],feedId:'transitive-alias',originalAssetUrl:'https://example.org/alias',reviewedEvent:{...cs[1].reviewedEvent!,eventId:'different'}});expect(allocateCityRecordings('butlerville',4,cs).status).toBe('invalid');
+ const missing=occurrenceCandidates();delete missing[1].sourceInterval;expect(allocateCityRecordings('butlerville',3,missing).status).toBe('invalid');
+ const changed=occurrenceCandidates();changed[1].sourceInterval!.endSec=150;expect(allocateCityRecordings('butlerville',3,changed).status).toBe('invalid');
+ const dup=occurrenceCandidates();dup.push({...dup[2],feedId:'copy'});expect(allocateCityRecordings('butlerville',4,dup).status).toBe('invalid');
+});
+it('an audited later registry entry extends history without changing the validation algorithm',()=>{
+ const cs=occurrenceCandidates(),p=structuredClone(REVIEWED_OCCURRENCES[0]),later=structuredClone(p);
+ Object.assign(later,{feedId:'registered-later',eventId:p.originalRecordingId+':200-216:other-reviewed-occurrence',equivalenceKey:p.originalRecordingId+'#frames:6000-6479@30',firstFrame:6000,lastFrame:6479,loopSha256:H('a'),posterSha256:H('b')});later.accepted.push({feedId:p.feedId,eventId:p.eventId,firstFrame:p.firstFrame,lastFrame:p.lastFrame});
+ const c:RecordingCandidate={...cs[2],feedId:later.feedId,sourceInterval:{startSec:200,endSec:216},eventAssets:{loopSha256:later.loopSha256,posterSha256:later.posterSha256,creditsSha256:later.creditsSha256},reviewedEvent:{...cs[2].reviewedEvent!,eventId:later.eventId,equivalenceKey:later.equivalenceKey,sameOriginalReview:later}};
+ REVIEWED_OCCURRENCES.push(later);try{expect(allocateCityRecordings('butlerville',4,[...cs,c]).status).toBe('ready');c.originalAssetUrl='https://example.org/forged';expect(allocateCityRecordings('butlerville',4,[...cs,c]).status).toBe('invalid');}finally{REVIEWED_OCCURRENCES.pop();}
+});
 
 /** Default view id is per-key so distinct keys are distinct reviewed views unless overridden. */
 function cand(over: Partial<RecordingCandidate> & { key?: string; page?: string; view?: string } = {}): RecordingCandidate {

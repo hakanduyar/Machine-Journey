@@ -785,5 +785,143 @@
     "originalAssetKey": "meva/2018-03-12.10-50-00.10-55-01.school.G420.r13.avi",
     "originalAssetUrl": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-12/10/2018-03-12.10-50-00.10-55-01.school.G420.r13.avi",
     "admissionManifestSha256": "56de8265d62d511a26fc843d52861697ea96cf67c21f285f806678c35f77a58f"
+  },
+  {
+    "recordingIntervalNonoverlapAllAccepted": false,
+    "fullFileOverlap": [
+      {
+        "feedId": "city-butlerville-event-42b9a7d07894762477da",
+        "originalRecordingId": "2018-03-15.14-55-00.15-00-00.school.G419.r13.avi",
+        "overlapSec": 300
+      }
+    ],
+    "usedIntervalDistinctReview": {
+      "status": "SEPARATE_ROOT_EVENT_INTERVAL_REVIEW_APPROVED",
+      "acceptedBaselineSha256": "67d44829661e0643ec6d225e01ea94d0de3cc1ea49591442f2b3650c3afb1a78",
+      "reviewSha256": "f1d219b13869f401516205a04e00ae0ef14bed2dd9df79357945630ba91fa459",
+      "candidateUsed": {
+        "start": 1521125850,
+        "end": 1521125866
+      },
+      "acceptedUsed": [
+        {
+          "feedId": "city-butlerville-event-42b9a7d07894762477da",
+          "start": 1521125800,
+          "end": 1521125825
+        }
+      ]
+    },
+    "key": "meva-event:44b798b1828557f48ec7",
+    "city": "butlerville",
+    "viewId": "meva-mutc-g419",
+    "physicalCameraId": "meva-mutc-g419",
+    "sourceCameraId": "meva:KF1:G419",
+    "eventId": "2018-03-15.14-55-00.15-00-00.school.G419.r13.avi:150-166:stair-ascent",
+    "eventEquivalenceKey": "2018-03-15.14-55-00.15-00-00.school.G419.r13.avi#frames:4500-4979@30",
+    "originalRecordingId": "2018-03-15.14-55-00.15-00-00.school.G419.r13.avi",
+    "source": "https://mevadata.org/",
+    "originalMedia": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-15/15/2018-03-15.14-55-00.15-00-00.school.G419.r13.avi",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "credit": "MEVA / Kitware Inc. / IARPA",
+    "originalSha256": "ed2a6ac9ddd2a51a3f9e7ff489f3ef2b2ed21e297dd9af141a642e65f9614128",
+    "loopSha256": "8f46c9ba0e462e88ea95660a3d0dcf6b5bead325eb537344b3df6a0148669703",
+    "posterSha256": "dd61b4cad334e7de7e1c000a1f5e522f49b450174420454bebd7ec00215cfbca",
+    "creditsSha256": "597a39f2d83901c47de349f2a8f804a632473883d74d45ea4e42c2f6acb5a011",
+    "trim": {
+      "startSec": 150,
+      "endSec": 166
+    },
+    "locationClaim": "MEVA KF1 MUTC, Butlerville; exact GPS unverified",
+    "provenanceLevel": "official-dataset-site",
+    "exactCameraCoordinatesVerified": false,
+    "physicalViewIncrement": 0,
+    "eventRecordingIncrement": 1,
+    "authorization": {
+      "city": "butlerville",
+      "decisionSha256": "3cbf43f248a54d26d711d185e188fde7d018e5e895c670269e91eb70dbf9ec76"
+    },
+    "eventReview": {
+      "reviewSha256": "f1d219b13869f401516205a04e00ae0ef14bed2dd9df79357945630ba91fa459",
+      "packetSha256": "8b67a8a2d081da2ed553107e43812c4672c3cd78208f75400532a1846d82abba",
+      "comparedAcceptedFeedIds": [
+        "m01",
+        "m02",
+        "m06",
+        "parking-walk",
+        "m03",
+        "m07",
+        "covered-road",
+        "m04",
+        "m05",
+        "city-butlerville-school-hall",
+        "city-butlerville-cafe",
+        "city-butlerville-stairwell",
+        "city-butlerville-classroom",
+        "city-butlerville-courtyard",
+        "city-butlerville-bus-interior",
+        "city-butlerville-gym-reverse",
+        "city-butlerville-stair-corridor",
+        "city-butlerville-roadside",
+        "city-butlerville-upper-stairwell",
+        "city-butlerville-meva-e00f38fcfeed15f3",
+        "city-butlerville-meva-6ca7fe9c563418d9",
+        "city-butlerville-event-6be3a62539fcd5e7e29c",
+        "city-butlerville-event-5b53880db45458d170a8",
+        "city-butlerville-event-aa4fd544b8e12da53881",
+        "city-butlerville-event-42b9a7d07894762477da",
+        "city-butlerville-event-788995c15491e2f58728",
+        "city-butlerville-event-0cb69d3407458efbd9cb",
+        "city-butlerville-event-7d31316b3ce1c2c82ffc",
+        "city-butlerville-event-0be6b9181c39c2a7d918",
+        "city-butlerville-event-dfdbfd1a0a68b6f25919",
+        "city-butlerville-event-0e5edab9c311666c7614"
+      ],
+      "comparisonFeedId": "city-butlerville-stairwell",
+      "comparisonOriginal": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/11/2018-03-07.10-55-01.11-00-01.school.G419.r13.avi",
+      "visualProof": "Independent root source and real-time playback review: lower-frame entry, complete stair ascent and departure; empty natural wrap.",
+      "observedEvent": "Later stair ascent150–166s; accepted descent100–125s is a separate, disjoint occurrence in the same original recording.",
+      "qualityNote": "Natural hard cut with empty endpoints; no generated frames, blending or interpolation; fixed source image scaled to1280x720."
+    },
+    "reviewRef": "R152_ROOT_G419_ASCENT_MEDIA_REVIEW",
+    "files": {
+      "loop": "g419-ascent/loop.mp4",
+      "poster": "g419-ascent/poster.jpg",
+      "credits": "g419-ascent/CREDITS.txt"
+    },
+    "cityId": "butlerville",
+    "feedId": "city-butlerville-event-44b798b1828557f48ec7",
+    "archiveLabel": "ARCHIVE / DISTINCT EVENT",
+    "originalAssetKey": "meva/2018-03-15.14-55-00.15-00-00.school.G419.r13.avi",
+    "originalAssetUrl": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-15/15/2018-03-15.14-55-00.15-00-00.school.G419.r13.avi",
+    "admissionManifestSha256": "f7d5cce4391c2fc4e71147c68f2b3ee6d06a23ec5cd6df769fc38e73f2319f4b",
+    "sameOriginalReview": {
+      "status": "PINNED_DISTINCT_OCCURRENCE_APPROVED",
+      "semanticReviewSha256": "f1d219b13869f401516205a04e00ae0ef14bed2dd9df79357945630ba91fa459",
+      "policyReviewSha256": "c6db7896a2c991b8dcd0f0f93452b2c947ce7b50bf50449316a042c89df9a9ec",
+      "acceptedBaselineSha256": "67d44829661e0643ec6d225e01ea94d0de3cc1ea49591442f2b3650c3afb1a78",
+      "cityId": "butlerville",
+      "physicalCameraId": "meva-mutc-g419",
+      "originalRecordingId": "2018-03-15.14-55-00.15-00-00.school.G419.r13.avi",
+      "originalUrl": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-15/15/2018-03-15.14-55-00.15-00-00.school.G419.r13.avi",
+      "originalSha256": "ed2a6ac9ddd2a51a3f9e7ff489f3ef2b2ed21e297dd9af141a642e65f9614128",
+      "feedId": "city-butlerville-event-44b798b1828557f48ec7",
+      "eventId": "2018-03-15.14-55-00.15-00-00.school.G419.r13.avi:150-166:stair-ascent",
+      "equivalenceKey": "2018-03-15.14-55-00.15-00-00.school.G419.r13.avi#frames:4500-4979@30",
+      "fps": 30,
+      "firstFrame": 4500,
+      "lastFrame": 4979,
+      "loopSha256": "8f46c9ba0e462e88ea95660a3d0dcf6b5bead325eb537344b3df6a0148669703",
+      "posterSha256": "dd61b4cad334e7de7e1c000a1f5e522f49b450174420454bebd7ec00215cfbca",
+      "creditsSha256": "597a39f2d83901c47de349f2a8f804a632473883d74d45ea4e42c2f6acb5a011",
+      "accepted": [
+        {
+          "feedId": "city-butlerville-event-42b9a7d07894762477da",
+          "eventId": "2018-03-15.14-55-00.15-00-00.school.G419.r13.avi:100-125:stair-descent",
+          "firstFrame": 3000,
+          "lastFrame": 3749
+        }
+      ]
+    }
   }
 ]

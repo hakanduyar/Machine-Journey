@@ -29,6 +29,8 @@
  * distinct physical camera. Missing review => `invalid` (unreviewed), never ready.
  */
 
+import reviewedOccurrences from './reviewedOccurrences.json' with {type:'json'};
+export const REVIEWED_OCCURRENCES = reviewedOccurrences;
 export interface RecordingProvenance {
   /** Publisher / source organisation, e.g. "NASA". Required. */
   publisher: string;
@@ -47,7 +49,7 @@ export interface ReviewedView {
 }
 
 export const BUTLERVILLE_EVENT_DECISION = '3cbf43f248a54d26d711d185e188fde7d018e5e895c670269e91eb70dbf9ec76';
-export interface ReviewedEvent { eventId: string; equivalenceKey: string; decisionSha256: string; reviewRef: string }
+export interface ReviewedEvent { eventId: string; equivalenceKey: string; decisionSha256: string; reviewRef: string; sameOriginalReview?: unknown }
 export interface RecordingCandidate {
   reviewedEvent?: ReviewedEvent;
   cityId: string;
@@ -57,6 +59,8 @@ export interface RecordingCandidate {
   originalAssetUrl?: string;
   /** SHA-256 hex of the original bytes; case-insensitive. */
   originalSha256?: string;
+  sourceInterval?: {startSec:number;endSec:number};
+  eventAssets?: {loopSha256:string;posterSha256:string;creditsSha256:string};
   provenance: RecordingProvenance;
   /** Diagnostics only; never identity. */
   feedId?: string;
@@ -146,6 +150,31 @@ const nonEmpty = (v: unknown): v is string => typeof v === 'string' && v.trim().
 const uniqSorted = (a: string[]): string[] => [...new Set(a)].sort();
 const cmp = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
 
+const canonicalProof = (v: unknown): string => JSON.stringify(v && typeof v === 'object'
+  ? Array.isArray(v) ? v.map(x=>JSON.parse(canonicalProof(x))) : Object.fromEntries(Object.entries(v).sort(([a],[b])=>cmp(a,b)).map(([k,x])=>[k,JSON.parse(canonicalProof(x))])) : v) ?? 'null';
+/** Same admission/runtime predicate. Proof shape and authority bytes are exact, not merely SHA-shaped. */
+export function validSameOriginalOccurrence(c: RecordingCandidate, others: readonly RecordingCandidate[], allowRegisteredSuccessors=false): boolean {
+  const e=c.reviewedEvent,p=REVIEWED_OCCURRENCES.find(p=>canonicalProof(e?.sameOriginalReview)===canonicalProof(p));
+  if(!e || !p || c.cityId!==p.cityId || c.feedId!==p.feedId || c.reviewedView?.viewId!==p.physicalCameraId || e.eventId!==p.eventId || e.equivalenceKey!==p.equivalenceKey || e.decisionSha256!==BUTLERVILLE_EVENT_DECISION || !nonEmpty(e.reviewRef))return false;
+  const clock=/^(\d{4}-\d{2}-\d{2})\.(\d{2})-(\d{2})-(\d{2})\.(\d{2})-(\d{2})-(\d{2})\.[a-z]+\.G\d+\.r13\.avi$/.exec(p.originalRecordingId);
+  if(!clock || p.cityId!=='butlerville' || !Number.isInteger(p.fps) || p.fps<=0)return false;
+  const duration=(Date.parse(`${clock[1]}T${clock[5]}:${clock[6]}:${clock[7]}Z`)-Date.parse(`${clock[1]}T${clock[2]}:${clock[3]}:${clock[4]}Z`))/1000;
+  if(![p,...p.accepted].every(w=>Number.isInteger(w.firstFrame)&&Number.isInteger(w.lastFrame)&&w.firstFrame>=0&&w.lastFrame>=w.firstFrame&&(w.lastFrame+1)/p.fps<=duration) || p.equivalenceKey!==`${p.originalRecordingId}#frames:${p.firstFrame}-${p.lastFrame}@${p.fps}`)return false;
+  if(c.originalAssetUrl!==p.originalUrl || c.originalAssetKey!=='meva/'+p.originalRecordingId || c.originalSha256!==p.originalSha256 || c.sourceInterval?.startSec!==p.firstFrame/p.fps || c.sourceInterval.endSec!==(p.lastFrame+1)/p.fps)return false;
+  if(!c.eventAssets || ['loopSha256','posterSha256','creditsSha256'].some(k=>c.eventAssets![k as keyof typeof c.eventAssets]!==p[k as 'loopSha256']))return false;
+  if(new Set([p.originalSha256,p.loopSha256,p.posterSha256]).size!==3 || others.some(a=>[p.loopSha256,p.posterSha256].some(h=>[a.originalSha256,a.eventAssets?.loopSha256,a.eventAssets?.posterSha256].includes(h))))return false;
+  const aliases=others.filter(a=>a.originalAssetUrl===c.originalAssetUrl || a.originalAssetKey===c.originalAssetKey || a.originalSha256?.toLowerCase()===c.originalSha256 || a.reviewedEvent?.eventId===e.eventId || a.reviewedEvent?.equivalenceKey===e.equivalenceKey).filter(a=>{
+    // Historical proofs remain valid after a later audited registry entry explicitly compares them.
+    // Admission never takes this option; runtime independently validates that successor and every pair.
+    if(!allowRegisteredSuccessors)return true;
+    return !REVIEWED_OCCURRENCES.some(later=>later.feedId===a.feedId && a.cityId===p.cityId && later.cityId===p.cityId && later.physicalCameraId===p.physicalCameraId && later.originalUrl===p.originalUrl && later.originalSha256===p.originalSha256 && later.accepted.some(w=>w.feedId===c.feedId&&w.eventId===e.eventId) && canonicalProof(a.reviewedEvent?.sameOriginalReview)===canonicalProof(later));
+  });
+  return aliases.length===p.accepted.length && p.accepted.every(w=>{
+    const matches=aliases.filter(a=>a.feedId===w.feedId);if(matches.length!==1)return false;const a=matches[0],t=a.sourceInterval;
+    return a.cityId===p.cityId && a.reviewedView?.viewId===p.physicalCameraId && a.originalAssetUrl===p.originalUrl && a.originalAssetKey==='meva/'+p.originalRecordingId && a.originalSha256===p.originalSha256 && a.reviewedEvent?.eventId===w.eventId && a.reviewedEvent.equivalenceKey!==e.equivalenceKey && !!t && t.startSec===w.firstFrame/p.fps && t.endSec===(w.lastFrame+1)/p.fps && (t.endSec<c.sourceInterval!.startSec || c.sourceInterval!.endSec<t.startSec);
+  });
+}
+
 interface Normalized {
   recordKey: string;
   eventId?: string;
@@ -225,6 +254,11 @@ export function allocateCityRecordings(
   });
   if (issues.length) return { status: 'invalid', cityId, issues };
 
+  // Validate even a singleton proof; malformed opt-ins cannot silently fall back to legacy behavior.
+  const distinct = new Set(owned.filter(n=>candidates[n.index].reviewedEvent?.sameOriginalReview!==undefined && validSameOriginalOccurrence(candidates[n.index],candidates.filter((_,i)=>i!==n.index),true)).map(n=>n.index));
+  for(const n of owned)if(candidates[n.index].reviewedEvent?.sameOriginalReview!==undefined && !distinct.has(n.index))issues.push({kind:'unreviewed',index:n.index,reason:'invalid pinned same-original occurrence proof'});
+  if (issues.length) return { status: 'invalid', cityId, issues };
+
   for (const n of owned.filter(n => n.eventId)) {
     if (!owned.some(base => !base.eventId && base.viewId === n.viewId)) issues.push({ kind: 'unreviewed', index: n.index, reason: 'event has no existing physical camera in this city' });
     if (owned.filter(x => x.eventId === n.eventId).length !== 1) issues.push({ kind: 'conflict', index: n.index, reason: 'event identity repeated' });
@@ -255,7 +289,8 @@ export function allocateCityRecordings(
   }
   for (const members of byEvidence.values()) {
     const views = uniqSorted(members.map((m) => m.recordKey));
-    if (views.length > 1) {
+    const reviewedPair = members.every(a=>members.every(b=>a===b || a.recordKey===b.recordKey || [a,b].some(n=>distinct.has(n.index) && REVIEWED_OCCURRENCES.some(p=>p.feedId===candidates[n.index].feedId && p.accepted.some(w=>w.feedId===candidates[n===a?b.index:a.index].feedId)))));
+    if (views.length > 1 && !reviewedPair) {
       issues.push({
         kind: 'conflict',
         index: Math.min(...members.map((m) => m.index)),
