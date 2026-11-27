@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   catalogModeFromSearch, evaluateUniqueCatalog, growRequest, lifecycleView, pinCapacity, recordAdmission, requiredSlotsFor, startLifecycle,
 } from '../../src/journey/uniqueCatalogGate';
-import { RECORDING_MANIFEST } from '../../src/journey/recordingManifest';
+import { ACTIVE_RECORDING_MANIFEST } from '../../src/journey/recordingManifest';
 import { ALL_FEEDS } from '../../src/journey/feeds';
 import { CITIES } from '../../src/journey/globe';
 import { tileCountFor } from '../../src/journey/layout';
@@ -22,15 +22,15 @@ describe('uniqueCatalogGate', () => {
     expect(requiredSlotsFor(1440, 900)).toBe(tileCountFor(1440, 900, 3));
   });
 
-  it('real catalogue: all 24 cities are deficient at 78 and at 77; Journey is not admitted', () => {
-    expect(CITIES).toHaveLength(24);
+  it('real catalogue: all 12 active cities are deficient at 78 and at 77; Journey is not admitted', () => {
+    expect(CITIES).toHaveLength(12);
     for (const required of [requiredSlotsFor(1440, 900), 77]) {
-      const g = evaluateUniqueCatalog({ requiredSlots: required, cities: CITIES, candidates: RECORDING_MANIFEST, feedIds: IDS });
+      const g = evaluateUniqueCatalog({ requiredSlots: required, cities: CITIES, candidates: ACTIVE_RECORDING_MANIFEST, feedIds: IDS });
       expect(g.ready).toBe(false);
       expect('layout' in g).toBe(false);
-      expect(g.cities).toHaveLength(24);
+      expect(g.cities).toHaveLength(12);
       expect(g.cities.every((c) => c.status === 'insufficient' && c.deficit > 0 && c.required === required)).toBe(true);
-      expect(g.cities.reduce((a, c) => a + c.available, 0)).toBe(RECORDING_MANIFEST.length);
+      expect(g.cities.reduce((a, c) => a + c.available, 0)).toBe(ACTIVE_RECORDING_MANIFEST.length);
       const but = g.cities.find((c) => c.cityId === 'butlerville')!;
       expect([but.available, but.deficit]).toEqual([31, required - 31]);
     }
@@ -43,7 +43,7 @@ describe('uniqueCatalogGate', () => {
     expect(pinCapacity(pinCapacity(41, 78), 41)).toBe(78);
     expect(requiredSlotsFor(1440, 900)).toBeGreaterThan(requiredSlotsFor(390, 844));
     // the larger pinned capacity must be proven: all current cities stay blocked at it
-    const g = evaluateUniqueCatalog({ requiredSlots: pinCapacity(pinCapacity(41, 78), 41), cities: CITIES, candidates: RECORDING_MANIFEST, feedIds: IDS });
+    const g = evaluateUniqueCatalog({ requiredSlots: pinCapacity(pinCapacity(41, 78), 41), cities: CITIES, candidates: ACTIVE_RECORDING_MANIFEST, feedIds: IDS });
     expect(g.ready).toBe(false);
     expect(g.required).toBe(78);
   });
@@ -103,3 +103,5 @@ describe('uniqueCatalogGate', () => {
     expect(bad.cities[0].status).toBe('invalid');
   });
 });
+
+

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { RECORDING_MANIFEST, PHYSICAL_RECORDING_MANIFEST, REVIEW_REF, VIEW_OF_FEED, manifestCandidatesFor, mergeReviewedViews } from '../../src/journey/recordingManifest';
+import { RECORDING_MANIFEST, ACTIVE_RECORDING_MANIFEST, ACTIVE_RECORDING_COUNTS, PHYSICAL_RECORDING_MANIFEST, REVIEW_REF, VIEW_OF_FEED, manifestCandidatesFor, mergeReviewedViews } from '../../src/journey/recordingManifest';
 import { allocateCityRecordings } from '../../src/journey/recordingIdentity';
 import { cityFeedIds } from '../../src/journey/cityContext';
 import { ALL_FEEDS } from '../../src/journey/feeds';
@@ -24,13 +24,14 @@ describe('recordingManifest (legacy and reviewed imported views)', () => {
   });
 
   it('owns exactly the feeds each city owns (CITIES), all playable in ALL_FEEDS', () => {
+    expect(ACTIVE_RECORDING_COUNTS).toEqual({ physicalViews: 81, recordings: 91, eventRecordings: 10 });
     const ids = new Set(ALL_FEEDS.map((f) => f.id));
     for (const city of CITIES) {
       const got = manifestCandidatesFor(city.id).map((c) => c.feedId).sort();
       expect(got).toEqual([...cityFeedIds(city)].sort());
       for (const f of got) expect(ids.has(f!)).toBe(true);
     }
-    expect(new Set(RECORDING_MANIFEST.map((c) => c.cityId)).size).toBe(CITIES.length);
+    expect(new Set(ACTIVE_RECORDING_MANIFEST.map((c) => c.cityId)).size).toBe(CITIES.length);
   });
 
   it('keeps the same NASA page as two distinct originals and views (Palmdale)', () => {

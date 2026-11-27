@@ -1,3 +1,4 @@
+import { ACTIVE_CITY_IDS } from './globe';
 import eventRows from '../../public/media/city-event-sources.json';
 /**
  * Canonical curated recording manifest: legacy city-owned core/base views plus reviewed additional media rows.
@@ -175,3 +176,11 @@ const eventCandidate = (r: EventRow): RecordingCandidate => ({
 });
 export const RECORDING_MANIFEST: readonly RecordingCandidate[] = [...PHYSICAL_RECORDING_MANIFEST, ...(eventRows as EventRow[]).map(eventCandidate)];
 export const RECORDING_COUNTS = { physicalViews: new Set(PHYSICAL_RECORDING_MANIFEST.map(c => c.cityId + '/' + c.reviewedView!.viewId)).size, recordings: RECORDING_MANIFEST.length, eventRecordings: eventRows.length };
+
+/** Active inventory only; the full manifest retains evidence for import rejection checks. */
+export const ACTIVE_RECORDING_MANIFEST = RECORDING_MANIFEST.filter(c => ACTIVE_CITY_IDS.includes(c.cityId));
+export const ACTIVE_RECORDING_COUNTS = {
+  physicalViews: new Set(ACTIVE_RECORDING_MANIFEST.map(c => c.cityId + '/' + c.reviewedView!.viewId)).size,
+  recordings: ACTIVE_RECORDING_MANIFEST.length,
+  eventRecordings: ACTIVE_RECORDING_MANIFEST.filter(c => c.reviewedEvent).length,
+};

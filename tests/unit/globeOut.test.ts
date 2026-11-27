@@ -52,7 +52,7 @@ describe('anchor', () => {
     // R49 C: every non-verified city owns its OWN stock clip, so a core feed with no verified place has no demo city; it departs
     // from a deterministic fallback point (an aim for the pull-back only, not a claim about where it was filmed).
     expect(anchorCityFor('city-paris', CITIES)!.id).toBe('paris');
-    expect(anchorCityFor('city-rome', CITIES)!.id).toBe('rome');
+    expect(anchorCityFor('city-istanbul', CITIES)!.id).toBe('istanbul');
     expect(anchorCityFor('m03', CITIES)).toBe(anchorCityFor('m03', CITIES));
     expect(CITIES.some((c) => !c.verified && c.feedId === 'm03')).toBe(false);
     expect(anchorCityFor('unrouted-feed', CITIES)).toBe(anchorCityFor('unrouted-feed', CITIES));

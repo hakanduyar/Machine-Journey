@@ -13,7 +13,10 @@ const IDS = ALL_FEEDS.map((f) => f.id);
 const BUTLER = ['m01', 'm02', 'm06', 'parking-walk', 'm03', 'm07', 'covered-road', 'm04', 'm05', 'city-butlerville-school-hall', 'city-butlerville-cafe', 'city-butlerville-stairwell', 'city-butlerville-classroom', 'city-butlerville-courtyard', 'city-butlerville-bus-interior',
   'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell', 'city-butlerville-meva-e00f38fcfeed15f3', 'city-butlerville-meva-6ca7fe9c563418d9', 'city-butlerville-event-6be3a62539fcd5e7e29c', 'city-butlerville-event-5b53880db45458d170a8', 'city-butlerville-event-aa4fd544b8e12da53881', 'city-butlerville-event-42b9a7d07894762477da', 'city-butlerville-event-788995c15491e2f58728', 'city-butlerville-event-0cb69d3407458efbd9cb', 'city-butlerville-event-7d31316b3ce1c2c82ffc', 'city-butlerville-event-0be6b9181c39c2a7d918', 'city-butlerville-event-dfdbfd1a0a68b6f25919', 'city-butlerville-event-0e5edab9c311666c7614'];
 const BUTLER_PRIMARY = BUTLER.slice(0, 4);
-const catalog = (city: string) => catalogIndices(cityFeedIds(cityById(city)), IDS);
+// Archived one-source fixture preserves generic finite-pool coverage without reactivating a destination.
+const oneSourceFixture = { id: 'cairo', feedId: 'city-cairo' };
+const testCity = (id: string) => id === 'cairo' ? oneSourceFixture : cityById(id);
+const catalog = (city: string) => catalogIndices(cityFeedIds(testCity(city)), IDS);
 
 // ---- city-scoped layouts, the way Journey builds them: one stable mosaic per city, tiles bound to the city's finite catalog ----
 const VW = 1000; const WORLD = 3000; const YEARS = 8;
@@ -74,7 +77,7 @@ describe('initial ownership: Butlerville (its thirty real feeds)', () => {
     expect(IDS.filter((_, i) => mosaicPlay[i])).toEqual(IDS.filter((id) => BUTLER.includes(id))); // catalog index order
   });
   it('a stock city owns one clip: every tile of its mosaic is that source (honest reuse, no foreign feed)', () => {
-    for (const t of layoutOf('cairo')) expect(IDS[t.feedIndex]).toBe('city-cairo'); // Cairo still owns exactly one clip
+    for (const t of layoutOf('cairo')) expect(IDS[t.feedIndex]).toBe('city-cairo'); // explicit one-source fixture
     expect(layoutOf('cairo').map((t) => t.id)).toEqual(layoutOf('butlerville').map((t) => t.id)); // stable tile ids across cities
   });
   it('a multi-clip city (Paris owns 9) binds its tiles only to its own nine and its deck cycles only them', () => {
@@ -100,7 +103,7 @@ describe('all modes select locally for a 4-source and a 1-source catalog', () =>
     expect(new Set(nr.feeds).size).toBe(4); for (const x of nr.feeds) expect(BUTLER).toContain(x);
   });
   it('one-source city: the minimum two stops, the same own source, every mode still plans', () => {
-    const pool = cityFeedIds(cityById('cairo'));
+    const pool = cityFeedIds(oneSourceFixture);
     expect(pool).toEqual(['city-cairo']);
     const n = stopsFor(4, pool.length); expect(n).toBe(2);
     const later = stopFeeds(pool, 'city-cairo', n - 1, []);
@@ -124,7 +127,7 @@ describe('all modes select locally for a 4-source and a 1-source catalog', () =>
     expect(p).not.toBeNull(); expect(p!.id).not.toBe(cur.id);
   });
   it('each city has its own deck (novelty / history); switching city never mixes them', () => {
-    const d = new CityDecks(CITIES, 3);
+    const d = new CityDecks([...CITIES, oneSourceFixture], 3);
     d.useCity('butlerville'); expect(d.commit('m01')).toBe(true);
     d.useCity('cairo'); expect(d.eligible()).toEqual(['city-cairo']); expect(d.commit('city-cairo')).toBe(true);
     expect(d.commit('m02')).toBe(false); // not a feed of the active city
