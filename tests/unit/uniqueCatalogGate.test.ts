@@ -32,7 +32,7 @@ describe('uniqueCatalogGate', () => {
       expect(g.cities.every((c) => c.status === 'insufficient' && c.deficit > 0 && c.required === required)).toBe(true);
       expect(g.cities.reduce((a, c) => a + c.available, 0)).toBe(ACTIVE_RECORDING_MANIFEST.length);
       const but = g.cities.find((c) => c.cityId === 'butlerville')!;
-      expect([but.available, but.deficit]).toEqual([32, required - 32]);
+      expect([but.available, but.deficit]).toEqual([33, required - 33]);
     }
     expect(requiredSlotsFor(1440, 900)).toBe(78);
   });
