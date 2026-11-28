@@ -14,17 +14,17 @@ const expectedTotal = 86 + importedRows.length;
 const expectedNY = 14 + importedRows.filter(r=>r.cityId==='new-york').length;
 describe('recordingManifest (legacy and reviewed imported views)', () => {
   it('has all legacy and imported entries with unique feeds, reviewed view ids and original asset keys', () => {
-    expect(RECORDING_MANIFEST).toHaveLength(expectedTotal + 11);
-    expect(new Set(RECORDING_MANIFEST.map((c) => c.feedId)).size).toBe(expectedTotal + 11);
+    expect(RECORDING_MANIFEST).toHaveLength(expectedTotal + 12);
+    expect(new Set(RECORDING_MANIFEST.map((c) => c.feedId)).size).toBe(expectedTotal + 12);
     expect(new Set(RECORDING_MANIFEST.map((c) => c.reviewedView?.viewId)).size).toBe(expectedTotal);
-    expect(new Set(RECORDING_MANIFEST.map((c) => c.originalAssetKey)).size).toBe(expectedTotal + 10);
+    expect(new Set(RECORDING_MANIFEST.map((c) => c.originalAssetKey)).size).toBe(expectedTotal + 11);
     expect(Object.keys(VIEW_OF_FEED)).toHaveLength(expectedTotal);
     // view ids are curated, not derived from the feed id
     for (const c of RECORDING_MANIFEST) expect(c.reviewedView!.viewId).not.toBe(c.feedId);
   });
 
   it('owns exactly the feeds each city owns (CITIES), all playable in ALL_FEEDS', () => {
-    expect(ACTIVE_RECORDING_COUNTS).toEqual({ physicalViews: 81, recordings: 92, eventRecordings: 11 });
+    expect(ACTIVE_RECORDING_COUNTS).toEqual({ physicalViews: 81, recordings: 93, eventRecordings: 12 });
     const ids = new Set(ALL_FEEDS.map((f) => f.id));
     for (const city of CITIES) {
       const got = manifestCandidatesFor(city.id).map((c) => c.feedId).sort();
@@ -58,7 +58,7 @@ describe('recordingManifest (legacy and reviewed imported views)', () => {
       expect(c.originalAssetKey).toContain(`.${cam}.`);
       expect(c.originalSha256).toBeUndefined();
     }
-    expect(manifestCandidatesFor('butlerville')).toHaveLength(32);
+    expect(manifestCandidatesFor('butlerville')).toHaveLength(33);
     // original hashes only where the packet declares the SOURCE .avi hash (never a loop hash); G507 (hold) is absent
     const withHash = ['m04', 'm05', 'city-butlerville-school-hall', 'city-butlerville-cafe', 'city-butlerville-stairwell', 'city-butlerville-classroom', 'city-butlerville-courtyard', 'city-butlerville-bus-interior',
       'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell'];
