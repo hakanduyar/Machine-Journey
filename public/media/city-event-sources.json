@@ -923,5 +923,92 @@
         }
       ]
     }
+  },
+  {
+    "key": "meva-event:88f4d0809693f54eeb25",
+    "city": "butlerville",
+    "viewId": "meva-mutc-g419",
+    "physicalCameraId": "meva-mutc-g419",
+    "sourceCameraId": "meva:KF1:G419",
+    "eventId": "2018-03-09.10-20-00.10-25-00.school.G419.r13.avi:pts542-932:stair-ascent",
+    "eventEquivalenceKey": "2018-03-09.10-20-00.10-25-00.school.G419.r13.avi",
+    "originalRecordingId": "2018-03-09.10-20-00.10-25-00.school.G419.r13.avi",
+    "source": "https://mevadata.org/",
+    "originalMedia": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-09/10/2018-03-09.10-20-00.10-25-00.school.G419.r13.avi",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "credit": "MEVA dataset, Kitware Inc. / IARPA",
+    "originalSha256": "8e8402f0d8dc80f2d968345d65f70fd6780dad4439d63436549c60d155d75704",
+    "loopSha256": "4b5a023edaed3baedf1c4b56c5842d68f1254c2407b063eb9605650f7359a76d",
+    "posterSha256": "cb4b2909478c5307a5dc21254bebf5f6737f7cd6675a8ba0283ee4cf2160b99f",
+    "creditsSha256": "af7ab3e6d1f4e66e4a72c4d7377032fa0876bf44dcfea3c10fc0b17af62dacac",
+    "trim": {
+      "startSec": 18.066666666666666,
+      "endSec": 31.066666666666666
+    },
+    "locationClaim": "Muscatatuck Urban Training Center, Butlerville, Indiana; existing admitted KF1 G419 camera, no exact GPS claim.",
+    "provenanceLevel": "official-dataset-site",
+    "exactCameraCoordinatesVerified": false,
+    "physicalViewIncrement": 0,
+    "eventRecordingIncrement": 1,
+    "authorization": {
+      "city": "butlerville",
+      "decisionSha256": "3cbf43f248a54d26d711d185e188fde7d018e5e895c670269e91eb70dbf9ec76"
+    },
+    "eventReview": {
+      "reviewSha256": "c5cddc382fdfc3bd0788c25cdbf18da3bcb4ca6b2f27eb0de1aa4d9e7eaf32e0",
+      "packetSha256": "bd643aed38bef284cec10b4064e10bafd47dfd9864fd39e1d1a07fc13188aa5d",
+      "comparedAcceptedFeedIds": [
+        "m01",
+        "m02",
+        "m06",
+        "parking-walk",
+        "m03",
+        "m07",
+        "covered-road",
+        "m04",
+        "m05",
+        "city-butlerville-school-hall",
+        "city-butlerville-cafe",
+        "city-butlerville-stairwell",
+        "city-butlerville-classroom",
+        "city-butlerville-courtyard",
+        "city-butlerville-bus-interior",
+        "city-butlerville-gym-reverse",
+        "city-butlerville-stair-corridor",
+        "city-butlerville-roadside",
+        "city-butlerville-upper-stairwell",
+        "city-butlerville-meva-e00f38fcfeed15f3",
+        "city-butlerville-meva-6ca7fe9c563418d9",
+        "city-butlerville-event-6be3a62539fcd5e7e29c",
+        "city-butlerville-event-5b53880db45458d170a8",
+        "city-butlerville-event-aa4fd544b8e12da53881",
+        "city-butlerville-event-42b9a7d07894762477da",
+        "city-butlerville-event-788995c15491e2f58728",
+        "city-butlerville-event-0cb69d3407458efbd9cb",
+        "city-butlerville-event-7d31316b3ce1c2c82ffc",
+        "city-butlerville-event-0be6b9181c39c2a7d918",
+        "city-butlerville-event-dfdbfd1a0a68b6f25919",
+        "city-butlerville-event-0e5edab9c311666c7614",
+        "city-butlerville-event-44b798b1828557f48ec7"
+      ],
+      "comparisonFeedId": "city-butlerville-stairwell",
+      "comparisonOriginal": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/11/2018-03-07.10-55-01.11-00-01.school.G419.r13.avi",
+      "visualProof": "Independently reviewed source progression and actual 13-second playback with complete empty-to-empty natural wrap.",
+      "observedEvent": "One complete dark-coat stair ascent from a different March 09 original, on the existing G419 camera. No person identity claim.",
+      "qualityNote": "Decoded source frames 540–929 correspond to original PTS 542–931 at 1/30; source interval 542/30 to 932/30 seconds. Muted 24 fps output, 312 frames, aspect-preserving fit/padding, no dissolve/reverse/generated movement."
+    },
+    "reviewRef": "reviewed-g419-march09-c5cddc382fdfc3bd",
+    "files": {
+      "loop": "g419-march09/loop.mp4",
+      "poster": "g419-march09/poster.jpg",
+      "credits": "g419-march09/CREDITS.txt"
+    },
+    "cityId": "butlerville",
+    "feedId": "city-butlerville-event-88f4d0809693f54eeb25",
+    "archiveLabel": "ARCHIVE / DISTINCT EVENT",
+    "originalAssetKey": "meva/2018-03-09.10-20-00.10-25-00.school.G419.r13.avi",
+    "originalAssetUrl": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-09/10/2018-03-09.10-20-00.10-25-00.school.G419.r13.avi",
+    "admissionManifestSha256": "953ea90365810a1df0e6ed2d4eadcc1f038eaa9a8af8353dcabd8d5211e52a20"
   }
 ]

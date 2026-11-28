@@ -5,6 +5,21 @@ import {PILOT_TRACKING,trackingFor,parseHeadTracking,sampleHeadTracks,headSquare
 import {computeCrop} from '../../src/journey/geometry';
 const fixture=(keys:HeadTracking['tracks'][number]['keyframes']):HeadTracking=>({...PILOT_TRACKING,tracks:[{id:'fixture',keyframes:keys}]});
 const k=(t:number,visible=true)=>({t,cx:.5,cy:.4,size:.1,visible});
+
+it('m04 preserves ten reviewed tracks without bridging unknown crossings or dissolve',()=>{
+ const d=trackingFor('m04')!;expect(d.videoSha256).toBe(crypto.createHash('sha256').update(fs.readFileSync('public/media/m04/loop.mp4')).digest('hex'));expect(d.tracks).toHaveLength(10);expect(d.tracks[0].keyframes).toHaveLength(569);expect(d.tracks[0].timedOcclusionPolygons).toBeUndefined();expect(d.tracks[1].keyframes).toHaveLength(559);
+ for(let n=0;n<588;n++){expect(sampleHeadTracks(d,n/24)).toHaveLength(n>568?0:10-(n>=150&&n<=159?1:0)-(n>=399&&n<=417?1:0)-(n>=393&&n<=417?1:0)-(n>=533&&n<=542?1:0)-(n>=333&&n<=355?1:0)-(n>=273&&n<=277?1:0)-(n>=424&&n<=429?1:0)-(n>=77&&n<=85?1:0));if(n<=568)expect(d.tracks[0].keyframes[n].t).toBe(n/24);}
+ for(const n of [149.5,150,159,159.5])expect(sampleHeadTracks({...d,tracks:[d.tracks[1]]},n/24)).toEqual([]);
+ expect(d.tracks[1].timedOcclusionPolygons).toEqual([{start:145/24,end:165/24,polygons:[[{x:494/1280,y:115/720},{x:499/1280,y:115/720},{x:499/1280,y:150/720},{x:494/1280,y:150/720}]]}]);
+ expect(d.tracks.map(t=>t.keyframes.length)).toEqual([569,559,550,544,569,559,546,564,563,560]);
+ expect(d.tracks.map(t=>t.id)).toEqual(['person-01','person-02','person-03','person-04','person-05','person-06','person-07','person-08','person-09','person-10']);
+ for(const n of [398.5,399,417,417.5])expect(sampleHeadTracks({...d,tracks:[d.tracks[2]]},n/24)).toEqual([]);
+ for(const n of [392.5,393,417,417.5])expect(sampleHeadTracks({...d,tracks:[d.tracks[3]]},n/24)).toEqual([]);
+ for(const [index,end] of [[2,440],[3,446]])expect(d.tracks[index].timedOcclusionPolygons).toEqual([{start:361/24,end:end/24,polygons:[[{x:768.5/1280,y:80/720},{x:771/1280,y:80/720},{x:771/1280,y:110/720},{x:768.5/1280,y:110/720}]]}]);
+ for(const [index,start,end] of [[5,533,542],[6,333,355],[7,273,277],[8,424,429],[9,77,85]])for(const n of [start-.5,start,end,end+.5])expect(sampleHeadTracks({...d,tracks:[d.tracks[index]]},n/24)).toEqual([]);
+ for(const [index,start,end,left,right,top,bottom] of [[5,518,552,494,499,115,150],[6,320,380,768.5,771,80,110],[7,260,290,494,499,195,230],[8,414,442,494,499,140,175],[9,70,96,176,184,280,310]])expect(d.tracks[index].timedOcclusionPolygons).toEqual([{start:start/24,end:end/24,polygons:[[{x:left/1280,y:top/720},{x:right/1280,y:top/720},{x:right/1280,y:bottom/720},{x:left/1280,y:bottom/720}]]}]);
+ expect(sampleHeadTracks(d,568.1/24)).toEqual([]);expect(sampleHeadTracks(d,24.5)).toEqual([]);
+});
 describe('source-bound head tracking pilot',()=>{
  it('binds to exact accepted m01 bytes and keeps anonymous authored person tracks',()=>{const hash=crypto.createHash('sha256').update(fs.readFileSync('public/media/m01/loop.mp4')).digest('hex');expect(hash).toBe(PILOT_TRACKING.videoSha256);expect(PILOT_TRACKING.feedId).toBe('m01');expect(PILOT_TRACKING.tracks).toHaveLength(4);expect(PILOT_TRACKING.tracks.every(t=>/^person-\d+$/.test(t.id))).toBe(true);});
  it('samples decoder time deterministically across pause, seek and wrap without extrapolation',()=>{const d=fixture([k(4),{...k(5),cx:.7},k(6,false)]);expect(sampleHeadTracks(d,4.5)[0].cx).toBeCloseTo(.6);expect(sampleHeadTracks(d,4.5)).toEqual(sampleHeadTracks(d,4.5));expect(sampleHeadTracks(d,25)).toEqual([]);expect(sampleHeadTracks(d,0)).toEqual([]);expect(sampleHeadTracks(d,4)[0].cx).toBe(.5);expect(sampleHeadTracks(d,5.1)).toEqual([]);expect(sampleHeadTracks(d,NaN)).toEqual([]);});
@@ -177,4 +192,13 @@ it('NYC cab uses its exact source and signal cutout while excluding the final ed
  expect(d.tracks).toHaveLength(1);expect(d.tracks[0].marker).toBe('vehicle-square');expect(d.occlusionPolygons).toHaveLength(1);expect(d.occlusionPolygons![0]).toHaveLength(14);
  expect(sampleHeadTracks(d,0)).toHaveLength(1);expect(sampleHeadTracks(d,8)).toHaveLength(1);expect(sampleHeadTracks(d,11)).toEqual([]);expect(sampleHeadTracks(d,11.4)).toEqual([]);
  const raw=JSON.parse(fs.readFileSync(`public/media/${id}/object-tracks.json`,'utf8'));expect(raw.sourceProvenance.policyCutoff.evidenceKind).toBe('POLICY_CUTOFF_NOT_NATIVE_MEASUREMENT');
+});
+it('G419 March09 keeps source-bound reviewed head interval and unknown boundary',()=>{
+ const id='city-butlerville-event-88f4d0809693f54eeb25',d=trackingFor(id)!;
+ expect(d.videoSha256).toBe(crypto.createHash('sha256').update(fs.readFileSync(`public/media/${id}/loop.mp4`)).digest('hex'));
+ expect(d.tracks).toHaveLength(1);expect(d.tracks[0].timedOcclusionPolygons).toHaveLength(4);
+ for(let n=0;n<312;n++)expect(sampleHeadTracks(d,n/24)).toHaveLength(n>=8&&n<=200?1:0);
+ for(const n of [200.01,200.5,201,244])expect(sampleHeadTracks(d,n/24)).toEqual([]);
+ expect(d.tracks[0].keyframes.find(key=>key.t===201/24)).toMatchObject({t:201/24,visible:false});
+ expect(d.tracks[0].timedOcclusionPolygons!.at(-1)!.end).toBe(201/24);
 });
