@@ -11,7 +11,7 @@ import { planNeuralRoute, type NeuralHold } from '../../src/journey/neuralRoute'
 
 const IDS = ALL_FEEDS.map((f) => f.id);
 const BUTLER = ['m01', 'm02', 'm06', 'parking-walk', 'm03', 'm07', 'covered-road', 'm04', 'm05', 'city-butlerville-school-hall', 'city-butlerville-cafe', 'city-butlerville-stairwell', 'city-butlerville-classroom', 'city-butlerville-courtyard', 'city-butlerville-bus-interior',
-  'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell', 'city-butlerville-meva-e00f38fcfeed15f3', 'city-butlerville-meva-6ca7fe9c563418d9', 'city-butlerville-event-6be3a62539fcd5e7e29c', 'city-butlerville-event-5b53880db45458d170a8', 'city-butlerville-event-aa4fd544b8e12da53881', 'city-butlerville-event-42b9a7d07894762477da', 'city-butlerville-event-788995c15491e2f58728', 'city-butlerville-event-0cb69d3407458efbd9cb', 'city-butlerville-event-7d31316b3ce1c2c82ffc', 'city-butlerville-event-0be6b9181c39c2a7d918', 'city-butlerville-event-dfdbfd1a0a68b6f25919', 'city-butlerville-event-0e5edab9c311666c7614', 'city-butlerville-event-44b798b1828557f48ec7', 'city-butlerville-event-88f4d0809693f54eeb25'];
+  'city-butlerville-gym-reverse', 'city-butlerville-stair-corridor', 'city-butlerville-roadside', 'city-butlerville-upper-stairwell', 'city-butlerville-meva-e00f38fcfeed15f3', 'city-butlerville-meva-6ca7fe9c563418d9', 'city-butlerville-event-6be3a62539fcd5e7e29c', 'city-butlerville-event-5b53880db45458d170a8', 'city-butlerville-event-aa4fd544b8e12da53881', 'city-butlerville-event-42b9a7d07894762477da', 'city-butlerville-event-788995c15491e2f58728', 'city-butlerville-event-0cb69d3407458efbd9cb', 'city-butlerville-event-7d31316b3ce1c2c82ffc', 'city-butlerville-event-0be6b9181c39c2a7d918', 'city-butlerville-event-dfdbfd1a0a68b6f25919', 'city-butlerville-event-0e5edab9c311666c7614', 'city-butlerville-event-44b798b1828557f48ec7', 'city-butlerville-event-88f4d0809693f54eeb25', 'city-butlerville-event-7d22021afd528fd44780'];
 const BUTLER_PRIMARY = BUTLER.slice(0, 4);
 // Archived one-source fixture preserves generic finite-pool coverage without reactivating a destination.
 const oneSourceFixture = { id: 'cairo', feedId: 'city-cairo' };
@@ -60,8 +60,8 @@ const toHold = (c: JourneyController) => { for (let i = 0; i < 6000 && !isHoldSt
 const fwd = (c: JourneyController) => { expect(c.dispatch({ type: 'intent' })).toBe(true); toHold(c); };
 const back = (c: JourneyController) => { expect(c.dispatch({ type: 'back' })).toBe(true); toHold(c); };
 
-describe('initial ownership: Butlerville (its thirty-three real feeds)', () => {
-  it('opens in Butlerville and its mosaic is bound only to its thirty-three feeds', () => {
+describe('initial ownership: Butlerville (its thirty-four real feeds)', () => {
+  it('opens in Butlerville and its mosaic is bound only to its thirty-four feeds', () => {
     const { c } = make();
     expect(c.activeCity).toBe('butlerville');
     expect(cityFeedIds(cityById(DEFAULT_CITY_ID))).toEqual(BUTLER);
@@ -69,7 +69,7 @@ describe('initial ownership: Butlerville (its thirty-three real feeds)', () => {
     for (const f of feeds) expect(BUTLER).toContain(f);
     expect(feeds.size).toBeGreaterThan(1);
   });
-  it('startup sources: only Butlerville\'s thirty-three; no other city / unowned clip is part of the opening pool', () => {
+  it('startup sources: only Butlerville\'s thirty-four; no other city / unowned clip is part of the opening pool', () => {
     const startup = new Set(cityFeedIds(cityById(DEFAULT_CITY_ID)));
     expect([...startup]).toEqual(BUTLER);
     for (const id of IDS) if (!startup.has(id)) expect(cityOfFeed(id, CITIES)?.id).not.toBe('butlerville');
@@ -220,7 +220,7 @@ describe('city context through the controller', () => {
 
 describe('capped playback for the active city', () => {
   const n = IDS.length;
-  it('route stages keep the cap of three even with a thirty-three-feed pool; the globe hold plays nothing', () => {
+  it('route stages keep the cap of three even with a thirty-four-feed pool; the globe hold plays nothing', () => {
     const pool = catalog('butlerville');
     for (const stage of ['floating', 'floatMove', 'neural', 'neuralMove'] as const) {
       const d = desiredPlayback({ stage, selectedFeed: -1, targetFeed: -1, feedCount: n, pool, active: pool });

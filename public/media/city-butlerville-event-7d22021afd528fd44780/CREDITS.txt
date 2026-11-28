@@ -1,0 +1,11 @@
+School stairwell passage — MEVA G420
+Attribution: MEVA dataset, Kitware Inc. / IARPA.
+Source: https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-13/17/2018-03-13.17-25-00.17-30-00.school.G420.r13.avi
+Original SHA-256: ffe48ca6ab92a9acb856f30ffa721f1ab1f7577f6f75c2857d8243f913059d6c
+Prepared loop SHA-256: bc49f79ecbf7bb88ec2cfbae7158efb79c344c6197890a18e6b070e34aa6ff3a
+License: Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+Official license: https://mevadata.org/resources/MEVA-data-license.txt
+Collection site: Muscatatuck Urban Training Center, Butlerville, Indiana.
+Changes: Source decoded frames 1980-2999 (original PTS 66.066667-100.033333s, native timebase 1/30); mute 24fps H.264, aspect-preserving 1280x720 fit/padding; 34s natural empty-to-empty cut; derived poster; no dissolve or reverse.
+Archived staged activity; not live surveillance. Exact camera GPS unverified. Video/poster CC BY 4.0; application licensing separate.

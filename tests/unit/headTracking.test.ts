@@ -6,13 +6,13 @@ import {computeCrop} from '../../src/journey/geometry';
 const fixture=(keys:HeadTracking['tracks'][number]['keyframes']):HeadTracking=>({...PILOT_TRACKING,tracks:[{id:'fixture',keyframes:keys}]});
 const k=(t:number,visible=true)=>({t,cx:.5,cy:.4,size:.1,visible});
 
-it('m04 preserves ten reviewed tracks without bridging unknown crossings or dissolve',()=>{
- const d=trackingFor('m04')!;expect(d.videoSha256).toBe(crypto.createHash('sha256').update(fs.readFileSync('public/media/m04/loop.mp4')).digest('hex'));expect(d.tracks).toHaveLength(10);expect(d.tracks[0].keyframes).toHaveLength(569);expect(d.tracks[0].timedOcclusionPolygons).toBeUndefined();expect(d.tracks[1].keyframes).toHaveLength(559);
- for(let n=0;n<588;n++){expect(sampleHeadTracks(d,n/24)).toHaveLength(n>568?0:10-(n>=150&&n<=159?1:0)-(n>=399&&n<=417?1:0)-(n>=393&&n<=417?1:0)-(n>=533&&n<=542?1:0)-(n>=333&&n<=355?1:0)-(n>=273&&n<=277?1:0)-(n>=424&&n<=429?1:0)-(n>=77&&n<=85?1:0));if(n<=568)expect(d.tracks[0].keyframes[n].t).toBe(n/24);}
+it('m04 preserves fourteen reviewed tracks without bridging unknown crossings or dissolve',()=>{
+ const d=trackingFor('m04')!;expect(d.videoSha256).toBe(crypto.createHash('sha256').update(fs.readFileSync('public/media/m04/loop.mp4')).digest('hex'));expect(d.tracks).toHaveLength(14);expect(d.tracks[0].keyframes).toHaveLength(569);expect(d.tracks[0].timedOcclusionPolygons).toBeUndefined();expect(d.tracks[1].keyframes).toHaveLength(559);
+ for(let n=0;n<588;n++){expect(sampleHeadTracks(d,n/24)).toHaveLength(n>568?0:10-(n>=150&&n<=159?1:0)-(n>=399&&n<=417?1:0)-(n>=393&&n<=417?1:0)-(n>=533&&n<=542?1:0)-(n>=333&&n<=355?1:0)-(n>=273&&n<=277?1:0)-(n>=424&&n<=429?1:0)-(n>=77&&n<=85?1:0)+((n>=285&&n<=381)||(n>=390&&n<=568)?1:0)+(n<=272||(n>=376&&n<=551)?1:0)+(n<=176||(n>=248&&n<=364)?1:0)+(n<=161||(n>=220&&n<=339)?1:0));if(n<=568)expect(d.tracks[0].keyframes[n].t).toBe(n/24);}
  for(const n of [149.5,150,159,159.5])expect(sampleHeadTracks({...d,tracks:[d.tracks[1]]},n/24)).toEqual([]);
  expect(d.tracks[1].timedOcclusionPolygons).toEqual([{start:145/24,end:165/24,polygons:[[{x:494/1280,y:115/720},{x:499/1280,y:115/720},{x:499/1280,y:150/720},{x:494/1280,y:150/720}]]}]);
- expect(d.tracks.map(t=>t.keyframes.length)).toEqual([569,559,550,544,569,559,546,564,563,560]);
- expect(d.tracks.map(t=>t.id)).toEqual(['person-01','person-02','person-03','person-04','person-05','person-06','person-07','person-08','person-09','person-10']);
+ expect(d.tracks.map(t=>t.keyframes.length)).toEqual([569,559,550,544,569,559,546,564,563,560,276,450,294,284]);
+ expect(d.tracks.map(t=>t.id)).toEqual(['person-01','person-02','person-03','person-04','person-05','person-06','person-07','person-08','person-09','person-10','person-11','person-12','person-13','person-14']);
  for(const n of [398.5,399,417,417.5])expect(sampleHeadTracks({...d,tracks:[d.tracks[2]]},n/24)).toEqual([]);
  for(const n of [392.5,393,417,417.5])expect(sampleHeadTracks({...d,tracks:[d.tracks[3]]},n/24)).toEqual([]);
  for(const [index,end] of [[2,440],[3,446]])expect(d.tracks[index].timedOcclusionPolygons).toEqual([{start:361/24,end:end/24,polygons:[[{x:768.5/1280,y:80/720},{x:771/1280,y:80/720},{x:771/1280,y:110/720},{x:768.5/1280,y:110/720}]]}]);
@@ -201,4 +201,27 @@ it('G419 March09 keeps source-bound reviewed head interval and unknown boundary'
  for(const n of [200.01,200.5,201,244])expect(sampleHeadTracks(d,n/24)).toEqual([]);
  expect(d.tracks[0].keyframes.find(key=>key.t===201/24)).toMatchObject({t:201/24,visible:false});
  expect(d.tracks[0].timedOcclusionPolygons!.at(-1)!.end).toBe(201/24);
+});
+
+it('m04 final four tracks preserve unknown boundaries and reviewed foreground timing',()=>{
+ const d=trackingFor('m04')!;
+ expect(d.tracks.slice(10).map(t=>t.keyframes.filter(k=>k.visible).length)).toEqual([276,449,294,282]);
+ for(const [index,frames] of [[10,[0,282,284.99,381.01,389.99,568.01]],[11,[272.01,273,375.99,551.01,552,568]],[12,[176.01,177,247.99,364.01,365,568]],[13,[161.01,162,219.99,339.01,340,568]]] as const)for(const n of frames)expect(sampleHeadTracks({...d,tracks:[d.tracks[index]]},n/24)).toEqual([]);
+ expect(d.tracks[11].keyframes.find(k=>k.t===552/24)?.visible).toBe(false);
+ for(const n of [162,340])expect(d.tracks[13].keyframes.find(k=>k.t===n/24)?.visible).toBe(false);
+ expect(d.tracks.slice(10).map(t=>t.timedOcclusionPolygons!.map(w=>[w.start*24,w.end*24]))).toEqual([[[374,398]],[[544,552]],[[156,177],[248,260]],[[144,225],[328,340]]]);
+ const column=[{x:1177/1280,y:20/720},{x:1204/1280,y:20/720},{x:1204/1280,y:52/720},{x:1173/1280,y:52/720},{x:1174/1280,y:40/720},{x:1176/1280,y:30/720}];
+ for(const w of d.tracks[12].timedOcclusionPolygons!)expect(w.polygons).toEqual([column]);
+});
+
+it('G420 March13 preserves three reviewed people and unknown entry/exit intervals',()=>{
+ const id='city-butlerville-event-7d22021afd528fd44780',d=trackingFor(id)!;
+ expect(d.videoSha256).toBe(crypto.createHash('sha256').update(fs.readFileSync(`public/media/${id}/loop.mp4`)).digest('hex'));
+ expect(d.tracks.map(t=>t.id)).toEqual(['person-01','person-02','person-03']);
+ expect(d.tracks.map(t=>t.keyframes.length)).toEqual([296,51,198]);
+ expect((JSON.parse(fs.readFileSync('public/media/'+id+'/head-tracks.json','utf8')).tracks as {sourceTrackIndex:number}[]).map(t=>t.sourceTrackIndex)).toEqual([0,1,2]);
+ const intervals=[[196,490],[260,452],[330,526]];
+ for(let n=0;n<816;n++)expect(sampleHeadTracks(d,n/24)).toHaveLength(intervals.filter(([a,b])=>n>=a&&n<=b).length);
+ for(let i=0;i<3;i++){const one={...d,tracks:[d.tracks[i]]},[a,b]=intervals[i];for(const n of [a-.01,b+.01,b+1])expect(sampleHeadTracks(one,n/24)).toEqual([]);expect(sampleHeadTracks(one,b/24)).toHaveLength(1);}
+ expect(d.tracks.map(t=>t.timedOcclusionPolygons!.map(w=>[w.start*24,w.end*24]))).toEqual([[[196,220],[400,491]],[[444,453]],[[330,342],[516,527]]]);
 });
